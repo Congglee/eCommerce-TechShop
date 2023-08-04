@@ -1,25 +1,18 @@
-import React from "react";
-import {
-  BiLogoFacebook,
-  BiLogoTwitter,
-  BiLogoInstagramAlt,
-  BiLogoGoogle,
-  BiLogoPinterest,
-  BiLogoGmail,
-} from "react-icons/bi";
-import {
-  BsFillTelephoneFill,
-  BsHeart,
-  BsFillHandbagFill,
-} from "react-icons/bs";
-import { GrMail } from "react-icons/gr";
-import { displayCart } from "../../features/user/cart.slice";
-import { RootState } from "../../store/store";
+import React, { useState } from "react";
+import HeaderTop from "./HeaderTop";
+import HeaderSection from "./HeaderSection";
+import Navigation from "./Navigation";
 
 type Props = {};
 
 const UserHeader = (props: Props) => {
-  return <div></div>;
+  return (
+    <div>
+      <HeaderTop />
+      <HeaderSection />
+      <Navigation />
+    </div>
+  );
 };
 
 export default UserHeader;

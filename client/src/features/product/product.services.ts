@@ -26,7 +26,7 @@ export const productApi = createApi({
         filterPriceLte?: string;
         category?: string;
         limit?: string | number;
-        page?: string;
+        page?: string | number;
       }
     >({
       query: ({

@@ -6,7 +6,7 @@ type Props = {};
 
 const UserLayout = (props: Props) => {
   return (
-    <div className="font-Poppins w-full max-w-[1920px]">
+    <div className="font-Poppins w-full max-w-[1520px]">
       <Header />
       <Outlet />
       <Footer />

@@ -5,9 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 
 type Props = {};
 
-const UserBanner = (props: Props) => {
+const Banner = (props: Props) => {
   const settings = {
-    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -15,31 +14,34 @@ const UserBanner = (props: Props) => {
     autoplay: true,
     autoplaySpeed: 3000,
   };
+
   return (
     <Slider {...settings}>
       <div className="w-full h-full">
         <img
-          className="w-full h-[400px] overflow-hidden"
-          src="https://warmgun.com/wp-content/uploads/2021/10/banner-elearning.png"
-          alt="Image 1"
+          src="https://img.freepik.com/premium-psd/3d-objects-laptop-black-friday-red-background_23-2148660042.jpg"
+          alt=""
+          className="w-full h-[461px] overflow-hidden"
         />
       </div>
-      <div>
+
+      <div className="w-full h-full">
         <img
-          className="w-full h-[400px] overflow-hidden"
-          src="https://warmgun.com/wp-content/uploads/2021/10/banner-elearning.png"
-          alt="Image 2"
+          src="https://nhatkhanhtech.com/wp-content/uploads/2019/10/Banner-gaming_laptops.jpg"
+          alt=""
+          className="w-full h-[461px] overflow-hidden"
         />
       </div>
-      <div>
+
+      <div className="w-full h-full">
         <img
-          className="w-full h-[400px] overflow-hidden"
-          src="https://warmgun.com/wp-content/uploads/2021/10/banner-elearning.png"
-          alt="Image 3"
+          src="https://cdn.tgdd.vn/Files/2021/12/20/1405435/laptopgamingdohoah22_1280x720-800-resize.jpg"
+          alt=""
+          className="w-full h-[461px] overflow-hidden"
         />
       </div>
     </Slider>
   );
 };
 
-export default UserBanner;
+export default Banner;

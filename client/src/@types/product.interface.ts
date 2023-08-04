@@ -1,3 +1,5 @@
+import { ICategory } from "./category.interface";
+
 export interface IProduct {
   _id: string;
   name: string;
@@ -5,6 +7,6 @@ export interface IProduct {
   thumb: string;
   images: string[];
   price: number;
-  description?: string;
-  categoryId: string;
+  description: string;
+  categoryId: ICategory | string;
 }

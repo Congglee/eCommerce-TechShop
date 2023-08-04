@@ -5,3 +5,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.slick-next::before,
+.slick-prev::before {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.slick-next,
+.slick-prev {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 5px !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  color: white !important;
+  cursor: pointer;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.slick-prev {
+  left: 20px !important;
+  z-index: 10 !important;
+}
+
+.slick-next {
+  right: 20px !important;
+  z-index: 10 !important;
+}

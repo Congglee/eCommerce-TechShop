@@ -251,7 +251,7 @@ const getProducts = async (req, res) => {
     }
 
     const page = +req.query.page || 1;
-    const limit = +req.query.limit || 10;
+    const limit = +req.query.limit || 100;
     const skip = (page - 1) * limit;
 
     queryCommand = queryCommand.skip(skip).limit(limit);

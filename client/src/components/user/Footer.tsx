@@ -33,7 +33,7 @@ const UserFooter = (props: Props) => {
             <input
               type="text"
               placeholder="Địa chỉ email"
-              className="px-5 py-4 bg-[#ffffff1a] outline-none text-white rounded-[30px] w-[590px] pr-12"
+              className="px-5 py-4 outline-none text-white rounded-[30px] w-[590px] pr-12 border-none border-0 text-sm bg-[rgba(255,255,255,.1)] placeholder:text-main-700 placeholder:opacity-50"
             />
             <button className="absolute w-5 h-5 right-5 top-1/2 translate-y-[-50%] text-white">
               <GrMail />

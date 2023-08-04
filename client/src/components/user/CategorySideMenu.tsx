@@ -1,119 +1,41 @@
-import React from "react";
-import { AiOutlineUnorderedList } from "react-icons/ai";
-import { SiAsus, SiDell } from "react-icons/si";
-import { IoLogoApple } from "react-icons/io";
-import { RiAliensFill } from "react-icons/ri";
+import React, { useRef } from "react";
+import icons from "../../utils/icons";
+import laptop_icon from "../../assets/laptop-icon.png";
+import { useGetCategoriesQuery } from "../../features/category/category.services";
 import { ICategory } from "../../@types/category.interface";
 import { Link } from "react-router-dom";
-import { useGetCategoriesQuery } from "../../features/category/category.services";
+
+const { GrUnorderedList } = icons;
 
 type Props = {};
 
-const UserSideMenu = (props: Props) => {
+const CategorySideMenu = (props: Props) => {
   const { data } = useGetCategoriesQuery();
 
   return (
-    <div className="border border-1 border-gray-200">
-      <div className="px-[20px] py-[10px] bg-[#EE3131]">
-        <div className="flex space-x-[5px] items-center  text-white">
-          <div>
-            <AiOutlineUnorderedList />
-          </div>
-          <p className="text-[16px]">ALL COLLECTIONS</p>
-        </div>
+    <div className="border border-[#ebebeb]">
+      <div className="py-[10px] px-5 uppercase bg-main-200 text-white text-base font-semibold flex items-center gap-x-[10px]">
+        <GrUnorderedList size={22} />
+        <h3>Danh mục</h3>
       </div>
-      <div className="text-black">
-        <ul className="">
-          {data?.categories.map((category: ICategory) => (
-            <li className="py-2" key={category._id}>
-              <Link
-                to={`/category/${category.slug}`}
-                className="text-white block pl-4"
-              >
-                <div className="flex space-x-[10px] items-center text-[#1c1d1d]">
-                  <div>
-                    <SiAsus size={35} />
-                  </div>
-                  <p className="text-[14px] ">{category.name}</p>
-                </div>
-              </Link>
-            </li>
-          ))}
 
-          {/* <li className="py-2">
-            <a href="#" className="text-white block pl-4">
-              <div className="flex space-x-[10px] items-center text-[#1c1d1d]">
-                <div>
-                  <SiAsus size={35} />
-                </div>
-                <p className="text-[14px] ">Asus</p>
-              </div>
-            </a>
-          </li>
-          <li className="py-2">
-            <a href="#" className="text-white block pl-4">
-              <div className="flex space-x-[10px] items-center text-[#1c1d1d]">
-                <div>
-                  <IoLogoApple size={35} />
-                </div>
-                <p className="text-[14px] ">Apple</p>
-              </div>
-            </a>
-          </li>
-          <li className="py-2">
-            <a href="#" className="text-white block pl-4">
-              <div className="flex space-x-[10px] items-center text-[#1c1d1d]">
-                <div>
-                  <SiDell size={35} />
-                </div>
-                <p className="text-[14px] ">Dell</p>
-              </div>
-            </a>
-          </li>
-          <li className="py-2">
-            <a href="#" className="text-white block pl-4">
-              <div className="flex space-x-[10px] items-center text-[#1c1d1d]">
-                <div>
-                  <RiAliensFill size={35} />
-                </div>
-                <p className="text-[14px] ">Alienware</p>
-              </div>
-            </a>
-          </li>
-          <li className="py-2">
-            <a href="#" className="text-white block pl-4">
-              <div className="flex space-x-[10px] items-center text-[#1c1d1d]">
-                <div>
-                  <SiAsus size={40} />
-                </div>
-                <p className="text-[14px] ">Asus</p>
-              </div>
-            </a>
-          </li>
-          <li className="py-2">
-            <a href="#" className="text-white block pl-4">
-              <div className="flex space-x-[10px] items-center text-[#1c1d1d]">
-                <div>
-                  <SiAsus size={40} />
-                </div>
-                <p className="text-[14px] ">Asus</p>
-              </div>
-            </a>
-          </li>
-          <li className="py-2">
-            <a href="#" className="text-white block pl-4">
-              <div className="flex space-x-[10px] items-center text-[#1c1d1d]">
-                <div>
-                  <SiAsus size={40} />
-                </div>
-                <p className="text-[14px] ">Asus</p>
-              </div>
-            </a>
-          </li> */}
-        </ul>
+      <div className="px-5 flex flex-col">
+        {data?.categories.map((category: ICategory) => (
+          <div
+            className="flex items-center gap-x-3 py-[14px]"
+            key={category._id}
+          >
+            <div className="w-5 h-5">
+              <img src={laptop_icon} alt="" />
+            </div>
+            <Link to={`/category/${category.slug}`}>
+              <span className="text-main-600 text-base">{category.name}</span>
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-export default UserSideMenu;
+export default CategorySideMenu;
