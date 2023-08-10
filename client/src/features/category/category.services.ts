@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ICategory } from "../../@types/category.interface";
+import { ICategory } from "../../interfaces/category.interface";
 
 interface IGetCategoriesResponse {
   success: boolean;

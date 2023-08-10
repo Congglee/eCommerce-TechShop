@@ -21,7 +21,7 @@ const verifyAccessToken = async (req, res, next) => {
   }
 };
 
-const isAdmin = async (req, res, next) => {
+const isAdminRole = async (req, res, next) => {
   const { isAdmin } = req.user;
   if (isAdmin === false)
     return res.status(401).json({
@@ -32,4 +32,4 @@ const isAdmin = async (req, res, next) => {
   next();
 };
 
-export { verifyAccessToken, isAdmin };
+export { verifyAccessToken, isAdminRole };

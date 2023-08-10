@@ -20,13 +20,18 @@ import {
   FaRegMoneyBillAlt,
   FaCalendarAlt,
   FaRegComment,
+  FaTruck,
+  FaTty,
+  FaReply,
 } from "react-icons/fa";
 import {
   BsFillHeartFill,
   BsArrowRight,
   BsFillTelephoneFill,
+  BsShieldShaded,
+  BsArrowLeft,
 } from "react-icons/bs";
-import { HiOutlineDotsHorizontal, HiShoppingBag } from "react-icons/hi";
+import { HiOutlineDotsHorizontal, HiShoppingBag, HiGift } from "react-icons/hi";
 import { GiPositionMarker } from "react-icons/gi";
 import { FiChevronDown } from "react-icons/fi";
 import { PiListBold, PiShoppingCartFill } from "react-icons/pi";
@@ -60,6 +65,12 @@ const icons = {
   PiShoppingCartFill,
   FaCalendarAlt,
   FaRegComment,
+  BsShieldShaded,
+  FaTruck,
+  HiGift,
+  FaReply,
+  FaTty,
+  BsArrowLeft,
 };
 
 export default icons;

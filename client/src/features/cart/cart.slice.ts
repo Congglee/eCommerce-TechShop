@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IProduct } from "../../@types/product.interface";
+import { IProduct } from "../../interfaces/product.interface";
 
 export interface ICartState {
   isDisplay: boolean;

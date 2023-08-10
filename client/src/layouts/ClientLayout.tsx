@@ -1,12 +1,12 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { Footer, Header } from "../components/user";
+import { Footer, Header } from "../components/guest";
 
 type Props = {};
 
 const UserLayout = (props: Props) => {
   return (
-    <div className="font-Poppins w-full max-w-[1520px]">
+    <div className="font-Inter w-full max-w-[1520px]">
       <Header />
       <Outlet />
       <Footer />

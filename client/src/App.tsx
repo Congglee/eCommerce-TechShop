@@ -2,23 +2,22 @@ import { Route, Routes } from "react-router-dom";
 import { AdminLayout, ClientLayout } from "./layouts";
 import {
   CategoryManagePage,
-  CreateCategory,
-  CreateProduct,
-  CreateUser,
-  Dashboard,
+  CreateCategoryPage,
+  CreateProductPage,
+  DashboardPage,
   ProductManagePage,
-  UpdateCategory,
-  UpdateProduct,
-  UpdateUser,
+  UpdateCategoryPage,
+  UpdateProductPage,
+  UpdateUserPage,
   UserManagePage,
 } from "./pages/admin";
 import {
   HomePage,
+  LoginPage,
   ProductDetailPage,
   ProductPage,
   RegisterPage,
-  LoginPage,
-} from "./pages/user";
+} from "./pages/guest";
 import path from "./utils/path";
 
 function App() {
@@ -40,21 +39,32 @@ function App() {
         </Route>
 
         <Route path={path.ADMIN_DASHBOARD} element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<DashboardPage />} />
           <Route path={path.ADMIN_PRODUCT_PAGE}>
             <Route index element={<ProductManagePage />} />
-            <Route path={path.ADMIN_CREATE_PAGE} element={<CreateProduct />} />
-            <Route path={path.ADMIN_UPDATE_PAGE} element={<UpdateProduct />} />
+            <Route
+              path={path.ADMIN_CREATE_PAGE}
+              element={<CreateProductPage />}
+            />
+            <Route
+              path={path.ADMIN_UPDATE_PAGE}
+              element={<UpdateProductPage />}
+            />
           </Route>
           <Route path={path.ADMIN_CATEGORY_PAGE}>
             <Route index element={<CategoryManagePage />} />
-            <Route path={path.ADMIN_CREATE_PAGE} element={<CreateCategory />} />
-            <Route path={path.ADMIN_UPDATE_PAGE} element={<UpdateCategory />} />
+            <Route
+              path={path.ADMIN_CREATE_PAGE}
+              element={<CreateCategoryPage />}
+            />
+            <Route
+              path={path.ADMIN_UPDATE_PAGE}
+              element={<UpdateCategoryPage />}
+            />
           </Route>
           <Route path={path.ADMIN_USER_PAGE}>
             <Route index element={<UserManagePage />} />
-            <Route path={path.ADMIN_CREATE_PAGE} element={<CreateUser />} />
-            <Route path={path.ADMIN_UPDATE_PAGE} element={<UpdateUser />} />
+            <Route path={path.ADMIN_UPDATE_PAGE} element={<UpdateUserPage />} />
           </Route>
         </Route>
       </Routes>

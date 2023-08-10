@@ -306,4 +306,5 @@ export {
   deleteProduct,
   getProductById,
   getProductBySlug,
+  uploadImagesProducts,
 };

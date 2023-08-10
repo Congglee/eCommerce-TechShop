@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IProduct } from "../../@types/product.interface";
+import { IProduct } from "../../interfaces/product.interface";
 
-interface IGetAllApiResponse {
+interface IGetProductsApiResponse {
   success: boolean;
   totalPages: number;
   totalProduct: number;
   products: IProduct[];
 }
-interface IGetOneApiResponse {
+interface IGetProductApiResponse {
   success: boolean;
   productData: IProduct;
 }
@@ -18,7 +18,7 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_APP_API_URL }),
   endpoints: (build) => ({
     getProducts: build.query<
-      IGetAllApiResponse,
+      IGetProductsApiResponse,
       {
         name?: string;
         sort?: string;
@@ -40,30 +40,17 @@ export const productApi = createApi({
       }) => {
         let queryString = "products";
         const params = [];
-        if (name) {
-          params.push(`name=${encodeURIComponent(name)}`);
-        }
-        if (sort) {
-          params.push(`sort=${encodeURIComponent(sort)}`);
-        }
-        if (filterPriceGte) {
-          params.push(`price[gte]=${encodeURIComponent(filterPriceGte)}`);
-        }
-        if (filterPriceLte) {
-          params.push(`price[lte]=${encodeURIComponent(filterPriceLte)}`);
-        }
-        if (category) {
-          params.push(`category=${encodeURIComponent(category)}`);
-        }
-        if (limit) {
-          params.push(`limit=${encodeURIComponent(limit)}`);
-        }
-        if (page) {
-          params.push(`page=${encodeURIComponent(page)}`);
-        }
-        if (params.length > 0) {
-          queryString += `?${params.join("&")}`;
-        }
+
+        if (name) params.push(`name=${name}`);
+        if (sort) params.push(`sort=${sort}`);
+        if (filterPriceGte) params.push(`price[gte]=${filterPriceGte}`);
+        if (filterPriceLte) params.push(`price[lte]=${filterPriceLte}`);
+        if (category) params.push(`category=${category}`);
+        if (limit) params.push(`limit=${limit}`);
+        if (page) params.push(`page=${page}`);
+
+        if (params.length > 0) queryString += `?${params.join("&")}`;
+
         return queryString;
       },
       providesTags(result, error, params) {
@@ -86,11 +73,11 @@ export const productApi = createApi({
           ];
         }
 
-        return [{ type: "Products", id: "LIST" }];
+        return [{ type: "Products" as const, id: "LIST" }];
       },
     }),
-    getProduct: build.query<IGetOneApiResponse, string>({
-      query: (id) => `products/id/${id}`,
+    getProduct: build.query<IGetProductApiResponse, string>({
+      query: (slug) => `products/slug/${slug}`,
     }),
   }),
 });

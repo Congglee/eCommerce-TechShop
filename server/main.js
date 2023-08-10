@@ -26,9 +26,7 @@ app.use("/api", userRoute);
 app.use("/api", orderRoute);
 
 mongoose
-  .connect(
-    "mongodb+srv://root:congltph27602@asm-web209.hu4clmr.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect("mongodb://localhost:27017/ecommerce-techshop")
   .then(() => console.log("DB connected"));
 
 app.listen(port, () => {

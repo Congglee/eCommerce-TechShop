@@ -1,155 +1,95 @@
-const asusCollections = [
+import laptopAcer from "../assets/laptop_acer_collection.png";
+import laptopAsus from "../assets/laptop_asus_collection_20.jpeg";
+import laptopDell from "../assets/laptop_dell_collection.png";
+import laptopHp from "../assets/laptop_hp_collection.png";
+import laptopLenvo from "../assets/laptop_lenovo_collection.png";
+import mackbook from "../assets/macbook_collection.png";
+
+const hotCollections = [
   {
-    name: "Asus Vivobook",
+    title: "Acer",
+    image: laptopAcer,
+    type: [
+      "Asus Aspire",
+      "Asus Swift",
+      "Asus Spin",
+      "Asus TravelMate",
+      "Asus Nitro",
+      "Asus Aspire 7",
+      "Asus Predator",
+    ],
   },
+
   {
-    name: "Asus Zenbook",
+    title: "Asus",
+    image: laptopAsus,
+    type: [
+      "Asus Vivobook",
+      "Asus Zenbook",
+      "Asus ExpertBook",
+      "Asus X Series",
+      "Asus ProArt",
+      "Asus ROG Gaming",
+      "Asus TUF Gaming",
+    ],
   },
+
   {
-    name: "Asus ExpertBook",
+    title: "Lenovo",
+    image: laptopLenvo,
+    type: [
+      "Lenovo Thinkpad",
+      "Lenovo Ideapad",
+      "Lenovo Thinkbook",
+      "Lenovo Gaming 3",
+      "Lenovo Yoga",
+      "Lenovo Gaming LOQ",
+      "Lenovo Pro",
+      "Lenovo Legion S5",
+    ],
   },
+
   {
-    name: "Asus X Series",
+    title: "Dell",
+    image: laptopDell,
+    type: [
+      "Dell Inspiron",
+      "Dell Vostro",
+      "Dell Latitude",
+      "Dell XPS",
+      "Dell Gaming G3",
+      "Dell Gaming G5",
+      "Dell Gaming G7",
+      "Dell Gaming G15",
+      "Dell Alienware",
+    ],
   },
+
   {
-    name: "Asus ProArt",
+    title: "HP",
+    image: laptopHp,
+    type: [
+      "HP Pavilion",
+      "HP Probook",
+      "HP Elitebook",
+      "HP Envy",
+      "HP Spectre",
+      "HP 14s, 15s",
+      "HP Omen",
+      "HP VICTUS",
+    ],
   },
+
   {
-    name: "Asus ROG Gaming",
-  },
-  {
-    name: "Asus TUF Gaming",
+    title: "Apple",
+    image: mackbook,
+    type: [
+      "Apple Macbook Air",
+      "Apple Macbook Pro 13",
+      "Apple Macbook Pro 14",
+      "Apple Macbook Pro 16",
+    ],
   },
 ];
 
-const acerCollection = [
-  {
-    name: "Asus Aspire",
-  },
-  {
-    name: "Asus Swift",
-  },
-  {
-    name: "Asus Spin",
-  },
-  {
-    name: "Asus TravelMate",
-  },
-  {
-    name: "Asus Nitro",
-  },
-  {
-    name: "Asus Aspire 7",
-  },
-  {
-    name: "Asus Predator",
-  },
-];
-
-const lenovoCollection = [
-  {
-    name: "Lenovo Thinkpad",
-  },
-  {
-    name: "Lenovo Ideapad",
-  },
-  {
-    name: "Lenovo Thinkbook",
-  },
-  {
-    name: "Lenovo Gaming 3",
-  },
-  {
-    name: "Lenovo Yoga",
-  },
-  {
-    name: "Lenovo Gaming LOQ",
-  },
-  {
-    name: "Lenovo Pro",
-  },
-  {
-    name: "Lenovo Legion S5",
-  },
-];
-
-const dellCollection = [
-  {
-    name: "Dell Inspiron",
-  },
-  {
-    name: "Dell Vostro",
-  },
-  {
-    name: "Dell Latitude",
-  },
-  {
-    name: "Dell XPS",
-  },
-  {
-    name: "Dell Gaming G3",
-  },
-  {
-    name: "Dell Gaming G5",
-  },
-  {
-    name: "Dell Gaming G7",
-  },
-  {
-    name: "Dell Alienware",
-  },
-  {
-    name: "Dell Gaming G15",
-  },
-];
-
-const hpCollection = [
-  {
-    name: "HP Pavilion",
-  },
-  {
-    name: "HP Probook",
-  },
-  {
-    name: "HP Elitebook",
-  },
-  {
-    name: "HP Envy",
-  },
-  {
-    name: "HP Spectre",
-  },
-  {
-    name: "HP 14s, 15s",
-  },
-  {
-    name: "HP Omen",
-  },
-  {
-    name: "HP VICTUS",
-  },
-];
-
-const appleCollection = [
-  {
-    name: "Apple Macbook Air",
-  },
-  {
-    name: "Apple Macbook Pro 13",
-  },
-  {
-    name: "Apple Macbook Pro 14",
-  },
-  {
-    name: "Apple Macbook Pro 16",
-  },
-];
-
-export {
-  acerCollection,
-  appleCollection,
-  asusCollections,
-  dellCollection,
-  hpCollection,
-  lenovoCollection,
-};
+export default hotCollections;

@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface IProductState {
   productId: string;
+  productSlug: string;
 }
 
 const initialState: IProductState = {
   productId: "",
+  productSlug: "",
 };
 
 const productSlice = createSlice({
