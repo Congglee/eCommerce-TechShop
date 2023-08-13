@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import {
-  Link,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import icons from "../../../utils/icons";
+import { useQueryString } from "../../../hooks/useQueryString";
+import { handleNameUrl } from "../../../utils/fn";
 
 const { AiOutlineCaretDown } = icons;
 
@@ -14,28 +11,25 @@ type Props = {};
 const Navigation = (props: Props) => {
   const [isHoverMenu, setIsHoverMenu] = useState<boolean>(false);
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const { category } = useParams();
-
-  const sort = searchParams.get("sort")!;
-  const price_filter_gte = searchParams.get("price_filter_gte")!;
-  const price_filter_lte = searchParams.get("price_filter_lte")!;
-  const page = searchParams.get("page")!;
+  const queryString: {
+    name?: string;
+    sort?: string;
+    page?: string;
+    price_filter_gte?: string;
+    price_filter_lte?: string;
+  } = useQueryString();
+  const { sort, price_filter_gte, price_filter_lte, page } = queryString;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
-    const searchUrl = `${
-      category ? `category/${category}` : "products/"
-    }?name=${inputValue}${
-      sort || price_filter_gte || price_filter_lte || page
-        ? `&sort=${sort === null ? "" : sort}&price_filter_gte=${
-            price_filter_gte === null ? "" : price_filter_gte
-          }&price_filter_lte=${
-            price_filter_lte === null ? "" : price_filter_lte
-          }&page=${page === null ? "" : page}`
-        : ""
-    }`;
+    const searchUrl = handleNameUrl(
+      inputValue,
+      sort,
+      price_filter_gte,
+      price_filter_lte,
+      page
+    );
 
     navigate(searchUrl);
   };
@@ -131,8 +125,8 @@ const Navigation = (props: Props) => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="Tìm kiếm ..."
-              className="bg-white outline-none py-2 px-[10px] border border-white focus:border-white placeholder:text-sm text-[#1c1d1d] w-[250px]"
+              placeholder="Tìm kiếm..."
+              className="bg-white outline-none py-2 px-[10px] border border-white focus:border-white placeholder:text-sm text-[#1c1d1d] w-[250px] focus:ring-0 focus:border-transparent"
               name="searchInput"
             />
           </form>

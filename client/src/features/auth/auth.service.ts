@@ -1,10 +1,38 @@
+import { store } from "./../../store/store";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { IUser } from "../../interfaces/user.interface";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { getAuthToken } from "./authUtils";
+
+interface ILoginResponse {
+  success: boolean;
+  accessToken: string;
+  userData: IUser;
+}
+
+interface IRegisterResponse {
+  succces: boolean;
+  message: string;
+}
+
+interface ICurrentUserResponse {
+  success: boolean;
+  userData: IUser;
+}
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_APP_API_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_APP_API_URL,
+    prepareHeaders(headers, { getState }) {
+      const token = (getState() as RootState).auth.token;
+      if (token) headers.set("authorization", `Bearer ${token}`);
+      return headers;
+    },
+  }),
   endpoints: (build) => ({
-    login: build.mutation({
+    login: build.mutation<ILoginResponse, { email: string; password: string }>({
       query: (body: { email: string; password: string }) => {
         return {
           url: "/users/login",
@@ -13,7 +41,11 @@ export const authApi = createApi({
         };
       },
     }),
-    register: build.mutation({
+
+    register: build.mutation<
+      IRegisterResponse,
+      { name: string; email: string; password: string; confirmPassword: string }
+    >({
       query: (body: {
         name: string;
         email: string;
@@ -27,7 +59,12 @@ export const authApi = createApi({
         };
       },
     }),
+
+    getCurrentUser: build.query<ICurrentUserResponse, void>({
+      query: () => "/users/currentUser",
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery } =
+  authApi;

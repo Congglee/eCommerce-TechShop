@@ -1,24 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import icons from "../../utils/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../features/auth/auth.service";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../features/auth/auth.slice";
 import jwt_decode from "jwt-decode";
+import { toast } from "react-toastify";
+import { isEntityError } from "../../utils/helper";
 
 const { BiChevronRight } = icons;
 
-const initialState = {
+const initialState: { email: string; password: string } = {
   email: "",
   password: "",
 };
+
+type LoginFormError =
+  | {
+      [key in keyof typeof initialState]: string;
+    }
+  | null
+  | undefined;
 
 type Props = {};
 
 const LoginPage = (props: Props) => {
   const [formValue, setFormValue] = useState(initialState);
-  const { email, password } = formValue;
-  const [login, { data, isSuccess, isError, error }] = useLoginMutation();
+  const [login, loginResult] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,32 +36,43 @@ const LoginPage = (props: Props) => {
 
   const handleSubmitLogin = async (e: any) => {
     e.preventDefault();
-    if (email && password) {
-      await login({ email, password });
-    } else {
-      alert("Vui lòng nhập vào các trường!");
-    }
+    await login(formValue);
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      alert("Đăng nhập thành công");
-      dispatch(setUser({ token: data.accessToken, userData: data.userData }));
-
-      const { token } = JSON.parse(localStorage.getItem("accessToken") || "{}");
-      const decodedToken: any = jwt_decode(token);
-      const { isAdmin } = decodedToken;
-
-      if (isAdmin) navigate("/admin");
-      else navigate("/");
+  const errorForm: LoginFormError = useMemo(() => {
+    if (isEntityError(loginResult.error)) {
+      return loginResult.error.data.message as LoginFormError;
     }
-  }, [isSuccess]);
+  }, [loginResult]);
 
   useEffect(() => {
-    if (isError) {
-      alert((error as any).data.message);
+    if (loginResult.isSuccess) {
+      dispatch(
+        setUser({
+          isLoggedIn: true,
+          userData: loginResult.data.userData,
+          token: loginResult.data.accessToken,
+        })
+      );
+
+      if (
+        loginResult.data.accessToken &&
+        typeof loginResult.data.accessToken === "string"
+      ) {
+        const { isAdmin }: any = jwt_decode(loginResult.data.accessToken);
+        if (isAdmin) navigate("/admin");
+        else {
+          navigate("/");
+        }
+      }
     }
-  }, [isError]);
+  }, [loginResult.isSuccess]);
+
+  useEffect(() => {
+    if (loginResult.isError) {
+      toast.error((loginResult.error as any).data.message);
+    }
+  }, [loginResult.isError]);
 
   return (
     <>
@@ -84,9 +103,15 @@ const LoginPage = (props: Props) => {
                 placeholder="Email"
                 className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
                 name="email"
-                value={email}
+                value={formValue.email}
                 onChange={handleChange}
               />
+
+              {errorForm?.email && (
+                <span className="mt-1 text-[13px] italic text-red-600 pl-2">
+                  <span className="font-semibold">{errorForm?.email}</span>
+                </span>
+              )}
             </div>
 
             <div className="text-sm text-main-600 w-[500px]">
@@ -95,9 +120,15 @@ const LoginPage = (props: Props) => {
                 placeholder="Mật khẩu"
                 className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
                 name="password"
-                value={password}
+                value={formValue.password}
                 onChange={handleChange}
               />
+
+              {errorForm?.password && (
+                <span className="mt-1 text-[13px] italic text-red-600 pl-2">
+                  <span className="font-semibold">{errorForm?.password}</span>
+                </span>
+              )}
             </div>
 
             <button className="bg-main-200 uppercase py-[10px] px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px]">

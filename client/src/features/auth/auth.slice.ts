@@ -1,15 +1,16 @@
+import { IUser } from "./../../interfaces/user.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store/store";
-import { IUser } from "../../interfaces/user.interface";
 
 export interface IAuthState {
-  token: string | null;
-  userData: IUser | null;
+  token?: string;
+  userData?: IUser;
+  isLoggedIn: boolean;
 }
 
 const initialState: IAuthState = {
-  token: null,
-  userData: null,
+  token: "",
+  userData: undefined,
+  isLoggedIn: false,
 };
 
 export const authSlice = createSlice({
@@ -18,23 +19,29 @@ export const authSlice = createSlice({
   reducers: {
     setUser: (
       state,
-      action: PayloadAction<{ token: string; userData: IUser }>
+      action: PayloadAction<{
+        isLoggedIn: boolean;
+        userData?: IUser;
+        token?: string;
+      }>
     ) => {
-      localStorage.setItem(
-        "accessToken",
-        JSON.stringify({ token: action.payload.token })
-      );
+      state.isLoggedIn = action.payload.isLoggedIn;
+      state.userData = action.payload.userData;
       state.token = action.payload.token;
+    },
+
+    setCurrentUser: (state, action: PayloadAction<{ userData?: IUser }>) => {
       state.userData = action.payload.userData;
     },
+
     logOut: (state) => {
-      localStorage.clear();
-      state.token = null;
-      state.userData = null;
+      state.isLoggedIn = false;
+      state.token = "";
+      state.userData = undefined;
     },
   },
 });
 
-export const { setUser, logOut } = authSlice.actions;
+export const { setUser, logOut, setCurrentUser } = authSlice.actions;
 const authReducer = authSlice.reducer;
 export default authReducer;

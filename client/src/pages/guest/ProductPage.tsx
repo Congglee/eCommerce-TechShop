@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import icons from "../../utils/icons";
 import { useGetProductsQuery } from "../../features/product/product.services";
 import { IProduct } from "../../interfaces/product.interface";
@@ -9,15 +9,27 @@ import {
   ProductItem,
 } from "../../components/guest";
 import { useQueryString } from "../../hooks/useQueryString";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import {
+  setFilterPriceGte,
+  setFilterPriceLte,
+  setSeletedSort,
+} from "../../features/product/product.slice";
+import {
+  handleFilterPriceGteUrl,
+  handleFilterPriceLteUrl,
+  handleSortUrl,
+} from "../../utils/fn";
 
 const { BiChevronRight, AiOutlineUnorderedList } = icons;
 
 type Props = {};
 
 const ProductPage = (props: Props) => {
-  const [seletedSort, setSeletedSort] = useState<string>("");
-  const [filterPriceGte, setFilterPriceGte] = useState<string>("");
-  const [filterPriceLte, setFilterPriceLte] = useState<string>("");
+  const { filterPriceGte, filterPriceLte } = useSelector(
+    (state: RootState) => state.product
+  );
   const queryString: {
     name?: string;
     sort?: string;
@@ -27,6 +39,7 @@ const ProductPage = (props: Props) => {
   } = useQueryString();
   const { name, sort, price_filter_gte, price_filter_lte, page } = queryString;
   const { category } = useParams();
+  const dispatch = useDispatch();
 
   const { data } = useGetProductsQuery({
     name: name || "",
@@ -41,16 +54,14 @@ const ProductPage = (props: Props) => {
 
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    setSeletedSort(value);
-    const sortUrl = `?sort=${value}${
-      name || price_filter_gte || price_filter_lte || page
-        ? `&name=${name === undefined ? "" : name}&price_filter_gte=${
-            price_filter_gte === undefined ? "" : price_filter_gte
-          }&price_filter_lte=${
-            price_filter_lte === undefined ? "" : price_filter_lte
-          }&page=${page === undefined ? "" : page}`
-        : ""
-    }`;
+    dispatch(setSeletedSort(value));
+    const sortUrl = handleSortUrl(
+      value,
+      name,
+      price_filter_gte,
+      price_filter_lte,
+      page
+    );
 
     navigate(sortUrl);
   };
@@ -59,17 +70,15 @@ const ProductPage = (props: Props) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
-    setFilterPriceGte(value);
+    dispatch(setFilterPriceGte(value));
 
-    const filterPriceGteUrl = `?price_filter_gte=${value}${
-      name || sort || price_filter_lte || page
-        ? `&name=${name === undefined ? "" : name}&sort=${
-            sort === undefined ? "" : sort
-          }&price_filter_lte=${
-            price_filter_lte === undefined ? "" : price_filter_lte
-          }&page=${page === undefined ? "" : page}`
-        : ""
-    }`;
+    const filterPriceGteUrl = handleFilterPriceGteUrl(
+      value,
+      name,
+      sort,
+      price_filter_lte,
+      page
+    );
     navigate(filterPriceGteUrl);
   };
 
@@ -77,16 +86,14 @@ const ProductPage = (props: Props) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
-    setFilterPriceLte(value);
-    const filterPriceLteUrl = `?price_filter_lte=${value}${
-      name || sort || price_filter_gte || page
-        ? `&name=${name === undefined ? "" : name}&sort=${
-            sort === undefined ? "" : sort
-          }&price_filter_gte=${
-            price_filter_gte === undefined ? "" : price_filter_gte
-          }&page=${page === undefined ? "" : page}`
-        : ""
-    }`;
+    dispatch(setFilterPriceLte(value));
+    const filterPriceLteUrl = handleFilterPriceLteUrl(
+      value,
+      name,
+      sort,
+      price_filter_gte,
+      page
+    );
     navigate(filterPriceLteUrl);
   };
 

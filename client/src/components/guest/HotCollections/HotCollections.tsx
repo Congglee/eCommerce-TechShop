@@ -14,7 +14,10 @@ const HotCollections = (props: Props) => {
       </div>
       <div className="flex flex-wrap mx-[-10px]">
         {hotCollections.map((item) => (
-          <div className="w-[calc(calc(100%_/_3)_-_20px)] mx-[10px] mb-5 border border-main-700 p-[15px] flex gap-x-5">
+          <div
+            className="w-[calc(calc(100%_/_3)_-_20px)] mx-[10px] mb-5 border border-main-700 p-[15px] flex gap-x-5"
+            key={item.title}
+          >
             <div className="pl-5 flex-shrink-0 w-[175px] h-[140px]">
               <img src={item.image} alt="" className="w-full h-full" />
             </div>

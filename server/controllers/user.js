@@ -16,15 +16,22 @@ const register = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      const errors = error.details.map((errItem) => errItem.message);
+      const errors = error.details.reduce((acc, errItem) => {
+        acc[errItem.path[0]] = errItem.message;
+        return acc;
+      }, {});
       return res.status(400).json({
         success: false,
         message: errors,
       });
     }
+
     const { email } = req.body;
     const checkMail = await User.findOne({ email });
-    if (checkMail) throw new Error("Người dùng đã tồn tại!");
+    if (checkMail)
+      throw new Error(
+        `Email ${email} đã được sử dụng, vui lòng sử dụng email khác`
+      );
     else {
       const newUser = await User.create(req.body);
       return res.status(200).json({
@@ -37,7 +44,7 @@ const register = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: `Đăng ký tài tài khoản thất bại! ${error.message}`,
+      message: `${error.message}`,
     });
   }
 };
@@ -48,7 +55,10 @@ const login = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      const errors = error.details.map((errItem) => errItem.message);
+      const errors = error.details.reduce((acc, errItem) => {
+        acc[errItem.path[0]] = errItem.message;
+        return acc;
+      }, {});
       return res.status(400).json({
         success: false,
         message: errors,

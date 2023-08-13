@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IProduct } from "../../../interfaces/product.interface";
 import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";
@@ -21,6 +21,7 @@ interface productDetailContentProps {
 
 const ProductDetailContent = (props: productDetailContentProps) => {
   const { product } = props;
+  const [value, setValue] = useState(1);
   return (
     <>
       <div className="w-[40%] flex-shrink-0 flex flex-col gap-y-[30px]">
@@ -80,6 +81,11 @@ const ProductDetailContent = (props: productDetailContentProps) => {
                 <button
                   type="button"
                   className="w-full h-full px-2 transition-all duration-200 ease-out border-r border-[#343535] hover:bg-main-600"
+                  onClick={() => {
+                    if (value > 1) {
+                      setValue(value - 1);
+                    }
+                  }}
                 >
                   -
                 </button>
@@ -87,13 +93,15 @@ const ProductDetailContent = (props: productDetailContentProps) => {
                 <input
                   type="number"
                   id="Quantity"
-                  defaultValue="1"
+                  value={value}
+                  onChange={(e) => setValue(+e.target.value)}
                   className="w-[50px] border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none bg-[#f6f6f6] focus:border-transparent focus:ring-0"
                 />
 
                 <button
                   type="button"
                   className="w-full h-full px-2 border-l border-[#343535] hover:bg-main-600 transition-all duration-200 ease-out"
+                  onClick={() => setValue(value + 1)}
                 >
                   +
                 </button>

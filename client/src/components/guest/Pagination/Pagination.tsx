@@ -45,7 +45,7 @@ const Pagination = (props: IPaginationProps) => {
         return (
           <div
             className={clsx(
-              "hover:text-[#ee3131] w-5 h-5 p-4 rounded-full hover:bg-[rgba(0,0,0,0.4)] text-black flex justify-center cursor-pointer",
+              "hover:text-[#ee3131] w-5 h-5 p-4 rounded-full hover:bg-[rgba(0,0,0,0.4)] flex justify-center cursor-pointer",
               !Number(item) && "items-end",
               Number(item) && "items-center",
               isActive && "text-[#ee3131]"
