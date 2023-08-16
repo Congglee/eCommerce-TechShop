@@ -7,6 +7,7 @@ export interface IProduct {
   thumb: string;
   images: string[];
   price: number;
+  quantity: number;
   description: string;
   categoryId: ICategory | string;
 }

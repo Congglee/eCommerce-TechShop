@@ -1,3 +1,4 @@
+import { IProduct } from "../../interfaces/product.interface";
 import { IUser } from "./../../interfaces/user.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -5,12 +6,16 @@ export interface IAuthState {
   token?: string;
   userData?: IUser;
   isLoggedIn: boolean;
+  // cartProducts: IProduct[];
 }
 
 const initialState: IAuthState = {
   token: "",
   userData: undefined,
   isLoggedIn: false,
+  // cartProducts: localStorage.getItem("cartProducts")
+  //   ? JSON.parse(localStorage.getItem("cartProducts")!)
+  //   : [],
 };
 
 export const authSlice = createSlice({
@@ -28,6 +33,7 @@ export const authSlice = createSlice({
       state.isLoggedIn = action.payload.isLoggedIn;
       state.userData = action.payload.userData;
       state.token = action.payload.token;
+      // state.cartProducts = action.payload.cartProducts;
     },
 
     setCurrentUser: (state, action: PayloadAction<{ userData?: IUser }>) => {

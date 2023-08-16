@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { IProduct } from "../../../interfaces/product.interface";
 import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../features/cart/cart.slice";
 
 const {
   AiTwotoneStar,
@@ -21,7 +24,38 @@ interface productDetailContentProps {
 
 const ProductDetailContent = (props: productDetailContentProps) => {
   const { product } = props;
+  const dispatch = useDispatch();
+  // const [addToCartMutation, addToCartMutationResult] = useAddToCartMutation();
+  // const { data, refetch } = useGetCurrentUserQuery();
+  // const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const [value, setValue] = useState(1);
+
+  const handleAddToCartStorage = async (product: IProduct) => {
+    // if (isLoggedIn) {
+    //   await addToCartMutation({
+    //     id: product._id,
+    //     quantity: value,
+    //   });
+    // }
+    dispatch(addToCart({ product: product, productQuantity: value }));
+    toast.success(`Thêm sản phẩm ${product.name} vào giỏ hàng thành công`, {
+      position: "bottom-right",
+    });
+  };
+
+  // useEffect(() => {
+  //   if (addToCartMutationResult.isSuccess) {
+  //     refetch();
+  //     dispatch(setCurrentUser({ userData: data?.userData }));
+  //   }
+  // }, [addToCartMutationResult.isSuccess, refetch, dispatch, data?.userData]);
+
+  // useEffect(() => {
+  //   if (addToCartMutationResult.isError) {
+  //     toast.error((addToCartMutationResult.error as any).data.message);
+  //   }
+  // }, [addToCartMutationResult.isError]);
+
   return (
     <>
       <div className="w-[40%] flex-shrink-0 flex flex-col gap-y-[30px]">
@@ -109,7 +143,10 @@ const ProductDetailContent = (props: productDetailContentProps) => {
             </div>
           </div>
 
-          <button className="w-full bg-main-200 text-white font-bold py-[11px] px-[15px] uppercase text-sm hover:bg-[#333] transition-all duration-150 ease-out mb-5">
+          <button
+            className="w-full bg-main-200 text-white font-bold py-[11px] px-[15px] uppercase text-sm hover:bg-[#333] transition-all duration-150 ease-out mb-5"
+            onClick={() => handleAddToCartStorage(product as IProduct)}
+          >
             Add To Cart
           </button>
 

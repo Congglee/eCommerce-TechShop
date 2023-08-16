@@ -5,10 +5,15 @@ import categoryReducer from "../features/category/category.slice";
 import { categoryApi } from "../features/category/category.services";
 import authReducer, { IAuthState } from "../features/auth/auth.slice";
 import { authApi } from "../features/auth/auth.service";
-import cartReducer from "../features/cart/cart.slice";
+import { cartApi } from "../features/cart/cart.services";
+import cartReducer, { ICartState } from "../features/cart/cart.slice";
+import { userReducer } from "../features/user/user.slice";
+import { userApi } from "../features/user/user.services";
+import { orderReducer } from "../features/order/order.slice";
 
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+import { orderApi } from "../features/order/order.services";
 
 const commonConfig = {
   key: "tech-shop/user",
@@ -17,12 +22,17 @@ const commonConfig = {
 
 const userConfig = {
   ...commonConfig,
-  whitelist: ["isLoggedIn", "token"],
+  whitelist: ["isLoggedIn", "token", "cartProducts"],
 };
 
 const persistedAuthReducer = persistReducer<IAuthState>(
   userConfig,
   authReducer
+);
+
+const persistedCartReducer = persistReducer<ICartState>(
+  userConfig,
+  cartReducer
 );
 
 export const store = configureStore({
@@ -36,15 +46,27 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     [authApi.reducerPath]: authApi.reducer,
 
-    cart: cartReducer,
+    user: userReducer,
+    [userApi.reducerPath]: userApi.reducer,
+
+    cart: persistedCartReducer,
+    [cartApi.reducerPath]: cartApi.reducer,
+
+    order: orderReducer,
+    [orderApi.reducerPath]: orderApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(productApi.middleware)
       .concat(categoryApi.middleware)
-      .concat(authApi.middleware),
+      .concat(authApi.middleware)
+      .concat(cartApi.middleware)
+      .concat(userApi.middleware)
+      .concat(orderApi.middleware),
 });
+
+// store.dispatch(getCartTotals());
 
 export const persistor = persistStore(store);
 

@@ -10,10 +10,24 @@ var orderSchema = new mongoose.Schema({
   ],
   status: {
     type: String,
-    default: "Proccessing",
-    enum: ["Cancelled", "Proccessing", "Succeed"],
+    default: "Đang xử lý",
+    enum: ["Đã hủy", "Đang xử lý", "Thành công"],
   },
   total: Number,
+  address: {
+    type: String,
+  },
+  mobile: {
+    type: String,
+  },
+  payment: {
+    type: String,
+    enum: [
+      "Thanh toán khi nhận hàng",
+      "Thanh toán qua STK ngân hàng",
+      "Thanh toán bằng Paypal",
+    ],
+  },
   orderBy: {
     type: mongoose.Types.ObjectId,
     ref: "User",

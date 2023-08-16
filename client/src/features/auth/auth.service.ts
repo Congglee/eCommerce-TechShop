@@ -1,9 +1,6 @@
-import { store } from "./../../store/store";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IUser } from "../../interfaces/user.interface";
-import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { getAuthToken } from "./authUtils";
 
 interface ILoginResponse {
   success: boolean;

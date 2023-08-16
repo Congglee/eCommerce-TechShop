@@ -1,3 +1,5 @@
+import { IProduct } from "./product.interface";
+
 export interface IUser {
   _id: string;
   name: string;
@@ -6,7 +8,8 @@ export interface IUser {
   avatar?: string;
   isAdmin?: boolean;
   isBlocked?: boolean;
-  cart: [];
+  cart: IProduct[] | [];
   refreshToken?: string;
   address?: string;
+  mobile?: string;
 }

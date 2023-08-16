@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
-import { logOut, setUser } from "../../../features/auth/auth.slice";
+import { logOut } from "../../../features/auth/auth.slice";
 
 const {
   FaRegMoneyBillAlt,
@@ -21,7 +21,7 @@ type Props = {};
 const HeaderTop = (props: Props) => {
   const [isHover, setIsHover] = useState(false);
   const dispatch = useDispatch();
-  const { data, isLoading, isFetching, refetch } = useGetCurrentUserQuery();
+  const { data, isFetching, refetch } = useGetCurrentUserQuery();
   const { isLoggedIn, token } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
@@ -81,14 +81,18 @@ const HeaderTop = (props: Props) => {
                         Tài khoản
                       </a>
                     </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        Quản lý website
-                      </a>
-                    </li>
+
+                    {data?.userData.isAdmin && (
+                      <li>
+                        <Link
+                          to="/admin"
+                          className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >
+                          Quản lý website
+                        </Link>
+                      </li>
+                    )}
+
                     <li>
                       <a
                         href="#"
@@ -111,7 +115,6 @@ const HeaderTop = (props: Props) => {
                       className="block px-4 py-2 text-[13px] text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                       onClick={() => {
                         dispatch(logOut());
-                        localStorage.clear();
                       }}
                     >
                       Đăng xuất

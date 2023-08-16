@@ -4,27 +4,34 @@ import User from "../models/user.js";
 const createOrder = async (req, res) => {
   try {
     const { _id } = req.user;
-    const userCart = await User.findById(_id)
-      .select("cart")
-      .populate("cart.product", "title price");
+    // const userCart = await User.findById(_id)
+    //   .select("cart")
+    //   .populate("cart.product", "title price");
+    const { cart, payment, address, mobile } = req.body;
 
-    if (userCart.cart.length === 0) {
+    if (!Array.isArray(cart) || cart.length === 0) {
       throw new Error(
         "Giỏ hàng của quý khách chưa có sản phẩm, vui lòng hãy chọn mua một sản phẩm"
       );
     }
 
-    const products = userCart?.cart?.map((item) => ({
-      product: item.product._id,
-      count: item.quantity,
-    }));
+    let total = 0;
+    const products = cart.map((item) => {
+      total += item.price * item.quantity;
+      return {
+        product: item._id,
+        count: item.quantity,
+      };
+    });
 
-    let total = userCart?.cart?.reduce(
-      (sum, item) => item.product.price * item.quantity + sum,
-      0
-    );
-
-    const createData = { products, total, orderBy: _id };
+    const createData = {
+      products,
+      payment,
+      total,
+      orderBy: _id,
+      address,
+      mobile,
+    };
     const response = await Order.create(createData);
     return res.status(200).json({
       success: response ? true : false,
@@ -65,7 +72,10 @@ const updateStatus = async (req, res) => {
 const getUserOrder = async (req, res) => {
   try {
     const { _id } = req.user;
-    const response = await Order.find({ orderBy: _id });
+    const response = await Order.find({ orderBy: _id }).populate({
+      path: "products.product",
+      select: "_id name thumb quantity price",
+    });
 
     return res.status(200).json({
       success: response ? true : false,

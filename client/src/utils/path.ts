@@ -5,6 +5,11 @@ const path = {
   PRODUCT_CATEGORY_PAGE: "category/:category",
   LOGIN_PAGE: "login",
   REGISTER_PAGE: "register",
+  CART_PAGE: "cart",
+  CHECKOUT_PAGE: "checkout",
+  CHECKOUT_INFO_PAGE: "info",
+  CHECKOUT_PAYMENT_PAGE: "payment",
+  CHECKOUT_SUCCESS_PAGE: "success",
 
   ADMIN_DASHBOARD: "admin",
   ADMIN_PRODUCT_PAGE: "products",

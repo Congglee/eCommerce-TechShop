@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { AdminLayout, ClientLayout } from "./layouts";
+import { AdminLayout, CheckoutLayout, ClientLayout } from "./layouts";
 import {
   CategoryManagePage,
   CreateCategoryPage,
@@ -12,6 +12,9 @@ import {
   UserManagePage,
 } from "./pages/admin";
 import {
+  CartPage,
+  CheckoutInfoPage,
+  CheckoutPaymentPage,
   HomePage,
   LoginPage,
   ProductDetailPage,
@@ -36,6 +39,19 @@ function App() {
           <Route path={path.PRODUCT_CATEGORY_PAGE} element={<ProductPage />} />
           <Route path={path.LOGIN_PAGE} element={<LoginPage />} />
           <Route path={path.REGISTER_PAGE} element={<RegisterPage />} />
+          <Route path={path.CART_PAGE} element={<CartPage />} />
+        </Route>
+
+        <Route path={path.CHECKOUT_PAGE} element={<CheckoutLayout />}>
+          <Route index element={<CheckoutInfoPage />} />
+          <Route
+            path={path.CHECKOUT_INFO_PAGE}
+            element={<CheckoutInfoPage />}
+          />
+          <Route
+            path={path.CHECKOUT_PAYMENT_PAGE}
+            element={<CheckoutPaymentPage />}
+          />
         </Route>
 
         <Route path={path.ADMIN_DASHBOARD} element={<AdminLayout />}>

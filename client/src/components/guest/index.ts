@@ -14,3 +14,4 @@ export { default as BlogPosts } from "./BlogPosts/BlogPosts";
 export { default as Brands } from "./Brands/Brands";
 export { default as ProductDetailContent } from "./ProductDetailContent/ProductDetailContent";
 export { default as ProductDetailTabs } from "./ProductDetailTabs/ProductDetailTabs";
+export { default as CheckoutProducts } from "./CheckoutProducts/CheckoutProducts";

@@ -1,3 +1,5 @@
+import CryptoJS from "crypto-js";
+
 export const generateRange = (start: number, end: number) => {
   const length = end + 1 - start;
   return Array.from({ length }, (_, index) => start + index);
@@ -111,4 +113,23 @@ export const handlePageUrl = (
   }`;
 
   return pageUrl;
+};
+
+export const encryptData = (data: any, secretKey: any) => {
+  const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), secretKey);
+  return encryptedData.toString();
+};
+
+export const decryptData = (encryptedData: any, secretKey: any) => {
+  let bytes;
+  if (encryptedData) {
+    bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
+  }
+
+  let decryptedData;
+  if (bytes) {
+    decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  }
+
+  return decryptedData;
 };
