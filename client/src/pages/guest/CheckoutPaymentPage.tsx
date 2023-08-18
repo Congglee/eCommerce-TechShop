@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { useCreateOrderMutation } from "../../features/order/order.services";
 import { toast } from "react-toastify";
+import moment from "moment";
+import Swal from "sweetalert2";
 
 const { BiChevronRight, BsArrowLeft } = icons;
 
@@ -21,6 +23,9 @@ const CheckoutPaymentPage = (props: Props) => {
   const [paymentMethod, setPaymentMethod] = useState("directly");
   const { cartProducts } = useSelector((state: RootState) => state.cart);
 
+  const currentDate = new Date();
+  const formattedDate = moment(currentDate).format("DD/MM/YYYY");
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let payment;
@@ -34,12 +39,22 @@ const CheckoutPaymentPage = (props: Props) => {
       payment: payment as string,
       address: decryptedUserData.address,
       mobile: decryptedUserData.mobile,
+      date: formattedDate,
     });
   };
 
   useEffect(() => {
+    const createOrderMessage = async () => {
+      await Swal.fire({
+        title: "Tạo mới đơn hàng thành công",
+        text: "Cảm ơn quý khách đã đặt hàng",
+        color: "#2f302f",
+        icon: "success",
+      });
+    };
     if (createOrderResult.isSuccess) {
-      toast.success("Tạo mới đơn hàng thành công");
+      createOrderMessage();
+      localStorage.removeItem("orderInfo");
     }
   }, [createOrderResult.isSuccess]);
 
@@ -82,10 +97,10 @@ const CheckoutPaymentPage = (props: Props) => {
               <div className="text-sm flex-shrink-0 w-[30%] text-[#707070]">
                 Liên hệ
               </div>
-              <div className="flex-1 w-[60%]">{decryptedUserData.email}</div>
+              <div className="flex-1 w-[60%]">{decryptedUserData?.email}</div>
             </div>
             <div className="text-xs text-[#349fe2] underline text-right w-[10%] flex-shrink-0">
-              Thay đổi
+              <Link to="/profile">Thay đổi</Link>
             </div>
           </div>
 
@@ -94,10 +109,10 @@ const CheckoutPaymentPage = (props: Props) => {
               <div className="text-sm flex-shrink-0 w-[30%] text-[#707070]">
                 Gửi đến
               </div>
-              <div className="flex-1 w-[60%]">{decryptedUserData.address}</div>
+              <div className="flex-1 w-[60%]">{decryptedUserData?.address}</div>
             </div>
             <div className="text-xs text-[#349fe2] underline text-right w-[10%] flex-shrink-0">
-              Thay đổi
+              <Link to="/checkout/info">Thay đổi</Link>
             </div>
           </div>
 
@@ -201,7 +216,7 @@ const CheckoutPaymentPage = (props: Props) => {
                         Nội dung chuyển khoản
                       </div>
                       <div className="flex-1 w-[70%]">
-                        DW2 - {decryptedUserData.email.toUpperCase()}
+                        PAYDW2 - {decryptedUserData.email.toUpperCase()}
                       </div>
                     </div>
                   </div>
@@ -249,7 +264,7 @@ const CheckoutPaymentPage = (props: Props) => {
                   Mã đơn hàng
                 </div>
                 <div className="text-sm w-[70%] flex-shrink-0 pl-2">
-                  {createOrderResult.data?.response._id}
+                  DW2{createOrderResult.data?.response._id}
                 </div>
               </div>
 
@@ -258,7 +273,7 @@ const CheckoutPaymentPage = (props: Props) => {
                   Họ và tên
                 </div>
                 <div className="text-sm w-[70%] flex-shrink-0 pl-2">
-                  {decryptedUserData.name}
+                  {decryptedUserData?.name}
                 </div>
               </div>
 
@@ -319,7 +334,7 @@ const CheckoutPaymentPage = (props: Props) => {
               </div>
 
               <div>
-                <Link to="/">
+                <Link to="/profile">
                   <button className="p-5 bg-[#333333] opacity-90 text-white text-sm rounded-md hover:opacity-100">
                     Kiểm tra đơn hàng
                   </button>

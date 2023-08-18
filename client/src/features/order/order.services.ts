@@ -10,11 +10,22 @@ interface ICreateOrderResponse {
 
 interface IGetUserOrderResponse {
   success: true;
+  response: IOrder[];
+}
+
+interface IGetOrderDetailResponse {
+  success: true;
+  response: IOrder;
+}
+
+interface IUpdateStatusOrderClientResponse {
+  success: boolean;
   response: IOrder;
 }
 
 export const orderApi = createApi({
   reducerPath: "orderApi",
+  tagTypes: ["Orders"],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_API_URL,
     prepareHeaders(headers, { getState }) {
@@ -31,6 +42,7 @@ export const orderApi = createApi({
         payment: string;
         address: string;
         mobile: string;
+        date: string;
       }
     >({
       query: (body: {
@@ -38,6 +50,7 @@ export const orderApi = createApi({
         payment: string;
         address: string;
         mobile: string;
+        date: string;
       }) => {
         return {
           url: "/orders/",
@@ -45,12 +58,51 @@ export const orderApi = createApi({
           body,
         };
       },
+      invalidatesTags: (result, error, body) =>
+        error ? [] : [{ type: "Orders", id: "LIST" }],
     }),
 
     getUserOrder: build.query<IGetUserOrderResponse, void>({
-      query: () => "/orders/",
+      query: () => "/orders/user",
+      providesTags(result) {
+        if (result) {
+          const final = [
+            ...result.response.map(({ _id }) => ({
+              type: "Orders" as const,
+              id: _id,
+            })),
+            { type: "Orders" as const, id: "LIST" },
+          ];
+          return final;
+        }
+        return [{ type: "Orders" as const, id: "LIST" }];
+      },
+    }),
+
+    getOrderDetail: build.query<IGetOrderDetailResponse, string>({
+      query: (id) => `orders/user/${id}`,
+    }),
+
+    updateStatusOrderClient: build.mutation<
+      IUpdateStatusOrderClientResponse,
+      { id: string; body: IOrder }
+    >({
+      query: (data) => {
+        return {
+          url: `/orders/user/status/${data.id}`,
+          method: "PUT",
+          body: data.body,
+        };
+      },
+      invalidatesTags: (result, error, data) =>
+        error ? [] : [{ type: "Orders", id: data.id }],
     }),
   }),
 });
 
-export const { useCreateOrderMutation, useGetUserOrderQuery } = orderApi;
+export const {
+  useCreateOrderMutation,
+  useGetUserOrderQuery,
+  useGetOrderDetailQuery,
+  useUpdateStatusOrderClientMutation,
+} = orderApi;

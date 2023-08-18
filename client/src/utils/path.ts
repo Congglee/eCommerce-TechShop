@@ -11,6 +11,10 @@ const path = {
   CHECKOUT_PAYMENT_PAGE: "payment",
   CHECKOUT_SUCCESS_PAGE: "success",
 
+  PROFILE_PAGE: "profile",
+  PROFILE_ORDER_DETAIL_PAGE: "order/:id",
+  PROFILE_EDIT_PAGE: "edit",
+
   ADMIN_DASHBOARD: "admin",
   ADMIN_PRODUCT_PAGE: "products",
   ADMIN_CATEGORY_PAGE: "categories",

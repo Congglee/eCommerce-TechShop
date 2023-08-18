@@ -1,5 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import { AdminLayout, CheckoutLayout, ClientLayout } from "./layouts";
+import {
+  AdminLayout,
+  CheckoutLayout,
+  ClientLayout,
+  ProfileLayout,
+} from "./layouts";
 import {
   CategoryManagePage,
   CreateCategoryPage,
@@ -19,6 +24,8 @@ import {
   LoginPage,
   ProductDetailPage,
   ProductPage,
+  ProfileOrderDetailPage,
+  ProfilePage,
   RegisterPage,
 } from "./pages/guest";
 import path from "./utils/path";
@@ -40,6 +47,14 @@ function App() {
           <Route path={path.LOGIN_PAGE} element={<LoginPage />} />
           <Route path={path.REGISTER_PAGE} element={<RegisterPage />} />
           <Route path={path.CART_PAGE} element={<CartPage />} />
+
+          <Route path={path.PROFILE_PAGE} element={<ProfileLayout />}>
+            <Route index element={<ProfilePage />} />
+            <Route
+              path={path.PROFILE_ORDER_DETAIL_PAGE}
+              element={<ProfileOrderDetailPage />}
+            />
+          </Route>
         </Route>
 
         <Route path={path.CHECKOUT_PAGE} element={<CheckoutLayout />}>

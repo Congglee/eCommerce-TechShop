@@ -67,7 +67,7 @@ export const productApi = createApi({
           return [
             ...result.products.map(({ _id }) => ({
               type: "Products" as const,
-              _id,
+              id: _id,
             })),
             { type: "Products" as const, id: "LIST" },
           ];

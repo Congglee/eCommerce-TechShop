@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import tailwindcss_forms from "@tailwindcss/forms";
+import tailwindcss_line_clamp from "@tailwindcss/line-clamp";
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -40,5 +42,5 @@ export default {
       },
     },
   },
-  plugins: [tailwindcss_forms],
+  plugins: [tailwindcss_forms, tailwindcss_line_clamp],
 };

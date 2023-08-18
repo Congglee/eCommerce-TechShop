@@ -7,7 +7,7 @@ const createOrder = async (req, res) => {
     // const userCart = await User.findById(_id)
     //   .select("cart")
     //   .populate("cart.product", "title price");
-    const { cart, payment, address, mobile } = req.body;
+    const { cart, payment, address, mobile, date } = req.body;
 
     if (!Array.isArray(cart) || cart.length === 0) {
       throw new Error(
@@ -31,6 +31,7 @@ const createOrder = async (req, res) => {
       orderBy: _id,
       address,
       mobile,
+      date,
     };
     const response = await Order.create(createData);
     return res.status(200).json({
@@ -45,11 +46,37 @@ const createOrder = async (req, res) => {
   }
 };
 
-const updateStatus = async (req, res) => {
+const updateStatusByAdmin = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
     if (!status) throw new Error("Vui lòng chọn trạng thái cho đơn hàng");
+
+    const response = await Order.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      success: response ? true : false,
+      response: response ? response : "Cập nhật trạng thái đơn hàng thất bại",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const updateStatusByClient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    if (status !== "Đã hủy") {
+      throw new Error("Chỉ cho phép trạng thái 'Đã hủy'.");
+    }
 
     const response = await Order.findByIdAndUpdate(
       id,
@@ -91,6 +118,30 @@ const getUserOrder = async (req, res) => {
   }
 };
 
+const getOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const orderData = await Order.findById(id)
+      .populate({
+        path: "products.product",
+        select: "_id name thumb quantity price",
+      })
+      .populate("orderBy", "email");
+
+    return res.status(200).json({
+      success: orderData ? true : false,
+      response: orderData
+        ? orderData
+        : "Lấy chi tiết thông tin đơn hàng của user thất bại",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const getOrders = async (req, res) => {
   try {
     const response = await Order.find();
@@ -107,4 +158,11 @@ const getOrders = async (req, res) => {
   }
 };
 
-export { createOrder, updateStatus, getUserOrder, getOrders };
+export {
+  createOrder,
+  updateStatusByAdmin,
+  updateStatusByClient,
+  getUserOrder,
+  getOrders,
+  getOrder,
+};

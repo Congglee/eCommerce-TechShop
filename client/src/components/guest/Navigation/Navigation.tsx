@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import icons from "../../../utils/icons";
 import { useQueryString } from "../../../hooks/useQueryString";
 import { handleNameUrl } from "../../../utils/fn";
@@ -11,6 +11,7 @@ type Props = {};
 const Navigation = (props: Props) => {
   const [isHoverMenu, setIsHoverMenu] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { category } = useParams();
   const queryString: {
     name?: string;
     sort?: string;
@@ -23,12 +24,16 @@ const Navigation = (props: Props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
+    const isCategoryUrl: boolean = category ? true : false;
+
     const searchUrl = handleNameUrl(
       inputValue,
       sort,
       price_filter_gte,
       price_filter_lte,
-      page
+      page,
+      isCategoryUrl,
+      category
     );
 
     navigate(searchUrl);

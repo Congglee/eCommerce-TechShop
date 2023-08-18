@@ -12,7 +12,10 @@ const createCategory = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      const errors = error.details.map((errItem) => errItem.message);
+      const errors = error.details.reduce((acc, errItem) => {
+        acc[errItem.path[0]] = errItem.message;
+        return acc;
+      }, {});
       return res.status(400).json({
         success: false,
         message: errors,
@@ -122,7 +125,10 @@ const updateCategory = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      const errors = error.details.map((errItem) => errItem.message);
+      const errors = error.details.reduce((acc, errItem) => {
+        acc[errItem.path[0]] = errItem.message;
+        return acc;
+      }, {});
       return res.status(400).json({
         success: false,
         message: errors,

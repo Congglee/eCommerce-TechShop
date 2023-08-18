@@ -7,10 +7,12 @@ export interface IOrderState {
     email: string;
     mobile: string;
   } | null;
+  orderId: string;
 }
 
 export const initialState: IOrderState = {
   userOrderInfo: null,
+  orderId: "",
 };
 
 const orderSlice = createSlice({
@@ -33,8 +35,12 @@ const orderSlice = createSlice({
         email: action.payload.email,
       };
     },
+
+    setOrderDetail: (state, action: PayloadAction<{ id: string }>) => {
+      state.orderId = action.payload.id;
+    },
   },
 });
 
-export const { setUserOrderInfo } = orderSlice.actions;
+export const { setUserOrderInfo, setOrderDetail } = orderSlice.actions;
 export const orderReducer = orderSlice.reducer;

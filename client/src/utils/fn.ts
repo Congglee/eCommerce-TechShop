@@ -38,9 +38,15 @@ export const handleNameUrl = (
   sort?: string,
   price_filter_gte?: string,
   price_filter_lte?: string,
-  page?: string | number
+  page?: string | number,
+  isCategory: boolean = false,
+  categoryUrlValue?: string
 ) => {
-  const nameUrl = `?name=${value}${
+  const baseEndpoint = isCategory
+    ? `/category/${categoryUrlValue}`
+    : "/products";
+
+  const nameUrl = `${baseEndpoint}?name=${value}${
     sort || price_filter_gte || price_filter_lte || page
       ? `&sort=${sort === undefined ? "" : sort}&price_filter_gte=${
           price_filter_gte === undefined ? "" : price_filter_gte

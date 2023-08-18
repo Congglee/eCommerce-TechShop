@@ -14,6 +14,9 @@ var orderSchema = new mongoose.Schema({
     enum: ["Đã hủy", "Đang xử lý", "Thành công"],
   },
   total: Number,
+  date: {
+    type: String,
+  },
   address: {
     type: String,
   },

@@ -129,9 +129,7 @@ const CheckoutInfoPage = (props: Props) => {
           </span>
         </div>
         <div className="flex items-center gap-x-1">
-          <Link to="/checkout/payment">
-            <span className="text-sm text-[#349fe2]">Thanh toán</span>
-          </Link>
+          <span className="text-sm text-[#349fe2]">Thanh toán</span>
         </div>
       </div>
 

@@ -20,6 +20,7 @@ interface ICurrentUserResponse {
 
 export const authApi = createApi({
   reducerPath: "authApi",
+  tagTypes: ["Auth"],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_API_URL,
     prepareHeaders(headers, { getState }) {
@@ -30,7 +31,7 @@ export const authApi = createApi({
   }),
   endpoints: (build) => ({
     login: build.mutation<ILoginResponse, { email: string; password: string }>({
-      query: (body: { email: string; password: string }) => {
+      query: (body) => {
         return {
           url: "/users/login",
           method: "POST",
@@ -43,12 +44,7 @@ export const authApi = createApi({
       IRegisterResponse,
       { name: string; email: string; password: string; confirmPassword: string }
     >({
-      query: (body: {
-        name: string;
-        email: string;
-        password: string;
-        confirmPassword: string;
-      }) => {
+      query: (body) => {
         return {
           url: "/users/register",
           method: "POST",
@@ -59,6 +55,16 @@ export const authApi = createApi({
 
     getCurrentUser: build.query<ICurrentUserResponse, void>({
       query: () => "/users/currentUser",
+      providesTags(result) {
+        if (result) {
+          const final = [
+            { type: "Auth" as const, id: result.userData.email },
+            { type: "Auth" as const, id: "CURRENT" },
+          ];
+          return final;
+        }
+        return [{ type: "Auth" as const, id: "CURRENT" }];
+      },
     }),
   }),
 });

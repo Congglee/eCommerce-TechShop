@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import icons from "../../../utils/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
@@ -23,6 +23,7 @@ const HeaderTop = (props: Props) => {
   const dispatch = useDispatch();
   const { data, isFetching, refetch } = useGetCurrentUserQuery();
   const { isLoggedIn, token } = useSelector((state: RootState) => state.auth);
+  const naivgate = useNavigate();
 
   useEffect(() => {
     if (token) {
@@ -56,7 +57,7 @@ const HeaderTop = (props: Props) => {
                   <img src={data?.userData.avatar} alt="" />
                 </div>
                 <div>
-                  <Link to="/">{`Hello ${
+                  <Link to="/profile">{`Hello ${
                     isFetching ? "....." : `${data?.userData.name}`
                   }`}</Link>
                 </div>
@@ -74,12 +75,12 @@ const HeaderTop = (props: Props) => {
                   </div>
                   <ul className="py-2 text-[13px] text-gray-700 dark:text-gray-200">
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to="/profile"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         Tài khoản
-                      </a>
+                      </Link>
                     </li>
 
                     {data?.userData.isAdmin && (
@@ -115,6 +116,7 @@ const HeaderTop = (props: Props) => {
                       className="block px-4 py-2 text-[13px] text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                       onClick={() => {
                         dispatch(logOut());
+                        naivgate("/login");
                       }}
                     >
                       Đăng xuất

@@ -11,7 +11,6 @@ import {
   ProductDetailTabs,
 } from "../../components/guest";
 import { ICategory } from "../../interfaces/category.interface";
-
 import RelateProducts from "../../components/guest/RelateProducts/RelateProducts";
 
 const { BiChevronRight, BsArrowLeft } = icons;

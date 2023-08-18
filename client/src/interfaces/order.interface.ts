@@ -7,7 +7,8 @@ export interface IOrder {
   status: string;
   total: number;
   payment: string;
-  orderBy: IUser;
+  orderBy: IUser | string;
   address: string;
   mobile: string;
+  date: string;
 }

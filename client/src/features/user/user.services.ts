@@ -1,9 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../../store/store";
+import { IUser } from "../../interfaces/user.interface";
 
-interface IUpdateUserOrder {
+interface IUpdateUserOrderResponse {
   success: boolean;
   message: string;
+}
+
+interface IGetUserResponse {
+  success: boolean;
+  userData: IUser;
 }
 
 export const userApi = createApi({
@@ -18,7 +24,7 @@ export const userApi = createApi({
   }),
   endpoints: (build) => ({
     updateUserOrder: build.mutation<
-      IUpdateUserOrder,
+      IUpdateUserOrderResponse,
       { address: string; mobile: string }
     >({
       query: (body: { address: string; mobile: string }) => {
@@ -29,7 +35,11 @@ export const userApi = createApi({
         };
       },
     }),
+
+    getUser: build.query<IGetUserResponse, string>({
+      query: (id) => `/users/id/${id}`,
+    }),
   }),
 });
 
-export const { useUpdateUserOrderMutation } = userApi;
+export const { useUpdateUserOrderMutation, useGetUserQuery } = userApi;
