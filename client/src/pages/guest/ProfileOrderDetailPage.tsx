@@ -18,7 +18,7 @@ const ProfileOrderDetailPage = (props: Props) => {
 
   return (
     <>
-      <div className="w-[25%] flex-shrink-0">
+      <div className="w-[20%] flex-shrink-0">
         <div className="mb-[50px]">
           <span className="bg-main-200 py-[11px] px-[15px] uppercase text-white">
             Chi tiết đơn hàng
@@ -33,9 +33,9 @@ const ProfileOrderDetailPage = (props: Props) => {
         </Link>
       </div>
 
-      <div className="w-[75%] flex-1">
+      <div className="w-[80%] flex-1">
         <div className="flex flex-col gap-y-1 mb-10">
-          <h2 className="text-3xl font-semibold text-main-500">
+          <h2 className="text-2xl font-semibold text-main-500">
             Đơn hàng DW2{data?.response._id}
           </h2>
           <span className="text-base font-medium text-gray-600">
@@ -56,7 +56,7 @@ const ProfileOrderDetailPage = (props: Props) => {
         </div>
 
         <div className="flex gap-x-6">
-          <div className="flex flex-col gap-y-6 p-6 bg-main-700 w-[65%]">
+          <div className="flex flex-col gap-y-6 p-6 bg-main-700 w-[70%]">
             <h3 className="text-main-500 text-xl font-semibold capitalize">
               Sản phẩm đơn hàng
             </h3>
@@ -66,16 +66,12 @@ const ProfileOrderDetailPage = (props: Props) => {
                 className="flex items-start gap-x-6"
                 key={orderProductItem._id}
               >
-                <div className="w-[150px]">
-                  <img
-                    src={orderProductItem.product.thumb}
-                    alt=""
-                    className="w-full h-full"
-                  />
+                <div className="w-[180px]">
+                  <img src={orderProductItem.product.thumb} alt="" />
                 </div>
 
-                <div className="flex items-start justify-between gap-x-8 text-main-300">
-                  <h3 className="text-base font-semibold">
+                <div className="flex-grow w-[calc(100%_-_180px)] flex items-start justify-between gap-x-8 text-main-300">
+                  <h3 className="text-[15px] font-semibold">
                     {orderProductItem.product.name}
                   </h3>
                   <span className="text-sm">
@@ -86,6 +82,7 @@ const ProfileOrderDetailPage = (props: Props) => {
                     {formatCurrency(
                       orderProductItem.product.price * orderProductItem.count
                     )}
+                    VND
                   </span>
                 </div>
               </div>
@@ -114,7 +111,7 @@ const ProfileOrderDetailPage = (props: Props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-y-6 w-[35%] bg-main-700 p-6">
+          <div className="flex flex-col gap-y-6 w-[30%] bg-main-700 p-6">
             <h3 className="text-main-500 text-xl font-semibold">
               Thông tin đơn hàng
             </h3>
@@ -141,9 +138,9 @@ const ProfileOrderDetailPage = (props: Props) => {
                   <span>
                     {data?.response.status === "Đang xử lý"
                       ? data?.response.status
-                      : "Thành công"
+                      : data?.response.status === "Thành công"
                       ? "Đang giao"
-                      : "Hủy"
+                      : data?.response.status === "Đã hủy"
                       ? data?.response.status
                       : ""}
                   </span>
@@ -159,9 +156,9 @@ const ProfileOrderDetailPage = (props: Props) => {
                   <span>
                     {data?.response.status === "Đang xử lý"
                       ? "Chưa thanh toán"
-                      : "Thành công"
+                      : data?.response.status === "Thành công"
                       ? "Đã thanh toán"
-                      : "Hủy"
+                      : data?.response.status === "Đã hủy"
                       ? "Đã hủy"
                       : ""}
                   </span>

@@ -24,7 +24,7 @@ const ProfileLayout = (props: Props) => {
         </div>
       </div>
 
-      <div className="max-w-[1220px] mx-auto px-5 flex gap-x-8 mb-10">
+      <div className="max-w-[1220px] mx-auto px-5 flex gap-x-6 mb-10">
         <Outlet />
       </div>
     </>

@@ -29,6 +29,7 @@ import {
   RegisterPage,
 } from "./pages/guest";
 import path from "./utils/path";
+import ProfileEditPage from "./pages/guest/ProfileEditPage";
 
 function App() {
   return (
@@ -53,6 +54,10 @@ function App() {
             <Route
               path={path.PROFILE_ORDER_DETAIL_PAGE}
               element={<ProfileOrderDetailPage />}
+            />
+            <Route
+              path={path.PROFILE_EDIT_PAGE}
+              element={<ProfileEditPage />}
             />
           </Route>
         </Route>

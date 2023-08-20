@@ -62,7 +62,7 @@ const ProfilePage = (props: Props) => {
 
   return (
     <>
-      <div className="w-[65%] flex-1 flex flex-col">
+      <div className="w-[70%] flex-1 flex flex-col">
         <div className="text-white bg-main-200 py-[14px] px-[15px] uppercase font-semibold text-lg">
           Lịch sử đặt hàng
         </div>
@@ -126,7 +126,7 @@ const ProfilePage = (props: Props) => {
         ))}
       </div>
 
-      <div className="w-[35%] flex-shrink-0">
+      <div className="w-[30%] flex-shrink-0">
         <div className="text-white bg-main-200 py-[14px] px-[15px] uppercase font-semibold text-lg mb-5">
           CHI TIẾT TÀI KHOẢN
         </div>

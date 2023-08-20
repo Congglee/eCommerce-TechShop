@@ -53,6 +53,9 @@ export const updateUserSchema = Joi.object({
   address: Joi.string().trim().messages({
     "string.empty": "Địa chỉ không được để trống",
   }),
+  avatar: Joi.string().trim().messages({
+    "string.empty": "Ảnh đại diện của tài khoản không được để trống",
+  }),
   password: Joi.string().trim().min(6).messages({
     "string.min": "Password phải có ít nhất {#limit} ký tự",
     "string.empty": "Password không được để trống",

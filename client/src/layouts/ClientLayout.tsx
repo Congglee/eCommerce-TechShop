@@ -8,7 +8,7 @@ type Props = {};
 
 const UserLayout = (props: Props) => {
   return (
-    <div className="font-Inter w-full max-w-[1520px]">
+    <div className="font-Inter w-full max-w-full">
       <Header />
       <ToastContainer
         position="top-right"

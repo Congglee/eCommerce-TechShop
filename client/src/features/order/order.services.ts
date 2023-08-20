@@ -45,13 +45,7 @@ export const orderApi = createApi({
         date: string;
       }
     >({
-      query: (body: {
-        cart: IProduct[];
-        payment: string;
-        address: string;
-        mobile: string;
-        date: string;
-      }) => {
+      query: (body) => {
         return {
           url: "/orders/",
           method: "POST",

@@ -200,7 +200,10 @@ const updateUserByClient = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      const errors = error.details.map((errItem) => errItem.message);
+      const errors = error.details.reduce((acc, errItem) => {
+        acc[errItem.path[0]] = errItem.message;
+        return acc;
+      }, {});
       return res.status(400).json({
         success: false,
         message: errors,
@@ -208,28 +211,68 @@ const updateUserByClient = async (req, res) => {
     }
 
     const { _id } = req.user;
-
-    const { email } = req.body;
+    const { email, mobile } = req.body;
     const checkEmail = await User.findOne({
       _id: { $ne: _id },
       email,
     });
-    if (checkEmail)
+    if (checkEmail) {
       return res.status(401).json({
         success: false,
         message: "Email đã tồn tại, vui lòng nhập lại email khác!",
       });
+    }
+
+    if (mobile) {
+      const checkMobile = await User.findOne({
+        _id: { $ne: _id },
+        mobile,
+      });
+      if (checkMobile) {
+        return res.status(401).json({
+          success: false,
+          message:
+            "Số điện thoại đã tồn tại, vui lòng nhập lại số điện thoại khác!",
+        });
+      }
+    }
+
+    const allowedAvatarFileExtensions = ["jpg", "jpeg", "png", "webp"];
+    const allowedAvatarFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    const avatarFile = req.file;
 
     const updateUser = await User.findByIdAndUpdate(_id, req.body, {
       new: true,
     }).select("-password -isAdmin");
 
-    // const avatarFile = req.file;
-    // if (avatarFile) {
-    //   updateUser.avatar = avatarFile.path;
-    // }
-    // await updateUser.save();
+    if (avatarFile) {
+      const fileExtension = avatarFile.originalname
+        .split(".")
+        .pop()
+        .toLowerCase();
+      if (!allowedAvatarFileExtensions.includes(fileExtension)) {
+        return res.status(400).json({
+          success: false,
+          message: {
+            avatar:
+              "File ảnh avatar không hợp lệ. Chỉ cho phép các file JPG, JPEG, PNG hoặc WEBP",
+          },
+        });
+      }
 
+      if (avatarFile.size > allowedAvatarFileSize) {
+        return res.status(400).json({
+          success: false,
+          message: {
+            avatar: "Kích thước file ảnh phải nhỏ hơn 5Mb",
+          },
+        });
+      }
+
+      updateUser.avatar = avatarFile.path;
+    }
+
+    await updateUser.save();
     return res.status(200).json({
       success: updateUser ? true : false,
       updatedUser: updateUser

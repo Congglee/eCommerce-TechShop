@@ -19,7 +19,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   allowedFormats: ["jpg", "png", "jpeg", "webp"],
   params: {
-    folder: "asm-web208",
+    folder: "ecommerce-techshop",
   },
 });
 

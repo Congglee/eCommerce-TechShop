@@ -12,6 +12,11 @@ interface IGetUserResponse {
   userData: IUser;
 }
 
+interface IUpdateUserByClient {
+  success: boolean;
+  updatedUser: IUser;
+}
+
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
@@ -27,7 +32,7 @@ export const userApi = createApi({
       IUpdateUserOrderResponse,
       { address: string; mobile: string }
     >({
-      query: (body: { address: string; mobile: string }) => {
+      query: (body) => {
         return {
           url: "/users/updateUserOrder",
           method: "PUT",
@@ -39,7 +44,21 @@ export const userApi = createApi({
     getUser: build.query<IGetUserResponse, string>({
       query: (id) => `/users/id/${id}`,
     }),
+
+    updateUserByClient: build.mutation<IUpdateUserByClient, IUser | FormData>({
+      query: (body) => {
+        return {
+          url: "/users/updateClient",
+          method: "PUT",
+          body,
+        };
+      },
+    }),
   }),
 });
 
-export const { useUpdateUserOrderMutation, useGetUserQuery } = userApi;
+export const {
+  useUpdateUserOrderMutation,
+  useGetUserQuery,
+  useUpdateUserByClientMutation,
+} = userApi;
