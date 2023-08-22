@@ -54,7 +54,11 @@ const HeaderTop = (props: Props) => {
                 onMouseLeave={() => setIsHover(false)}
               >
                 <div className="w-[30px] h-[30px] rounded-full overflow-hidden">
-                  <img src={data?.userData.avatar} alt="" />
+                  <img
+                    src={data?.userData.avatar as string}
+                    alt=""
+                    className="w-full h-full"
+                  />
                 </div>
                 <div>
                   <Link to="/profile">{`Hello ${
@@ -95,12 +99,12 @@ const HeaderTop = (props: Props) => {
                     )}
 
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to="/cart"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
-                        Đơn hàng
-                      </a>
+                        Giỏ hàng
+                      </Link>
                     </li>
                     <li>
                       <a

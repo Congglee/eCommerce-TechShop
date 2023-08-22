@@ -1,19 +1,77 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import icons from "../../../utils/icons";
 import { IProduct } from "../../../interfaces/product.interface";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { Link } from "react-router-dom";
+import { StarRating } from "..";
+import { IUser } from "../../../interfaces/user.interface";
+import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
+import { useRatingProductMutation } from "../../../features/product/product.services";
+import moment from "moment";
+import "moment/locale/vi";
+import { toast } from "react-toastify";
+import { isEntityError } from "../../../utils/helper";
 
 const { AiTwotoneStar } = icons;
 
 interface productDetailTabsProps {
   product: IProduct | undefined;
+  refetchProduct: any;
 }
 
 const ProductDetailTabs = (props: productDetailTabsProps) => {
-  const { product } = props;
+  const { product, refetchProduct } = props;
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { data } = useGetCurrentUserQuery();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [activeTab, setActiveTab] = useState("description");
   const [isReviewActive, setIsReviewActive] = useState(false);
+  const [comment, setComment] = useState("");
+  const [ratingProduct, ratingProductResult] = useRatingProductMutation();
+
+  const alreadyRating = product?.ratings.find(
+    (item) => (item.postedBy as IUser)._id === data?.userData._id
+  );
+
+  const currentDate = moment();
+  const formattedDate = currentDate.format("MMMM DD, YYYY");
+  const vietnameseFormattedDate = formattedDate.replace(
+    currentDate.format("MMMM"),
+    `Tháng ${currentDate.format("M")}`
+  );
+
+  useEffect(() => {
+    if (alreadyRating) {
+      setRating(alreadyRating.star);
+      setHover(alreadyRating.star);
+      setComment(alreadyRating.comment);
+    }
+  }, [alreadyRating]);
+
+  const errorForm: any = useMemo(() => {
+    if (isEntityError(ratingProductResult.error)) {
+      return ratingProductResult.error.data.message;
+    }
+  }, [ratingProductResult]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await ratingProduct({
+      star: rating,
+      comment: comment,
+      date: vietnameseFormattedDate,
+      id: product?._id as string,
+    });
+  };
+
+  useEffect(() => {
+    if (ratingProductResult.isSuccess) {
+      refetchProduct();
+      toast.success("Đánh giá, bình luận sản phẩm thành công");
+    }
+  }, [ratingProductResult.isSuccess]);
 
   return (
     <div className="mb-[30px]">
@@ -214,53 +272,49 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
 
             <div className="flex flex-col mb-6">
               <div className="flex items-center gap-x-1 text-[#f1b400] mb-1">
-                <AiTwotoneStar size={14} />
-                <AiTwotoneStar size={14} />
-                <AiTwotoneStar size={14} />
-                <AiTwotoneStar size={14} />
-                <AiTwotoneStar size={14} />
+                <StarRating
+                  totalRatings={product?.totalRatings as number}
+                  size={14}
+                />
               </div>
-              <span className="text-sm text-main-500">Dựa trên 1 đánh giá</span>
+              <span className="text-sm text-main-500">
+                Dựa trên {product?.ratings.length} đánh giá
+              </span>
               <div>
-                <span
-                  className="text-sm text-main-200 cursor-pointer hover:text-main-600"
-                  onClick={() => setIsReviewActive((prev) => !prev)}
-                >
-                  Bình luận và Đánh giá
-                </span>
+                {isLoggedIn && alreadyRating && (
+                  <span
+                    className="text-sm text-main-200 cursor-pointer hover:text-main-600"
+                    onClick={() => setIsReviewActive((prev) => !prev)}
+                  >
+                    Sửa Bình luận và Đánh giá
+                  </span>
+                )}
+
+                {isLoggedIn && !alreadyRating && (
+                  <span
+                    className="text-sm text-main-200 cursor-pointer hover:text-main-600"
+                    onClick={() => setIsReviewActive((prev) => !prev)}
+                  >
+                    Bình luận và Đánh giá
+                  </span>
+                )}
+
+                {!isLoggedIn && (
+                  <Link to="/login">
+                    <span className="text-sm text-main-200 cursor-pointer hover:text-main-600">
+                      Đăng nhập để bình luận và đánh giá
+                    </span>
+                  </Link>
+                )}
               </div>
             </div>
 
             {isReviewActive && (
               <div className="pt-6 border-t border-[rgba(0,0,0,0.1)]">
-                <form action="">
+                <form action="" onSubmit={handleSubmit}>
                   <h3 className="text-base font-semibold text-main-500 mb-2">
                     Bình luận và Đánh giá
                   </h3>
-
-                  <div className="mb-[15px] flex flex-col gap-y-[2px]">
-                    <label htmlFor="" className="text-sm text-main-500">
-                      Họ và tên
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Nhập tên của bạn"
-                      className="text-sm border-transparent border-2 text-main-600 w-full py-2 
-                      px-[10px] bg-[#f6f6f6] focus:ring-0 focus:border-2 focus:border-main-600 focus:rounded placeholder:font-light placeholder:text-main-100"
-                    />
-                  </div>
-
-                  <div className="mb-[15px] flex flex-col gap-y-[2px]">
-                    <label htmlFor="" className="text-sm text-main-500">
-                      Email
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="john.smith@example.com"
-                      className="text-sm border-transparent border-2 text-main-600 w-full py-2 
-                      px-[10px] bg-[#f6f6f6] focus:ring-0 focus:border-2 focus:border-main-600 focus:rounded placeholder:font-light placeholder:text-main-100"
-                    />
-                  </div>
 
                   <div className="mb-[15px] flex flex-col gap-y-[1px]">
                     <label htmlFor="" className="text-sm text-main-500">
@@ -291,18 +345,12 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
                         );
                       })}
                     </div>
-                  </div>
 
-                  <div className="mb-[15px] flex flex-col gap-y-[2px]">
-                    <label htmlFor="" className="text-sm text-main-500">
-                      Tiêu đề đánh giá
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Đặt tiêu đề cho đánh giá của bạn"
-                      className="text-sm border-transparent border-2 text-main-600 w-full py-2 
-                      px-[10px] bg-[#f6f6f6] focus:ring-0 focus:border-2 focus:border-main-600 focus:rounded placeholder:font-light placeholder:text-main-100"
-                    />
+                    {errorForm?.star && (
+                      <span className="mt-1 text-[13px] italic text-red-600">
+                        <span className="font-semibold">{errorForm?.star}</span>
+                      </span>
+                    )}
                   </div>
 
                   <div className="mb-[15px] flex flex-col gap-y-[2px]">
@@ -313,6 +361,8 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
                       rows={10}
                       placeholder="Viết bình luận của bạn ở đây"
                       className="text-sm border-transparent border-2 text-main-600 w-full py-2 px-[10px] bg-[#f6f6f6] focus:ring-0 focus:border-2 focus:border-main-600 focus:rounded placeholder:font-light placeholder:text-main-100 h-full"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
                     />
                   </div>
 
@@ -325,39 +375,36 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
               </div>
             )}
 
-            <div className="pt-6 mt-6 border-t border-[rgba(0,0,0,0.1)]">
-              <div className="mb-[14px]">
-                <div className="flex items-center text-[#f1b400] mb-[6px] gap-x-1">
-                  <AiTwotoneStar size={14} />
-                  <AiTwotoneStar size={14} />
-                  <AiTwotoneStar size={14} />
-                  <AiTwotoneStar size={14} />
-                  <AiTwotoneStar size={14} />
+            {product?.ratings.map((rate) => (
+              <div className="pt-6 mt-6 border-t border-[rgba(0,0,0,0.1)]">
+                <div className="mb-2">
+                  <div className="flex items-center text-[#f1b400] mb-[6px] gap-x-1">
+                    <StarRating totalRatings={rate.star} size={14} />
+                  </div>
+
+                  <span className="flex items-center text-sm italic">
+                    <div className="w-10 h-10 rounded-full overflow-hidden mr-2">
+                      <img
+                        src={(rate.postedBy as IUser).avatar as string}
+                        alt=""
+                        className="w-full h-full"
+                      />
+                    </div>
+                    <strong className="pr-1">
+                      {(rate.postedBy as IUser).name}
+                    </strong>
+                    vào
+                    <strong className="pl-1">{rate.date}</strong>
+                  </span>
                 </div>
 
-                <h3 className="text-base font-semibold text-main-500">
-                  Sản phẩm tốt
-                </h3>
-                <span className="flex text-sm gap-x-1 italic">
-                  <strong>Tadatheme</strong>
-                  vào
-                  <strong>Tháng Năm 20, 2017</strong>
-                </span>
-              </div>
+                <div className="text-sm text-main-500 mb-6">{rate.comment}</div>
 
-              <div className="text-sm text-main-500 mb-6">
-                Bạn có thể tương tác với thực tế tăng cường bằng tai nghe và xem
-                các vật thể 3D được "chiếu" vào thế giới thực của bạn -- thứ
-                thường được gọi là "thực tế hỗn hợp". Tuy nhiên, thực tế tăng
-                cường không cần tai nghe. Nó có thể sử dụng điện thoại của bạn.
-                Trong thực tế, nó đã làm. Cú đánh thành công vào mùa hè năm 2016
-                Pokemon Go là việc sử dụng AR rộng rãi nhất từng thấy.
+                <div className="text-main-200 text-[11px] text-right cursor-pointer hover:text-main-600">
+                  <span>Báo cáo là không phù hợp</span>
+                </div>
               </div>
-
-              <div className="text-main-200 text-[11px] text-right cursor-pointer hover:text-main-600">
-                <span>Báo cáo là không phù hợp</span>
-              </div>
-            </div>
+            ))}
           </div>
         )}
       </div>

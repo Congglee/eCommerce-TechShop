@@ -181,10 +181,15 @@ const getProductById = async (req, res) => {
 const getProductBySlug = async (req, res) => {
   try {
     const productSlug = req.params.slug;
-    const product = await Product.findOne({ slug: productSlug }).populate({
-      path: "categoryId",
-      select: "name slug",
-    });
+    const product = await Product.findOne({ slug: productSlug })
+      .populate({
+        path: "categoryId",
+        select: "name slug",
+      })
+      .populate({
+        path: "ratings.postedBy",
+        select: "name avatar",
+      });
 
     if (product) {
       return res.status(200).json({
@@ -304,6 +309,71 @@ const uploadImagesProducts = async (req, res) => {
   }
 };
 
+const ratings = async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const { star, comment, id, date } = req.body;
+    if (!star || !id) {
+      return res.status(400).json({
+        success: false,
+        message: {
+          star: "Vui lòng đánh giá sản phẩm",
+        },
+      });
+    }
+
+    const ratingProduct = await Product.findById(id);
+    const alreadyRating = ratingProduct?.ratings?.find(
+      (item) => item.postedBy.toString() === _id
+    );
+
+    if (alreadyRating) {
+      await Product.updateOne(
+        {
+          ratings: { $elemMatch: alreadyRating },
+        },
+        {
+          $set: {
+            "ratings.$.star": star,
+            "ratings.$.comment": comment,
+            "ratings.$.date": date,
+          },
+        },
+        { new: true }
+      );
+    } else {
+      await Product.findByIdAndUpdate(
+        id,
+        {
+          $push: { ratings: { star, comment, postedBy: _id, date } },
+        },
+        { new: true }
+      );
+    }
+
+    const updatedProduct = await Product.findById(id);
+    const ratingCount = updatedProduct.ratings.length;
+    const sumRatings = updatedProduct.ratings.reduce(
+      (sum, item) => sum + +item.star,
+      0
+    );
+
+    updatedProduct.totalRatings =
+      Math.round((sumRatings * 10) / ratingCount) / 10;
+    await updatedProduct.save();
+
+    return res.status(200).json({
+      success: true,
+      updatedProduct,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error?.message,
+    });
+  }
+};
+
 export {
   createProduct,
   updateProduct,
@@ -312,4 +382,5 @@ export {
   getProductById,
   getProductBySlug,
   uploadImagesProducts,
+  ratings,
 };

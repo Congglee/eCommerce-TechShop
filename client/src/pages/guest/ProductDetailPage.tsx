@@ -22,7 +22,7 @@ const ProductDetailPage = (props: Props) => {
   const productSlug = useSelector(
     (state: RootState) => state.product.productSlug
   );
-  const { data: product } = useGetProductQuery(
+  const { data: product, refetch: refectProduct } = useGetProductQuery(
     productSlug ? productSlug : (slug as string)
   );
   const { data: products } = useGetProductsQuery({});
@@ -64,11 +64,14 @@ const ProductDetailPage = (props: Props) => {
           </div>
 
           <Link to="/products">
-            <span>BACK TO LAPTOP</span>
+            <span>QUAY LẠI CỬA HÀNG</span>
           </Link>
         </div>
 
-        <ProductDetailTabs product={product?.productData} />
+        <ProductDetailTabs
+          product={product?.productData}
+          refetchProduct={refectProduct}
+        />
 
         <div className="mb-[109px]">
           <RelateProducts relateProducts={relateProducts} />

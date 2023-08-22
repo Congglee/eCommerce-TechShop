@@ -1,6 +1,7 @@
 import React from "react";
 import icons from "../../../utils/icons";
 import { IProduct } from "../../../interfaces/product.interface";
+import { formatCurrency } from "../../../utils/fn";
 
 const { AiFillStar, AiTwotoneStar, PiListBold } = icons;
 
@@ -39,7 +40,7 @@ const DailyDealProduct = (props: DailyDealProps) => {
             <AiTwotoneStar size={18} />
           </div>
           <div className="text-main-500 text-base mb-3">
-            <span>{dailyDealProduct?.price.toLocaleString()} VND</span>
+            <span>{formatCurrency(dailyDealProduct?.price)} VND</span>
           </div>
 
           <div className="flex items-center justify-center gap-x-1 mb-3">

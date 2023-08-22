@@ -1,5 +1,13 @@
 import { ICategory } from "./category.interface";
+import { IUser } from "./user.interface";
 
+interface IRating {
+  _id: string;
+  star: number;
+  postedBy: string | IUser;
+  comment: string;
+  date: string;
+}
 export interface IProduct {
   _id: string;
   name: string;
@@ -8,6 +16,8 @@ export interface IProduct {
   images: string[];
   price: number;
   quantity: number;
+  ratings: IRating[];
+  totalRatings: number;
   description: string;
   categoryId: ICategory | string;
 }

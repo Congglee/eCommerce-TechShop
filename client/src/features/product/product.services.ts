@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IProduct } from "../../interfaces/product.interface";
+import { RootState } from "../../store/store";
 
 interface IGetProductsApiResponse {
   success: boolean;
@@ -12,10 +13,22 @@ interface IGetProductApiResponse {
   productData: IProduct;
 }
 
+interface IRatingProductResponse {
+  success: boolean;
+  updatedProduct: IProduct;
+}
+
 export const productApi = createApi({
   reducerPath: "productApi",
   tagTypes: ["Products"],
-  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_APP_API_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_APP_API_URL,
+    prepareHeaders(headers, { getState }) {
+      const token = (getState() as RootState).auth.token;
+      if (token) headers.set("authorization", `Bearer ${token}`);
+      return headers;
+    },
+  }),
   endpoints: (build) => ({
     getProducts: build.query<
       IGetProductsApiResponse,
@@ -76,10 +89,30 @@ export const productApi = createApi({
         return [{ type: "Products" as const, id: "LIST" }];
       },
     }),
+
     getProduct: build.query<IGetProductApiResponse, string>({
       query: (slug) => `products/slug/${slug}`,
+    }),
+
+    ratingProduct: build.mutation<
+      IRatingProductResponse,
+      { star: number; id: string; comment: string; date: string }
+    >({
+      query: (body) => {
+        return {
+          url: "products/ratings",
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: (result, error, body) =>
+        error ? [] : [{ type: "Products", id: body.id }],
     }),
   }),
 });
 
-export const { useGetProductsQuery, useGetProductQuery } = productApi;
+export const {
+  useGetProductsQuery,
+  useGetProductQuery,
+  useRatingProductMutation,
+} = productApi;

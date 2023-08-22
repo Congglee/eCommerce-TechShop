@@ -5,6 +5,7 @@ import { formatCurrency } from "../../../utils/fn";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../features/cart/cart.slice";
+import { StarRating } from "..";
 
 const {
   AiTwotoneStar,
@@ -83,13 +84,14 @@ const ProductDetailContent = (props: productDetailContentProps) => {
 
           <div className="flex items-start gap-x-[3px] mb-3">
             <div className="flex items-center text-[#f1b400] mb-[10px]">
-              <AiTwotoneStar size={18} />
-              <AiTwotoneStar size={18} />
-              <AiTwotoneStar size={18} />
-              <AiTwotoneStar size={18} />
-              <AiTwotoneStar size={18} />
+              <StarRating
+                totalRatings={product?.totalRatings as number}
+                size={18}
+              />
             </div>
-            <span className="text-main-500 text-sm">1 review</span>
+            <span className="text-main-500 text-sm">
+              {product?.ratings.length} đánh giá
+            </span>
           </div>
 
           <div className="mb-5">
@@ -147,7 +149,7 @@ const ProductDetailContent = (props: productDetailContentProps) => {
             className="w-full bg-main-200 text-white font-bold py-[11px] px-[15px] uppercase text-sm hover:bg-[#333] transition-all duration-150 ease-out mb-5"
             onClick={() => handleAddToCartStorage(product as IProduct)}
           >
-            Add To Cart
+            Thêm vào giỏ hàng
           </button>
 
           <div className="flex items-center gap-x-3">
@@ -171,8 +173,10 @@ const ProductDetailContent = (props: productDetailContentProps) => {
             </div>
 
             <div className="flex flex-col capitalize">
-              <span className="text-main-500 text-sm">Guarantee</span>
-              <span className="text-xs text-[#999]">Quality checked</span>
+              <span className="text-main-500 text-sm">Bảo đảm</span>
+              <span className="text-xs text-[#999]">
+                Đã kiểm tra chất lượng
+              </span>
             </div>
           </div>
 
@@ -182,8 +186,10 @@ const ProductDetailContent = (props: productDetailContentProps) => {
             </div>
 
             <div className="flex flex-col capitalize">
-              <span className="text-main-500 text-sm">Free Shipping</span>
-              <span className="text-xs text-[#999]">Free On All Products</span>
+              <span className="text-main-500 text-sm">Miễn phí vận chuyển</span>
+              <span className="text-xs text-[#999]">
+                Miễn phí trên tất cả sản phẩm
+              </span>
             </div>
           </div>
 
@@ -193,8 +199,10 @@ const ProductDetailContent = (props: productDetailContentProps) => {
             </div>
 
             <div className="flex flex-col capitalize">
-              <span className="text-main-500 text-sm">Special Gift Cards</span>
-              <span className="text-xs text-[#999]">Special Gift Cards</span>
+              <span className="text-main-500 text-sm">
+                Thẻ quà tặng đặc biệt
+              </span>
+              <span className="text-xs text-[#999]">Thẻ quà tặng đặc biệt</span>
             </div>
           </div>
 
@@ -204,8 +212,8 @@ const ProductDetailContent = (props: productDetailContentProps) => {
             </div>
 
             <div className="flex flex-col capitalize">
-              <span className="text-main-500 text-sm">Free Return</span>
-              <span className="text-xs text-[#999]">Within 7 Days</span>
+              <span className="text-main-500 text-sm">Trả lại miễn phí</span>
+              <span className="text-xs text-[#999]">Trong vòng 7 ngày</span>
             </div>
           </div>
 
@@ -215,8 +223,8 @@ const ProductDetailContent = (props: productDetailContentProps) => {
             </div>
 
             <div className="flex flex-col capitalize">
-              <span className="text-main-500 text-sm">Consultancy</span>
-              <span className="text-xs text-[#999]">Lifetime 24/7/356</span>
+              <span className="text-main-500 text-sm">Tư vấn</span>
+              <span className="text-xs text-[#999]">24/7</span>
             </div>
           </div>
         </div>

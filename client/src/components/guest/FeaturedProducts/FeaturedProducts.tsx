@@ -3,6 +3,7 @@ import { IProduct } from "../../../interfaces/product.interface";
 import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";
 import { Link } from "react-router-dom";
+import { StarRating } from "..";
 
 const { AiTwotoneStar } = icons;
 
@@ -34,11 +35,10 @@ const FeaturedProducts = (props: FeaturedProducts) => {
                 <Link to={`/products/${product.slug}`}>{product.name}</Link>
               </h3>
               <div className="flex items-center text-[#f1b400] gap-x-[2px] mb-[10px]">
-                <AiTwotoneStar size={14} />
-                <AiTwotoneStar size={14} />
-                <AiTwotoneStar size={14} />
-                <AiTwotoneStar size={14} />
-                <AiTwotoneStar size={14} />
+                <StarRating
+                  totalRatings={product.totalRatings as number}
+                  size={14}
+                />
               </div>
               <div className="text-xs">{formatCurrency(product.price)}</div>
             </div>

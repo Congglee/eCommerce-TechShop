@@ -188,7 +188,11 @@ const ProfileEditPage = (props: Props) => {
             )}
 
             <div className="mt-2 w-[100px] h-[100px] rounded-full overflow-hidden">
-              <img src={data?.userData.avatar as string} alt="" />
+              <img
+                src={data?.userData.avatar as string}
+                alt=""
+                className="w-full h-full"
+              />
             </div>
           </div>
 

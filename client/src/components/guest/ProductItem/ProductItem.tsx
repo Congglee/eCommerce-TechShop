@@ -3,6 +3,7 @@ import icons from "../../../utils/icons";
 import { Link } from "react-router-dom";
 import { IProduct } from "../../../interfaces/product.interface";
 import { formatCurrency } from "../../../utils/fn";
+import { StarRating } from "..";
 
 const {
   AiTwotoneStar,
@@ -52,11 +53,13 @@ const ProductItem = (props: ProductItemProps) => {
         onMouseEnter={() => setIsHoverProductHome(true)}
         onMouseLeave={() => setIsHoverProductHome(false)}
       >
-        <img
-          src={product?.thumb}
-          alt=""
-          className="w-full h-full object-cover"
-        />
+        <Link to={`/products/${product?.slug}`}>
+          <img
+            src={product?.thumb}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+        </Link>
 
         {isHoverHomePage && isHoverProductHome && (
           <div className="absolute left-0 right-0 bottom-[-40px] w-full flex items-center justify-center gap-x-[5px] animate-show-up">
@@ -81,11 +84,10 @@ const ProductItem = (props: ProductItemProps) => {
         </div>
 
         <div className="flex items-center text-[#f1b400] gap-x-[2px] mb-[10px]">
-          <AiTwotoneStar size={14} />
-          <AiTwotoneStar size={14} />
-          <AiTwotoneStar size={14} />
-          <AiTwotoneStar size={14} />
-          <AiTwotoneStar size={14} />
+          <StarRating
+            totalRatings={product?.totalRatings as number}
+            size={14}
+          />
         </div>
 
         <div className="text-base">{formatCurrency(product?.price)} VND</div>

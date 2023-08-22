@@ -122,7 +122,7 @@ const CheckoutPaymentPage = (props: Props) => {
                 Phương thức
               </div>
               <div className="flex-1 w-[60%]">
-                Vận chuyển tiêu chuẩn · 230.000 VND
+                Vận chuyển tiêu chuẩn · 0,00 VND
               </div>
             </div>
 
@@ -205,7 +205,7 @@ const CheckoutPaymentPage = (props: Props) => {
                         Tài khoản
                       </div>
                       <div className="flex-1 w-[70%]">
-                        0953018062003 - LÊ THÀNH CÔNG
+                        0953018062003 - LE THANH CONG
                       </div>
                     </div>
                   </div>
