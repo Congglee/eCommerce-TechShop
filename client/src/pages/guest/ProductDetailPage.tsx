@@ -12,6 +12,7 @@ import {
 } from "../../components/guest";
 import { ICategory } from "../../interfaces/category.interface";
 import RelateProducts from "../../components/guest/RelateProducts/RelateProducts";
+import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 
 const { BiChevronRight, BsArrowLeft } = icons;
 
@@ -42,18 +43,14 @@ const ProductDetailPage = (props: Props) => {
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               {product?.productData.name}
             </div>
-            <div className="flex items-center text-sm text-[#1c1d1d]">
-              <span>Trang chủ</span>
-              <BiChevronRight size={18} />
-              <span>{product?.productData.name}</span>
-            </div>
+            <Breadcrumb product={product?.productData} />
           </div>
         </div>
       </div>
 
       <div className="max-w-[1220px] mx-auto px-5">
         <div className="flex gap-x-[45px] mb-5">
-          <ProductDetailContent product={product?.productData} />
+          <ProductDetailContent product={product?.productData} slug={slug} />
         </div>
 
         <div className="flex items-center justify-center uppercase text-sm gap-x-1 hover:text-main-200 mb-[30px]">

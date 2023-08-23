@@ -6,6 +6,7 @@ import { IUser } from "../../interfaces/user.interface";
 import { useUpdateUserByClientMutation } from "../../features/user/user.services";
 import { isEntityError } from "../../utils/helper";
 import { toast } from "react-toastify";
+import { InputItem } from "../../components/guest";
 
 const { BsArrowLeft } = icons;
 
@@ -128,13 +129,12 @@ const ProfileEditPage = (props: Props) => {
           </h3>
 
           <div className="text-sm text-main-600 w-full">
-            <input
-              type="text"
-              placeholder="Email"
-              className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
+            <InputItem
+              type="email"
               name="email"
               value={formValue.email}
-              onChange={handleChange}
+              handleChange={handleChange}
+              placeholder="Email"
             />
 
             {errorForm?.email && (
@@ -145,13 +145,12 @@ const ProfileEditPage = (props: Props) => {
           </div>
 
           <div className="text-sm text-main-600 w-full">
-            <input
+            <InputItem
               type="text"
-              placeholder="Họ và tên"
-              className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
               name="name"
               value={formValue.name}
-              onChange={handleChange}
+              handleChange={handleChange}
+              placeholder="Họ và tên"
             />
 
             {errorForm?.name && (
@@ -162,23 +161,25 @@ const ProfileEditPage = (props: Props) => {
           </div>
 
           <div className="text-sm text-main-600 w-full">
-            <input
+            <InputItem
               type="password"
+              name="name"
+              value={formValue.name}
+              handleChange={handleChange}
               placeholder="Mật khẩu"
-              className="border-transparent border-2 bg-gray-400 w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-gray-500 focus:ring-0 rounded-[4px]"
-              name="password"
-              readOnly
+              style="border-transparent border-2 bg-gray-400 w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-gray-500 focus:ring-0 rounded-[4px]"
+              isReadOnly
+              isDefaultValue
               defaultValue={123456}
             />
           </div>
 
           <div className="text-sm text-main-600 w-full">
-            <input
+            <InputItem
               type="file"
-              placeholder="Avatar"
-              className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
               name="avatar"
-              onChange={handleChange}
+              placeholder="Avatar"
+              handleChange={handleChange}
             />
 
             {errorForm?.avatar && (
@@ -197,13 +198,11 @@ const ProfileEditPage = (props: Props) => {
           </div>
 
           <div className="text-sm text-main-600 w-full">
-            <input
-              type="text"
+            <InputItem
               placeholder="Địa chỉ"
-              className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
               name="address"
               value={formValue.address}
-              onChange={handleChange}
+              handleChange={handleChange}
             />
 
             {errorForm?.address && (
@@ -214,13 +213,11 @@ const ProfileEditPage = (props: Props) => {
           </div>
 
           <div className="text-sm text-main-600 w-full">
-            <input
-              type="text"
+            <InputItem
               placeholder="Số điện thoại"
-              className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
               name="mobile"
               value={formValue.mobile}
-              onChange={handleChange}
+              handleChange={handleChange}
             />
 
             {errorForm?.mobile && (

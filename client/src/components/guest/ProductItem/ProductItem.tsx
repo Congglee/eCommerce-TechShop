@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import icons from "../../../utils/icons";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { IProduct } from "../../../interfaces/product.interface";
 import { formatCurrency } from "../../../utils/fn";
 import { StarRating } from "..";
@@ -36,6 +36,8 @@ const ProductItem = (props: ProductItemProps) => {
 
   const formattedProductDesc = product?.description.replace(/\n/g, "<br/>");
 
+  const { category } = useParams();
+
   return (
     <div
       className={`w-[calc(calc(100%_/_3)_-_22px)] mx-[11px] border border-[#ebebeb] p-[15px] cursor-pointer flex flex-col relative
@@ -53,7 +55,13 @@ const ProductItem = (props: ProductItemProps) => {
         onMouseEnter={() => setIsHoverProductHome(true)}
         onMouseLeave={() => setIsHoverProductHome(false)}
       >
-        <Link to={`/products/${product?.slug}`}>
+        <Link
+          to={`${
+            category
+              ? `/category/${category}/${product?.slug}`
+              : `/products/${product?.slug}`
+          }`}
+        >
           <img
             src={product?.thumb}
             alt=""
@@ -80,7 +88,15 @@ const ProductItem = (props: ProductItemProps) => {
 
       <div className="flex-1 flex flex-col">
         <div className="mb-[6px] text-base text-main-500 line-clamp-2">
-          <Link to={`/products/${product?.slug}`}>{product?.name}</Link>
+          <Link
+            to={`${
+              category
+                ? `/category/${category}/${product?.slug}`
+                : `/products/${product?.slug}`
+            }`}
+          >
+            {product?.name}
+          </Link>
         </div>
 
         <div className="flex items-center text-[#f1b400] gap-x-[2px] mb-[10px]">
@@ -106,7 +122,15 @@ const ProductItem = (props: ProductItemProps) => {
               isNewArrivals ? "line-clamp-3" : "line-clamp-4"
             }`}
           >
-            <Link to={`/products/${product?.slug}`}>{product?.name}</Link>
+            <Link
+              to={`${
+                category
+                  ? `/category/${category}/${product?.slug}`
+                  : `/products/${product?.slug}`
+              }`}
+            >
+              {product?.name}
+            </Link>
           </div>
 
           <div className="text-base text-right leading-[18px]">
@@ -115,7 +139,13 @@ const ProductItem = (props: ProductItemProps) => {
         </div>
 
         <div className="py-[10px] px-5 w-full">
-          <Link to={`/products/${product?.slug}`}>
+          <Link
+            to={`${
+              category
+                ? `/category/${category}/${product?.slug}`
+                : `/products/${product?.slug}`
+            }`}
+          >
             <div
               dangerouslySetInnerHTML={{
                 __html: formattedProductDesc as string,

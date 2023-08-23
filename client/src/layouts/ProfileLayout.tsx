@@ -1,12 +1,20 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import icons from "../utils/icons";
+import Breadcrumb from "../components/guest/Breadcrumb/Breadcrumb";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { useGetOrderDetailQuery } from "../features/order/order.services";
 
 const { BiChevronRight } = icons;
 
 type Props = {};
 
 const ProfileLayout = (props: Props) => {
+  const { orderId } = useSelector((state: RootState) => state.order);
+  const { id } = useParams();
+  const { data } = useGetOrderDetailQuery(orderId ? orderId : (id as string));
+
   return (
     <>
       <div className="bg-[#f7f7f7] py-[15px] mb-[35px]">
@@ -15,11 +23,7 @@ const ProfileLayout = (props: Props) => {
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               Tài khoản cá nhân
             </div>
-            <div className="flex items-center text-sm text-[#1c1d1d]">
-              <span>Trang chủ</span>
-              <BiChevronRight size={18} />
-              <span>Tài khoản cá nhân</span>
-            </div>
+            <Breadcrumb order={data?.response} />
           </div>
         </div>
       </div>

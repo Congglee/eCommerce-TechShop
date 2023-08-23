@@ -20,6 +20,7 @@ import {
   CartPage,
   CheckoutInfoPage,
   CheckoutPaymentPage,
+  CheckoutSuccessPage,
   HomePage,
   LoginPage,
   ProductDetailPage,
@@ -45,6 +46,10 @@ function App() {
             />
           </Route>
           <Route path={path.PRODUCT_CATEGORY_PAGE} element={<ProductPage />} />
+          <Route
+            path={path.PRODUCT_DETAIL_CATEGORY_PAGE}
+            element={<ProductDetailPage />}
+          />
           <Route path={path.LOGIN_PAGE} element={<LoginPage />} />
           <Route path={path.REGISTER_PAGE} element={<RegisterPage />} />
           <Route path={path.CART_PAGE} element={<CartPage />} />
@@ -71,6 +76,10 @@ function App() {
           <Route
             path={path.CHECKOUT_PAYMENT_PAGE}
             element={<CheckoutPaymentPage />}
+          />
+          <Route
+            path={path.CHECKOUT_SUCCESS_PAGE}
+            element={<CheckoutSuccessPage />}
           />
         </Route>
 

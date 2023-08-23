@@ -2,6 +2,7 @@ import React from "react";
 import icons from "../../../utils/icons";
 import { IProduct } from "../../../interfaces/product.interface";
 import { formatCurrency } from "../../../utils/fn";
+import { StarRating } from "..";
 
 const { AiFillStar, AiTwotoneStar, PiListBold } = icons;
 
@@ -33,11 +34,10 @@ const DailyDealProduct = (props: DailyDealProps) => {
             {dailyDealProduct?.name}
           </h2>
           <div className="flex items-center justify-center text-[#f1b400] gap-x-[1px] mb-3">
-            <AiTwotoneStar size={18} />
-            <AiTwotoneStar size={18} />
-            <AiTwotoneStar size={18} />
-            <AiTwotoneStar size={18} />
-            <AiTwotoneStar size={18} />
+            <StarRating
+              totalRatings={dailyDealProduct?.totalRatings as number}
+              size={18}
+            />
           </div>
           <div className="text-main-500 text-base mb-3">
             <span>{formatCurrency(dailyDealProduct?.price)} VND</span>

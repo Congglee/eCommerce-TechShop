@@ -21,15 +21,21 @@ type Props = {};
 const HeaderTop = (props: Props) => {
   const [isHover, setIsHover] = useState(false);
   const dispatch = useDispatch();
-  const { data, isFetching, refetch } = useGetCurrentUserQuery();
+  const { data, isFetching, refetch, isError } = useGetCurrentUserQuery();
   const { isLoggedIn, token } = useSelector((state: RootState) => state.auth);
-  const naivgate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
       refetch();
     }
   }, [token]);
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(logOut());
+    }
+  }, [isError]);
 
   return (
     <div className="bg-main-200 w-full py-[10px]">
@@ -120,7 +126,7 @@ const HeaderTop = (props: Props) => {
                       className="block px-4 py-2 text-[13px] text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                       onClick={() => {
                         dispatch(logOut());
-                        naivgate("/login");
+                        navigate("/login");
                       }}
                     >
                       Đăng xuất

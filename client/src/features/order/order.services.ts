@@ -56,6 +56,16 @@ export const orderApi = createApi({
         error ? [] : [{ type: "Orders", id: "LIST" }],
     }),
 
+    createCheckoutSession: build.mutation({
+      query: (body: { cartProducts: IProduct[]; userId: string }) => {
+        return {
+          url: "/stripe/create-checkout-session",
+          method: "POST",
+          body,
+        };
+      },
+    }),
+
     getUserOrder: build.query<IGetUserOrderResponse, void>({
       query: () => "/orders/user",
       providesTags(result) {
@@ -99,4 +109,5 @@ export const {
   useGetUserOrderQuery,
   useGetOrderDetailQuery,
   useUpdateStatusOrderClientMutation,
+  useCreateCheckoutSessionMutation,
 } = orderApi;

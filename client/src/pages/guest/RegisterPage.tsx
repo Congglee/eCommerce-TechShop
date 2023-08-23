@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useRegisterMutation } from "../../features/auth/auth.service";
 import { toast } from "react-toastify";
 import { isEntityError } from "../../utils/helper";
+import { InputItem } from "../../components/guest";
+import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 
 const { BiChevronRight } = icons;
 
@@ -67,11 +69,7 @@ const RegisterPage = (props: Props) => {
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               Tạo tài khoản
             </div>
-            <div className="flex items-center text-sm text-[#1c1d1d]">
-              <span>Trang chủ</span>
-              <BiChevronRight size={18} />
-              <span>Đăng ký</span>
-            </div>
+            <Breadcrumb />
           </div>
         </div>
       </div>
@@ -83,13 +81,11 @@ const RegisterPage = (props: Props) => {
             onSubmit={handleRegister}
           >
             <div className="text-sm text-main-600 w-[500px]">
-              <input
-                type="text"
+              <InputItem
                 placeholder="Họ và tên"
-                className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
                 name="name"
                 value={formValue.name}
-                onChange={handleChange}
+                handleChange={handleChange}
               />
 
               {errorForm?.name && (
@@ -100,13 +96,12 @@ const RegisterPage = (props: Props) => {
             </div>
 
             <div className="text-sm text-main-600 w-[500px]">
-              <input
-                type="text"
+              <InputItem
+                type="email"
                 placeholder="Email"
-                className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
                 name="email"
                 value={formValue.email}
-                onChange={handleChange}
+                handleChange={handleChange}
               />
 
               {errorForm?.email && (
@@ -117,13 +112,12 @@ const RegisterPage = (props: Props) => {
             </div>
 
             <div className="text-sm text-main-600 w-[500px]">
-              <input
+              <InputItem
                 type="password"
                 placeholder="Mật khẩu"
-                className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
                 name="password"
                 value={formValue.password}
-                onChange={handleChange}
+                handleChange={handleChange}
               />
 
               {errorForm?.password && (
@@ -134,13 +128,12 @@ const RegisterPage = (props: Props) => {
             </div>
 
             <div className="text-sm text-main-600 w-[500px]">
-              <input
+              <InputItem
                 type="password"
                 placeholder="Xác nhận mật khẩu"
-                className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
                 name="confirmPassword"
                 value={formValue.confirmPassword}
-                onChange={handleChange}
+                handleChange={handleChange}
               />
 
               {errorForm?.confirmPassword && (

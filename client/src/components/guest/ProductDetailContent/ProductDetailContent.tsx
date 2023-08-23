@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IProduct } from "../../../interfaces/product.interface";
 import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";
@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../features/cart/cart.slice";
 import { StarRating } from "..";
+import { useParams } from "react-router-dom";
 
 const {
-  AiTwotoneStar,
   BiLogoFacebook,
   BiLogoTwitter,
   BiLogoPinterest,
@@ -21,6 +21,7 @@ const {
 
 interface productDetailContentProps {
   product: IProduct | undefined;
+  slug?: string;
 }
 
 const ProductDetailContent = (props: productDetailContentProps) => {
@@ -30,6 +31,7 @@ const ProductDetailContent = (props: productDetailContentProps) => {
   // const { data, refetch } = useGetCurrentUserQuery();
   // const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const [value, setValue] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(product?.thumb);
 
   const handleAddToCartStorage = async (product: IProduct) => {
     // if (isLoggedIn) {
@@ -43,6 +45,14 @@ const ProductDetailContent = (props: productDetailContentProps) => {
       position: "bottom-right",
     });
   };
+
+  const handleImageClick = (image: string) => {
+    setSelectedImage(image);
+  };
+
+  useEffect(() => {
+    setSelectedImage(product?.thumb);
+  }, [product]);
 
   // useEffect(() => {
   //   if (addToCartMutationResult.isSuccess) {
@@ -61,14 +71,15 @@ const ProductDetailContent = (props: productDetailContentProps) => {
     <>
       <div className="w-[40%] flex-shrink-0 flex flex-col gap-y-[30px]">
         <div className="border border-main-700 bg-[#f7f7f7]">
-          <img src={product?.thumb} alt="" />
+          <img src={selectedImage || product?.thumb} alt="" />
         </div>
 
         <div className="flex flex-wrap mx-[-5px] gap-y-[10px]">
           {product?.images.map((image) => (
             <div
-              className="w-[calc(calc(100%_/_3)_-_10px)] mx-[5px] border border-main-700 p-[10px]"
+              className="w-[calc(calc(100%_/_3)_-_10px)] mx-[5px] border border-main-700 p-[10px] cursor-pointer"
               key={image}
+              onClick={() => handleImageClick(image)}
             >
               <img src={image} alt="" />
             </div>

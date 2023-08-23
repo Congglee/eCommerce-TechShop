@@ -111,6 +111,7 @@ const ProfileOrderDetailPage = (props: Props) => {
               </div>
             </div>
           </div>
+
           <div className="flex flex-col gap-y-6 w-[30%] bg-main-700 p-6">
             <h3 className="text-main-500 text-xl font-semibold">
               Thông tin đơn hàng
@@ -135,15 +136,7 @@ const ProfileOrderDetailPage = (props: Props) => {
                 </h3>
                 <div className="flex flex-col text-sm gap-y-[2px]">
                   <span>{data?.response.address}</span>
-                  <span>
-                    {data?.response.status === "Đang xử lý"
-                      ? data?.response.status
-                      : data?.response.status === "Thành công"
-                      ? "Đang giao"
-                      : data?.response.status === "Đã hủy"
-                      ? data?.response.status
-                      : ""}
-                  </span>
+                  <span>{data?.response.delivery_status}</span>
                 </div>
               </div>
 
@@ -153,15 +146,7 @@ const ProfileOrderDetailPage = (props: Props) => {
                 </h3>
                 <div className="flex flex-col text-sm gap-y-[2px]">
                   <span>{data?.response.address}</span>
-                  <span>
-                    {data?.response.status === "Đang xử lý"
-                      ? "Chưa thanh toán"
-                      : data?.response.status === "Thành công"
-                      ? "Đã thanh toán"
-                      : data?.response.status === "Đã hủy"
-                      ? "Đã hủy"
-                      : ""}
-                  </span>
+                  <span>{data?.response.payment_status}</span>
                 </div>
               </div>
             </div>

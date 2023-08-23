@@ -13,6 +13,16 @@ var orderSchema = new mongoose.Schema({
     default: "Đang xử lý",
     enum: ["Đã hủy", "Đang xử lý", "Thành công"],
   },
+  delivery_status: {
+    type: String,
+    default: "Chưa xử lý",
+    enum: ["Chưa xử lý", "Đang xử lý", "Đang giao", "Giao thành công"],
+  },
+  payment_status: {
+    type: String,
+    default: "Chưa thanh toán",
+    enum: ["Chưa thanh toán", "Đã thanh toán"],
+  },
   total: Number,
   date: {
     type: String,
@@ -28,7 +38,7 @@ var orderSchema = new mongoose.Schema({
     enum: [
       "Thanh toán khi nhận hàng",
       "Thanh toán qua STK ngân hàng",
-      "Thanh toán bằng Paypal",
+      "Thanh toán qua cổng Stripe",
     ],
   },
   orderBy: {

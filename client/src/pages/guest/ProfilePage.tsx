@@ -67,56 +67,52 @@ const ProfilePage = (props: Props) => {
           Lịch sử đặt hàng
         </div>
         <div className="flex items-center uppercase text-[13px] py-[15px] px-3 border border-[#f1f1f1] font-medium">
-          <div className="w-[calc(calc(100%_/_5))] mx-4">Mã đơn hàng</div>
-          <div className="w-[calc(calc(100%_/_5))] mx-4">Ngày đặt hàng</div>
-          <div className="w-[calc(calc(100%_/_5))] mx-4">
+          <div className="w-[calc(calc(100%_/_6))] mx-4">Mã đơn hàng</div>
+          <div className="w-[calc(calc(100%_/_6))] mx-4">Ngày đặt hàng</div>
+          <div className="w-[calc(calc(100%_/_6))] mx-4">
+            Phương thức thanh toán
+          </div>
+          <div className="w-[calc(calc(100%_/_6))] mx-4">
             Tình trạng đơn hàng
           </div>
-          <div className="w-[calc(calc(100%_/_5))] mx-4">Tổng cộng</div>
-          <div className="w-[calc(calc(100%_/_5))] mx-4"></div>
+          <div className="w-[calc(calc(100%_/_6))] mx-4">Tổng cộng</div>
+          <div className="w-[calc(calc(100%_/_6))] mx-4"></div>
         </div>
 
         {userOrders?.response.map((order: IOrder) => (
           <div
-            className="flex items-center text-[13px] py-[15px] px-3 border border-[#f1f1f1]"
+            className="flex items-center text-[13px] py-[15px] px-2 border border-[#f1f1f1]"
             key={order._id}
           >
             <div
-              className="w-[calc(calc(100%_/_5))] mx-4 hover:text-main-200 line-clamp-1"
+              className="w-[calc(calc(100%_/_6))] mx-4 hover:text-main-200 line-clamp-2 whitespace-normal break-words"
               onClick={() => dispatch(setOrderDetail({ id: order._id }))}
             >
               <Link to={`order/${order._id}`}>DW2{order._id}</Link>
             </div>
 
-            <div className="w-[calc(calc(100%_/_5))] mx-4">{order.date}</div>
-            <div className="w-[calc(calc(100%_/_5))] mx-4">{order.status}</div>
-            <div className="w-[calc(calc(100%_/_5))] mx-4">
+            <div className="w-[calc(calc(100%_/_6))] mx-4">{order.date}</div>
+            <div className="w-[calc(calc(100%_/_6))] mx-4">{order.payment}</div>
+            <div className="w-[calc(calc(100%_/_6))] mx-4">{order.status}</div>
+            <div className="w-[calc(calc(100%_/_6))] mx-4">
               {formatCurrency(order.total)}
             </div>
-            <div className="w-[calc(calc(100%_/_5))] mx-4">
-              {order.status === "Đang xử lý" && (
+            <div className="w-[calc(calc(100%_/_6))] mx-4">
+              {order.status === "Đã hủy" ||
+              order.status === "Thành công" ||
+              order.delivery_status === "Giao thành công" ||
+              order.delivery_status === "Đang giao" ? (
+                <button
+                  type="button"
+                  className="border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-gray-600 text-white dark:hover:bg-gray-700 dark:hover:border-gray-600"
+                >
+                  Hủy
+                </button>
+              ) : (
                 <button
                   type="button"
                   className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg uppercase px-5 py-2.5 text-center mr-2 mb-2"
                   onClick={() => handleCancelOrder(order, "Đã hủy")}
-                >
-                  Hủy
-                </button>
-              )}
-
-              {order.status === "Đã hủy" && (
-                <button
-                  type="button"
-                  className="border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-gray-600 text-white dark:hover:bg-gray-700 dark:hover:border-gray-600"
-                >
-                  Hủy
-                </button>
-              )}
-
-              {order.status === "Thành công" && (
-                <button
-                  type="button"
-                  className="border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-gray-600 text-white dark:hover:bg-gray-700 dark:hover:border-gray-600"
                 >
                   Hủy
                 </button>

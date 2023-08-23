@@ -11,4 +11,6 @@ export interface IOrder {
   address: string;
   mobile: string;
   date: string;
+  delivery_status: string;
+  payment_status: string;
 }

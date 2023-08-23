@@ -7,6 +7,8 @@ import { setUser } from "../../features/auth/auth.slice";
 import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
 import { isEntityError } from "../../utils/helper";
+import { InputItem } from "../../components/guest";
+import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 
 const { BiChevronRight } = icons;
 
@@ -95,11 +97,7 @@ const LoginPage = (props: Props) => {
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               Đăng nhập
             </div>
-            <div className="flex items-center text-sm text-[#1c1d1d]">
-              <span>Trang chủ</span>
-              <BiChevronRight size={18} />
-              <span>Tài khoản</span>
-            </div>
+            <Breadcrumb />
           </div>
         </div>
       </div>
@@ -111,13 +109,11 @@ const LoginPage = (props: Props) => {
             onSubmit={handleSubmitLogin}
           >
             <div className="text-sm text-main-600 w-[500px]">
-              <input
-                type="text"
+              <InputItem
                 placeholder="Email"
-                className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
                 name="email"
                 value={formValue.email}
-                onChange={handleChange}
+                handleChange={handleChange}
               />
 
               {errorForm?.email && (
@@ -128,13 +124,11 @@ const LoginPage = (props: Props) => {
             </div>
 
             <div className="text-sm text-main-600 w-[500px]">
-              <input
+              <InputItem
                 type="password"
                 placeholder="Mật khẩu"
-                className="border-transparent border-2 bg-[#f6f6f6] w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-main-600 focus:ring-0 rounded-[4px]"
                 name="password"
-                value={formValue.password}
-                onChange={handleChange}
+                handleChange={handleChange}
               />
 
               {errorForm?.password && (

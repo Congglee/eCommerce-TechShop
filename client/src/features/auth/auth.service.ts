@@ -55,16 +55,6 @@ export const authApi = createApi({
 
     getCurrentUser: build.query<ICurrentUserResponse, void>({
       query: () => "/users/currentUser",
-      providesTags(result) {
-        if (result) {
-          const final = [
-            { type: "Auth" as const, id: result.userData.email },
-            { type: "Auth" as const, id: "CURRENT" },
-          ];
-          return final;
-        }
-        return [{ type: "Auth" as const, id: "CURRENT" }];
-      },
     }),
   }),
 });

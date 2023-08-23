@@ -14,6 +14,7 @@ import {
 } from "../../features/cart/cart.slice";
 import { toast } from "react-toastify";
 import CartItem from "../../components/guest/CartItem/CartItem";
+import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 
 const { BiChevronRight } = icons;
 
@@ -64,11 +65,7 @@ const CartPage = (props: Props) => {
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               GIỎ HÀNG CỦA BẠN
             </div>
-            <div className="flex items-center text-sm text-[#1c1d1d]">
-              <span>Trang chủ</span>
-              <BiChevronRight size={18} />
-              <span>Giỏ hàng của bạn</span>
-            </div>
+            <Breadcrumb />
           </div>
         </div>
       </div>

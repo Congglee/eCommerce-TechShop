@@ -17,10 +17,12 @@ import {
   setSeletedSort,
 } from "../../features/product/product.slice";
 import {
+  formatCurrency,
   handleFilterPriceGteUrl,
   handleFilterPriceLteUrl,
   handleSortUrl,
 } from "../../utils/fn";
+import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 
 const { BiChevronRight, AiOutlineUnorderedList } = icons;
 
@@ -50,6 +52,15 @@ const ProductPage = (props: Props) => {
     page: page || 1,
     limit: import.meta.env.VITE_APP_LIMIT_PRODUCT_PER_PAGE || 6,
   });
+  const highestPriceProduct = data?.products.reduce(
+    (prevProduct, currentProduct) => {
+      if (currentProduct.price > prevProduct.price) {
+        return currentProduct;
+      }
+      return prevProduct;
+    },
+    data?.products[0]
+  );
   const navigate = useNavigate();
 
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -105,11 +116,7 @@ const ProductPage = (props: Props) => {
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               SẢN PHẨM
             </div>
-            <div className="flex items-center text-sm text-[#1c1d1d]">
-              <span>Trang chủ</span>
-              <BiChevronRight size={18} />
-              <span>Sản phẩm</span>
-            </div>
+            <Breadcrumb />
           </div>
         </div>
       </div>
@@ -125,7 +132,7 @@ const ProductPage = (props: Props) => {
 
             <div>
               <div className="flex items-center py-[10px] gap-x-2 px-5 bg-main-200 text-white text-base">
-                <AiOutlineUnorderedList size={16} />
+                <AiOutlineUnorderedList size={20} />
                 <span className="uppercase font-semibold">MUA SẮM THEO</span>
               </div>
 
@@ -157,8 +164,10 @@ const ProductPage = (props: Props) => {
                   <div className="border border-solid border-[rgba(26,27,24,0.2)] w-full">
                     <div className="border-b border-solid border-[rgba(26,27,24,0.2)]">
                       <div className="px-[10px] py-[5px] text-main-500 text-sm">
-                        Giá cao nhất là 46.893.977,41 VND. Giá trị đầu vào mặc
-                        định là VND<span className="underline">Reset</span>
+                        Giá cao nhất là{" "}
+                        {formatCurrency(highestPriceProduct?.price)} VND. Giá
+                        trị đầu vào mặc định là VND
+                        <span className="underline">Reset</span>
                       </div>
                     </div>
 

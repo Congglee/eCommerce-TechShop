@@ -23,6 +23,7 @@ import {
   FaTruck,
   FaTty,
   FaReply,
+  FaCcStripe,
 } from "react-icons/fa";
 import {
   BsFillHeartFill,
@@ -71,6 +72,7 @@ const icons = {
   FaReply,
   FaTty,
   BsArrowLeft,
+  FaCcStripe,
 };
 
 export default icons;
