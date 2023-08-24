@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import icons from "../../../utils/icons";
 import { useQueryString } from "../../../hooks/useQueryString";
 import { handleNameUrl } from "../../../utils/fn";
+import { useGetCategoriesQuery } from "../../../features/category/category.services";
 
 const { AiOutlineCaretDown } = icons;
 
@@ -10,6 +11,7 @@ type Props = {};
 
 const Navigation = (props: Props) => {
   const [isHoverMenu, setIsHoverMenu] = useState<boolean>(false);
+  const { data } = useGetCategoriesQuery();
   const navigate = useNavigate();
   const { category } = useParams();
   const queryString: {
@@ -87,19 +89,22 @@ const Navigation = (props: Props) => {
                     LAPTOP
                   </h3>
                   <div className="text-[15px] flex flex-col gap-y-[10px] text-main-500">
-                    <span>Asus</span>
-                    <span>Dell</span>
-                    <span>LG</span>
-                    <span>Macbook</span>
-                    <span>Acer</span>
-                    <span>HP</span>
-                    <span>Lenovo</span>
+                    {data?.categories.map((category) => (
+                      <Link
+                        key={category._id}
+                        to={`/category/${category.slug}`}
+                      >
+                        <span className="hover:text-main-200">
+                          {category.name}
+                        </span>
+                      </Link>
+                    ))}
                   </div>
                 </div>
 
                 <div className="w-[calc(calc(100%_/_4)_-_40px_)] mx-[20px]">
                   <h3 className="text-lg uppercase mb-5 font-semibold">
-                    Pages
+                    Trang
                   </h3>
                   <div className="text-[15px] flex flex-col gap-y-[10px] text-main-500">
                     <span>Giới thiệu</span>

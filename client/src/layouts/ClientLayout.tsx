@@ -1,13 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Footer, Header } from "../components/guest";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { setCurrentScreenWidth } from "../features/app.slice";
 
 type Props = {};
 
 const UserLayout = (props: Props) => {
   const location = useLocation();
+  const [currentWidth, setCurrentWidth] = useState(screen.width);
+  const dispatch = useDispatch();
+
+  const setWidth = (e: any) => {
+    setCurrentWidth(e.target.screen.width);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", setWidth);
+    return () => {
+      window.removeEventListener("resize", setWidth);
+    };
+  }, []);
+
+  useEffect(() => {
+    dispatch(setCurrentScreenWidth({ width: currentWidth }));
+  }, [currentWidth]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

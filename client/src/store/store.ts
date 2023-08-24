@@ -14,6 +14,7 @@ import { orderReducer } from "../features/order/order.slice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { orderApi } from "../features/order/order.services";
+import appReducer from "../features/app.slice";
 
 const commonConfig = {
   key: "tech-shop/user",
@@ -54,6 +55,8 @@ export const store = configureStore({
 
     order: orderReducer,
     [orderApi.reducerPath]: orderApi.reducer,
+
+    app: appReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

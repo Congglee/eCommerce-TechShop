@@ -3,6 +3,8 @@ import { IProduct } from "../../../interfaces/product.interface";
 import ProductItem from "../ProductItem/ProductItem";
 import banner1 from "../../../assets/banner1-home2.png";
 import banner2 from "../../../assets/banner2-home2.png";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 interface HomeProductTabs {
   products: IProduct[] | undefined;
@@ -13,6 +15,12 @@ const HomeProductTabs = (props: HomeProductTabs) => {
   const [isBestSeller, setIsBestSeller] = useState<boolean>(true);
   const [isNewArrivals, setIsNewArrivals] = useState<boolean>(false);
   const [isMackbook, setIsMackbook] = useState<boolean>(false);
+  const { currentWidth } = useSelector((state: RootState) => state.app);
+
+  let numItemsToShow = 3;
+
+  if (currentWidth < 970 && currentWidth > 480) numItemsToShow = 2;
+  else if (currentWidth <= 480) numItemsToShow = 1;
 
   return (
     <>
@@ -60,7 +68,7 @@ const HomeProductTabs = (props: HomeProductTabs) => {
       <div className="flex mx-[-11px] gap-y-[18px] mb-5">
         {isBestSeller &&
           products
-            ?.slice(0, 3)
+            ?.slice(0, numItemsToShow)
             .map((product: IProduct) => (
               <ProductItem
                 key={product._id}
@@ -73,7 +81,7 @@ const HomeProductTabs = (props: HomeProductTabs) => {
           products
             ?.slice()
             .reverse()
-            .slice(0, 3)
+            .slice(0, numItemsToShow)
             .map((product: IProduct) => (
               <ProductItem
                 key={product._id}
@@ -85,7 +93,7 @@ const HomeProductTabs = (props: HomeProductTabs) => {
         {isMackbook &&
           products
             ?.filter((product) => product.name.toLowerCase().includes("apple"))
-            .slice(0, 3)
+            .slice(0, numItemsToShow)
             .map((product: IProduct) => (
               <ProductItem
                 key={product._id}

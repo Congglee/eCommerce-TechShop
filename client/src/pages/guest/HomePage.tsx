@@ -22,12 +22,12 @@ const HomePage = (props: Props) => {
   return (
     <div className="py-[20px]">
       <div className="max-w-[1220px] mx-auto px-5">
-        <div className="flex items-stretch gap-x-5 mb-[30px]">
-          <div className="w-[25%] flex-shrink-0">
+        <div className="flex items-stretch mb-[30px]">
+          <div className="flex-shrink-0 w-1/4">
             <CategorySideMenu />
           </div>
 
-          <div className="w-[75%] flex-1">
+          <div className="flex-1 w-3/4 pl-5">
             <Banner />
           </div>
         </div>
