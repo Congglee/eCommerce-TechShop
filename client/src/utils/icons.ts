@@ -7,17 +7,35 @@ import {
   BiLogoPinterest,
   BiLogoTwitter,
 } from "react-icons/bi";
-import { GrSort, GrMail } from "react-icons/gr";
-import { AiTwotoneStar, AiOutlineUnorderedList } from "react-icons/ai";
+import { GrSort, GrMail, GrUnorderedList } from "react-icons/gr";
+import {
+  AiTwotoneStar,
+  AiOutlineUnorderedList,
+  AiOutlineCaretDown,
+  AiFillStar,
+} from "react-icons/ai";
 import { LiaBarsSolid } from "react-icons/lia";
-import { FaEye } from "react-icons/fa";
+import {
+  FaEye,
+  FaRegMoneyBillAlt,
+  FaCalendarAlt,
+  FaRegComment,
+  FaTruck,
+  FaTty,
+  FaReply,
+  FaCcStripe,
+} from "react-icons/fa";
 import {
   BsFillHeartFill,
   BsArrowRight,
   BsFillTelephoneFill,
+  BsShieldShaded,
+  BsArrowLeft,
 } from "react-icons/bs";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { HiOutlineDotsHorizontal, HiShoppingBag, HiGift } from "react-icons/hi";
 import { GiPositionMarker } from "react-icons/gi";
+import { FiChevronDown } from "react-icons/fi";
+import { PiListBold, PiShoppingCartFill } from "react-icons/pi";
 
 const icons = {
   BiChevronRight,
@@ -38,6 +56,23 @@ const icons = {
   BiLogoTwitter,
   GiPositionMarker,
   BsFillTelephoneFill,
+  FaRegMoneyBillAlt,
+  FiChevronDown,
+  HiShoppingBag,
+  AiOutlineCaretDown,
+  GrUnorderedList,
+  AiFillStar,
+  PiListBold,
+  PiShoppingCartFill,
+  FaCalendarAlt,
+  FaRegComment,
+  BsShieldShaded,
+  FaTruck,
+  HiGift,
+  FaReply,
+  FaTty,
+  BsArrowLeft,
+  FaCcStripe,
 };
 
 export default icons;

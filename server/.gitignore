@@ -1,3 +1,6 @@
 /node_modules
 .env
-workflow.md
+/src/data
+docs.md
+
+/build
