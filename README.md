@@ -208,6 +208,7 @@ This project was created using the following technologies.
 ## Features in Development
 
 - Responsive website
+- Add loader effect
 - Create cart api
 - Admin Side for manage product, category, account, order, ...
 - Register an account with email verification
