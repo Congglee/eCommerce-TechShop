@@ -40,7 +40,7 @@ const ProductItem = (props: ProductItemProps) => {
 
   return (
     <div
-      className={`w-[calc(calc(100%_/_3)_-_22px)] mx-[11px] border border-[#ebebeb] p-[15px] cursor-pointer flex flex-col relative
+      className={`w-[calc(calc(100%_/_3)_-_22px)] max-[970px]:w-[calc(calc(100%_/_2)_-_22px)] mx-[11px] border border-[#ebebeb] p-[15px] cursor-pointer flex flex-col relative
       ${isRelateProductSlide && "w-auto mx-2"}
       ${isRelateProduct && "w-[calc(calc(100%_/_4)_-_20px)] mx-[10px]"}
       ${isNewArrivals && "w-[calc(calc(100%_/_3)_-_20px)] mx-[10px]"}
@@ -65,7 +65,7 @@ const ProductItem = (props: ProductItemProps) => {
           <img
             src={product?.thumb}
             alt=""
-            className="w-full h-full object-cover"
+            className={`w-full h-full ${isNewArrivals ? "object-cover" : ""}`}
           />
         </Link>
 

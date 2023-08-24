@@ -1,6 +1,6 @@
 import React from "react";
 import icons from "../../../utils/icons";
-import hotCollections from "../../../utils/collections";
+import { hotCollections } from "../../../utils/collections";
 
 const { BiChevronRight } = icons;
 
@@ -12,28 +12,33 @@ const HotCollections = (props: Props) => {
       <div className="mb-5 text-[#151515] border-b-2 border-main-200 pb-[15px] uppercase text-xl font-semibold">
         BỘ SƯU TẬP HOT
       </div>
-      <div className="flex flex-wrap mx-[-10px]">
+
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {hotCollections.map((item) => (
           <div
-            className="w-[calc(calc(100%_/_3)_-_20px)] mx-[10px] mb-5 border border-main-700 p-[15px] flex gap-x-5"
+            className="border border-main-700 p-4 flex gap-3 md:gap-5"
             key={item.title}
           >
-            <div className="pl-5 flex-shrink-0 w-[175px] h-[140px]">
-              <img src={item.image} alt="" className="w-full h-full" />
+            <div className="w-28 h-28 md:w-36 md:h-36">
+              <img
+                src={item.image}
+                alt=""
+                className="w-full h-full object-cover"
+              />
             </div>
 
             <div className="flex-1">
-              <h3 className="uppercase font-semibold mb-[10px] text-main-500 text-sm">
+              <h3 className="uppercase font-semibold mb-1 text-main-500 text-sm">
                 {item.title}
               </h3>
-              <div className="flex flex-col gap-y-[5px] mb-5">
+              <div className="flex flex-col gap-1 mb-4">
                 {item.type.map((elItem) => (
                   <div
-                    className="flex items-center text-gray-500 text-sm"
+                    className="flex items-center text-gray-500 text-xs"
                     key={elItem}
                   >
                     <div>
-                      <BiChevronRight size={16} />
+                      <BiChevronRight size={14} />
                     </div>
                     <span>{elItem}</span>
                   </div>

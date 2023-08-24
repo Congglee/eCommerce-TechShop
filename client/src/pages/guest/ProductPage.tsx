@@ -147,7 +147,7 @@ const ProductPage = (props: Props) => {
                     className="border border-solid border-[rgba(26,27,24,.75)] pl-[15px] pr-5 w-full text-xs bg-[#f6f6f6] text-[#1c1d1d] py-[10px]"
                     onChange={handleChangeSort}
                   >
-                    <option value="">Sản phẩm nổi bật</option>
+                    <option value="-totalRatings">Sản phẩm nổi bật</option>
                     <option value="">Bán chạy nhất</option>
                     <option value="name">Theo bảng chữ cái, A-Z</option>
                     <option value="-name">Theo bảng chữ cái, Z-A</option>

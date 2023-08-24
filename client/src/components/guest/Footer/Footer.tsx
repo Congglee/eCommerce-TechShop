@@ -19,7 +19,7 @@ const UserFooter = (props: Props) => {
   return (
     <div>
       <div className="bg-main-200">
-        <div className="px-[170px] py-[25px] flex flex-row justify-between items-center">
+        <div className="py-[25px] max-w-[1220px] mx-auto px-5 flex justify-between items-center">
           <div className="text-white">
             <div className="text-xl uppercase">
               ĐĂNG KÝ ĐỂ NHẬN TIN MỚI NHẤT
@@ -43,7 +43,7 @@ const UserFooter = (props: Props) => {
       </div>
 
       <div className="bg-[#191919]">
-        <div className="py-[50px] px-[170px] flex flex-row gap-x-5">
+        <div className="py-[50px] max-w-[1220px] mx-auto px-5 flex justify-between items-center gap-x-5">
           <div className="basis-1/3 flex-shrink-0">
             <div className="text-white text-[15px] uppercase pl-[15px] mb-5 font-semibold relative after:content-[''] after:absolute after:w-[3px] after:h-[100%] after:bg-main-200 after:top-0 after:left-0">
               VỀ CHÚNG TÔI

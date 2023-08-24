@@ -28,8 +28,8 @@ const HeaderSection = (props: Props) => {
           <img src={logo} alt="" />
         </div>
 
-        <div className="flex gap-x-5">
-          <div className="pl-5 flex flex-col items-center">
+        <div className="flex gap-x-5 max-[990px]:gap-x-[10px]">
+          <div className="pl-5 max-[990px]:pl-[10px] max-[900px]:hidden flex flex-col items-center">
             <div className="flex items-center gap-x-[10px]">
               <div className="text-main-200">
                 <BsFillTelephoneFill size={12} />
@@ -43,7 +43,7 @@ const HeaderSection = (props: Props) => {
             </div>
           </div>
 
-          <div className="pl-5 border-l border-[rgba(0,0,0,0.1)] flex flex-col items-center">
+          <div className="pl-5 max-[990px]:pl-[10px] max-[900px]:hidden border-l border-[rgba(0,0,0,0.1)] flex flex-col items-center">
             <div className="flex items-center gap-x-[10px]">
               <div className="text-main-200">
                 <GrMail size={12} />
@@ -57,13 +57,13 @@ const HeaderSection = (props: Props) => {
             </div>
           </div>
 
-          <div className="pl-5 border-l border-[rgba(0,0,0,0.1)]">
+          <div className="pl-5 max-[990px]:pl-[10px] border-l border-[rgba(0,0,0,0.1)]">
             <div className="flex justify-center items-center gap-x-[10px] text-main-200 cursor-pointer py-[10px] h-[40px]">
               <BsFillHeartFill size={19} />
             </div>
           </div>
 
-          <div className="pl-5 border-l border-[rgba(0,0,0,0.1)]">
+          <div className="pl-5 max-[990px]:pl-[10px] border-l border-[rgba(0,0,0,0.1)]">
             <Link to="/cart">
               <div className="flex items-center gap-x-[10px] py-[10px] h-[40px] cursor-pointer">
                 <div className=" text-main-200">

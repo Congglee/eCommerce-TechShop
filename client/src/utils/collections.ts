@@ -10,13 +10,13 @@ const hotCollections = [
     title: "Acer",
     image: laptopAcer,
     type: [
-      "Asus Aspire",
-      "Asus Swift",
-      "Asus Spin",
-      "Asus TravelMate",
-      "Asus Nitro",
-      "Asus Aspire 7",
-      "Asus Predator",
+      "Acer Aspire",
+      "Acer Swift",
+      "Acer Spin",
+      "Acer TravelMate",
+      "Acer Nitro",
+      "Acer Aspire 7",
+      "Acer Predator",
     ],
   },
 
@@ -92,4 +92,47 @@ const hotCollections = [
   },
 ];
 
-export default hotCollections;
+const newsItems = [
+  {
+    id: 1,
+    image: "https://hanoicomputercdn.com/media/news/1817_cover_msi_laptop.jpg",
+    title: "Loạt laptop MSI mới trang bị Raptor Lake-HX và RTX 40 Series",
+    date: "December 13, 2016",
+    comments: 1,
+    content:
+      "Sự kiện trực tuyến “MSIology: The Leap to Singularity” giới thiệu các mẫu laptop mới nhất, trang bị bộ đôi vi xử lý Intel Core HX Series thế hệ 13 cùng đồ họa ...",
+  },
+  {
+    id: 2,
+    image:
+      "https://hanoicomputercdn.com/media/news/1746_cover_corei9_13900hx.jpg",
+    title:
+      "Core i9-13900HX cho laptop lộ điểm hiệu năng vượt trội với thế hệ tiền nhiệm",
+    date: "December 13, 2016",
+    comments: 1,
+    content:
+      "Core i9-13900HX cho laptop lộ điểm hiệu năng cao hơn cả Core i9-12900K và Ryzen 9 7900X",
+  },
+  {
+    id: 3,
+    image:
+      "https://hanoicomputercdn.com/media/news/2035_laptop_asus_vivobook_pro_16x.jpg",
+    title: "Những mẫu laptop phù hợp với sinh viên mùa tựu trường",
+    date: "December 13, 2016",
+    comments: 1,
+    content:
+      "Tổng hợp 9 mẫu laptop tốt nhất dành cho sinh viên mùa nhập học 2023 với mức giá vô cùng hấp dẫn tại Digital World.",
+  },
+  {
+    id: 4,
+    image:
+      "https://hanoicomputercdn.com/media/news/2035_laptop_asus_vivobook_pro_16x.jpg",
+    title: "Những mẫu laptop phù hợp với sinh viên mùa tựu trường",
+    date: "December 13, 2016",
+    comments: 1,
+    content:
+      "Tổng hợp 9 mẫu laptop tốt nhất dành cho sinh viên mùa nhập học 2023 với mức giá vô cùng hấp dẫn tại Digital World.",
+  },
+];
+
+export { hotCollections, newsItems };

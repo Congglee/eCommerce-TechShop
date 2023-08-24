@@ -46,26 +46,27 @@ const FeaturedProducts = (props: FeaturedProducts) => {
         ))}
       </div>
 
-      <div className="flex gap-5 h-[680px]">
+      <div className="flex flex-col md:flex-row gap-5 md:h-auto">
         <img
           src="https://digital-world-2.myshopify.com/cdn/shop/files/banner1-bottom-home2_b96bc752-67d4-45a5-ac32-49dc691b1958_600x.jpg?v=1613166661"
           alt=""
+          className="md:w-[50%] md:h-auto object-cover"
         />
 
-        <div className="flex flex-col gap-y-5">
-          <div className="w-full h-[340px]">
+        <div className="flex flex-col gap-y-5 md:w-[25%]">
+          <div className="w-full h-auto">
             <img
               src="https://digital-world-2.myshopify.com/cdn/shop/files/banner2-bottom-home2_400x.jpg?v=1613166661"
               alt=""
-              className="w-full h-full"
+              className="w-full h-auto object-cover"
             />
           </div>
 
-          <div className="w-full h-[340px]">
+          <div className="w-full h-auto">
             <img
               src="https://digital-world-2.myshopify.com/cdn/shop/files/banner3-bottom-home2_400x.jpg?v=1613166661"
               alt=""
-              className="w-full h-full"
+              className="w-full h-auto object-cover"
             />
           </div>
         </div>
@@ -73,6 +74,7 @@ const FeaturedProducts = (props: FeaturedProducts) => {
         <img
           src="https://digital-world-2.myshopify.com/cdn/shop/files/banner4-bottom-home2_92e12df0-500c-4897-882a-7d061bb417fd_400x.jpg?v=1613166661"
           alt=""
+          className="md:w-[25%] md:h-auto object-cover"
         />
       </div>
     </div>
