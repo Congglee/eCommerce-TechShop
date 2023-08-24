@@ -28,7 +28,7 @@ app.use("/api", orderRoute);
 app.use("/api/stripe", stripePayment);
 
 mongoose
-  .connect("mongodb://localhost:27017/ecommerce-techshop")
+  .connect(process.env.MONGODB_URL)
   .then(() => console.log("DB connected"));
 
 app.listen(port, () => {
