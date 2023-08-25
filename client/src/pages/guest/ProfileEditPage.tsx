@@ -37,18 +37,6 @@ const ProfileEditPage = (props: Props) => {
 
   useEffect(() => {
     if (data?.userData) {
-      // setFormValue({
-      //   name: data.userData.name,
-      //   email: data.userData.email,
-      //   ...(data.userData.address !== undefined && {
-      //     address: data.userData.address,
-      //   }),
-      //   ...(data.userData.mobile !== undefined && {
-      //     mobile: data.userData.mobile,
-      //   }),
-      //   avatar: data.userData.avatar,
-      // });
-
       const updatedFormValue: any = {
         name: data.userData.name,
         email: data.userData.email,

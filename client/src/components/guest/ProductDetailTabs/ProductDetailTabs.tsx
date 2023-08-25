@@ -31,7 +31,7 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
   const [ratingProduct, ratingProductResult] = useRatingProductMutation();
 
   const alreadyRating = product?.ratings.find(
-    (item) => (item.postedBy as IUser)._id === data?.userData._id
+    (item) => (item.postedBy as IUser)?._id === data?.userData?._id
   );
 
   const currentDate = moment();
