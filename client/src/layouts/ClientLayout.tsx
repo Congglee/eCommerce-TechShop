@@ -9,7 +9,7 @@ import { setCurrentScreenWidth } from "../features/app.slice";
 type Props = {};
 
 const UserLayout = (props: Props) => {
-  const location = useLocation();
+  const { pathname } = useLocation();
   const [currentWidth, setCurrentWidth] = useState(screen.width);
   const dispatch = useDispatch();
 
@@ -29,8 +29,12 @@ const UserLayout = (props: Props) => {
   }, [currentWidth]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location]);
+    document.documentElement.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [pathname]);
 
   return (
     <div className="font-Inter w-full max-w-full">

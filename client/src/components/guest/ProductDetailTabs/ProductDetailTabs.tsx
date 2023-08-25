@@ -257,7 +257,10 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
             )}
 
             {product?.ratings.map((rate) => (
-              <div className="pt-6 mt-6 border-t border-[rgba(0,0,0,0.1)]">
+              <div
+                className="pt-6 mt-6 border-t border-[rgba(0,0,0,0.1)]"
+                key={rate._id}
+              >
                 <div className="mb-2">
                   <div className="flex items-center text-[#f1b400] mb-[6px] gap-x-1">
                     <StarRating totalRatings={rate.star} size={14} />
@@ -266,13 +269,13 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
                   <span className="flex items-center text-sm italic">
                     <div className="w-10 h-10 rounded-full overflow-hidden mr-2">
                       <img
-                        src={(rate.postedBy as IUser).avatar as string}
+                        src={(rate.postedBy as IUser)?.avatar as string}
                         alt=""
                         className="w-full h-full"
                       />
                     </div>
                     <strong className="pr-1">
-                      {(rate.postedBy as IUser).name}
+                      {(rate.postedBy as IUser)?.name}
                     </strong>
                     vào
                     <strong className="pl-1">{rate.date}</strong>
