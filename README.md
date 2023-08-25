@@ -9,8 +9,9 @@ Fullstack open source ecommerce application made with MongoDB, Express, React & 
   - [Frontend](#frontend)
   - [Backend](#backend)
   - [Database](#database)
-- [📸 Screenshots](#screenshots)
+- [🐞 Bugs](#bugs)
 - [Features in Development](#features-in-development)
+- [📸 Screenshots](#screenshots)
 - [Author](#author)
 
 ## Configuration and Setup
@@ -97,7 +98,8 @@ This project was created using the following technologies.
 - [Tailwindcss](https://tailwindcss.com/) - For User Interface
 - [React Redux](https://react-redux.js.org/) - Manage application state efficiently and provide a more structured mechanism for managing data
 - [React Toastify](https://www.npmjs.com/package/react-toastify) - To display interactive and responsive notifications (toasts) in web applications
-- [sweetalert2](https://sweetalert2.github.io/) - Creating attractive pop-up notifications and modals.
+- [react-loader-spinner](https://mhnpd.github.io/react-loader-spinner/docs/intro) - Cool spinners for ReactJS application
+- [sweetalert2](https://sweetalert2.github.io/) - Creating attractive pop-up notifications and modals
 - [React Slick](https://react-slick.neostack.com/) - Designing responsive image sliders or carousels
 - [Redux Persist](https://github.com/rt2zz/redux-persist) - Persistently storing application state
 - [React Icons](https://react-icons.github.io/react-icons) - Integrating icons into React components
@@ -132,6 +134,20 @@ This project was created using the following technologies.
 #### Database
 
 - [MongoDB ](https://www.mongodb.com/) - It provides a free cloud service to store MongoDB collections
+
+## Features in Development
+
+- When choosing to pay via Stripe gateway on chrome browser got an error: CORS policy (net::ERR_FAILED 500): No 'Access-Control-Allow-Origin' header is present on the requested resource, but when running on another browser or anonymous chrome works fine
+
+## Features in Development
+
+- Responsive website
+- Create cart api
+- Admin Side for manage product, category, account, order, ...
+- Register an account with email verification
+- Forgot password, reset password (use Refresh Token)
+
+> - fix bugs of old features
 
 ## Screenshots
 
@@ -204,17 +220,6 @@ This project was created using the following technologies.
 ---
 
 ![rating](https://res.cloudinary.com/di3eto0bg/image/upload/v1692914919/ecommerce-techshop/rating-techshop_exlnfq.png)
-
-## Features in Development
-
-- Responsive website
-- Add loader effect
-- Create cart api
-- Admin Side for manage product, category, account, order, ...
-- Register an account with email verification
-- Forgot password, reset password (use Refresh Token)
-
-> - fix bugs of old features
 
 ## Author
 
