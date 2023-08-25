@@ -9,16 +9,44 @@ const { AiTwotoneStar } = icons;
 
 interface FeaturedProducts {
   products: IProduct[] | undefined;
+  isFetching: boolean;
 }
 
 const FeaturedProducts = (props: FeaturedProducts) => {
-  const { products } = props;
+  const { products, isFetching } = props;
   return (
     <div className="mb-5">
       <div className="mb-5 text-[#151515] border-b-2 border-main-200 py-[15px] uppercase text-xl font-semibold">
         SẢN PHẨM NỔI BẬT
       </div>
       <div className="flex flex-wrap ml-[-20px]">
+        {isFetching &&
+          [...Array(9)].map((_, index) => (
+            <div
+              role="status"
+              className="w-[calc(calc(100%_/_3)_-_20px)] ml-5 mb-5 space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center"
+              key={index}
+            >
+              <div className="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
+                <svg
+                  className="w-10 h-10 text-gray-200 dark:text-gray-600"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 18"
+                >
+                  <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                </svg>
+              </div>
+              <div className="w-full">
+                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[440px] mb-2.5" />
+                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[460px] mb-2.5" />
+                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]" />
+              </div>
+              <span className="sr-only">Loading...</span>
+            </div>
+          ))}
+
         {products?.slice(0, 9).map((product) => (
           <div
             className="w-[calc(calc(100%_/_3)_-_20px)] ml-5 mb-5 p-[15px] border border-main-700 flex items-start gap-x-5"

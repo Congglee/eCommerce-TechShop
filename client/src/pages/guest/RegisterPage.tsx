@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { isEntityError } from "../../utils/helper";
 import { InputItem } from "../../components/guest";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
+import { OvalSpinner } from "../../components/common/LoaderSpinner";
 
 const { BiChevronRight } = icons;
 
@@ -145,8 +146,11 @@ const RegisterPage = (props: Props) => {
               )}
             </div>
 
-            <button className="bg-main-200 uppercase py-[10px] px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px]">
-              Đăng ký
+            <button className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px]">
+              <div className="flex items-center justify-center gap-x-2">
+                <span>Đăng ký</span>
+                {registerResult.isLoading && <OvalSpinner />}
+              </div>
             </button>
 
             <div className="flex items-center justify-center">

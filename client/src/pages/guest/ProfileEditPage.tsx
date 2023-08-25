@@ -7,6 +7,7 @@ import { useUpdateUserByClientMutation } from "../../features/user/user.services
 import { isEntityError } from "../../utils/helper";
 import { toast } from "react-toastify";
 import { InputItem } from "../../components/guest";
+import { OvalSpinner } from "../../components/common/LoaderSpinner";
 
 const { BsArrowLeft } = icons;
 
@@ -80,10 +81,15 @@ const ProfileEditPage = (props: Props) => {
     if (formValue.address) {
       formData.append("address", formValue.address as string);
     }
+
     if (formValue.mobile) {
       formData.append("mobile", formValue.mobile as string);
     }
-    formData.append("avatar", formValue.avatar as File);
+
+    if (formValue.avatar) {
+      formData.append("avatar", formValue.avatar as File);
+    }
+
     await updateUserByClient(formData);
   };
 
@@ -239,8 +245,11 @@ const ProfileEditPage = (props: Props) => {
           </div>
 
           <div className="text-right">
-            <button className="bg-main-200 uppercase py-[10px] px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px] w-full max-w-[250px] mt-2">
-              Cập nhật
+            <button className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px] w-full max-w-[250px] mt-2">
+              <div className="flex items-center justify-center gap-x-2">
+                <span> Cập nhật</span>
+                {updateUserByClientResult.isLoading && <OvalSpinner />}
+              </div>
             </button>
           </div>
         </form>

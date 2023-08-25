@@ -5,6 +5,7 @@ import { useGetCurrentUserQuery } from "../../features/auth/auth.service";
 import { useUpdateUserOrderMutation } from "../../features/user/user.services";
 import { toast } from "react-toastify";
 import { decryptData, encryptData } from "../../utils/fn";
+import { RotatingSpinner } from "../../components/common/LoaderSpinner";
 
 const { BiChevronRight } = icons;
 
@@ -226,8 +227,11 @@ const CheckoutInfoPage = (props: Props) => {
           </div>
 
           <div className="text-right">
-            <button className="p-5 bg-[#333333] opacity-90 text-white text-sm rounded-md hover:opacity-100">
-              Tiếp tục vận chuyển
+            <button className="px-5 h-12 bg-[#333333] opacity-90 text-white text-sm rounded-md hover:opacity-100">
+              <div className="flex items-center gap-x-2">
+                <span>Tiếp tục vận chuyển</span>
+                {updateUserOrderResult.isLoading && <RotatingSpinner />}
+              </div>
             </button>
           </div>
         </form>

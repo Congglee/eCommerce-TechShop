@@ -9,8 +9,7 @@ import { toast } from "react-toastify";
 import { isEntityError } from "../../utils/helper";
 import { InputItem } from "../../components/guest";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
-
-const { BiChevronRight } = icons;
+import { OvalSpinner } from "../../components/common/LoaderSpinner";
 
 const initialState: { email: string; password: string } = {
   email: "",
@@ -138,8 +137,11 @@ const LoginPage = (props: Props) => {
               )}
             </div>
 
-            <button className="bg-main-200 uppercase py-[10px] px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px]">
-              Đăng nhập
+            <button className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px]">
+              <div className="flex items-center justify-center gap-x-2">
+                <span>Đăng nhập</span>
+                {loginResult.isLoading && <OvalSpinner />}
+              </div>
             </button>
 
             <div className="flex items-center justify-center flex-col gap-y-[10px]">
