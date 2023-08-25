@@ -135,7 +135,7 @@ This project was created using the following technologies.
 
 - [MongoDB ](https://www.mongodb.com/) - It provides a free cloud service to store MongoDB collections
 
-## Features in Development
+## Bugs
 
 - When choosing to pay via Stripe gateway on chrome browser got an error: CORS policy (net::ERR_FAILED 500): No 'Access-Control-Allow-Origin' header is present on the requested resource, but when running on another browser or anonymous chrome works fine
 
