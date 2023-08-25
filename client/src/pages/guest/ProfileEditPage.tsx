@@ -37,13 +37,33 @@ const ProfileEditPage = (props: Props) => {
 
   useEffect(() => {
     if (data?.userData) {
-      setFormValue({
+      // setFormValue({
+      //   name: data.userData.name,
+      //   email: data.userData.email,
+      //   ...(data.userData.address !== undefined && {
+      //     address: data.userData.address,
+      //   }),
+      //   ...(data.userData.mobile !== undefined && {
+      //     mobile: data.userData.mobile,
+      //   }),
+      //   avatar: data.userData.avatar,
+      // });
+
+      const updatedFormValue: any = {
         name: data.userData.name,
         email: data.userData.email,
-        address: data.userData.address,
-        mobile: data.userData.mobile,
         avatar: data.userData.avatar,
-      });
+      };
+
+      if (data.userData.address) {
+        updatedFormValue.address = data.userData.address;
+      }
+
+      if (data.userData.mobile) {
+        updatedFormValue.mobile = data.userData.mobile;
+      }
+
+      setFormValue(updatedFormValue);
     }
   }, [data]);
 
@@ -69,10 +89,13 @@ const ProfileEditPage = (props: Props) => {
     const formData = new FormData();
     formData.append("name", formValue.name);
     formData.append("email", formValue.email);
-    formData.append("address", formValue.address as string);
-    formData.append("mobile", formValue.mobile as string);
+    if (formValue.address) {
+      formData.append("address", formValue.address as string);
+    }
+    if (formValue.mobile) {
+      formData.append("mobile", formValue.mobile as string);
+    }
     formData.append("avatar", formValue.avatar as File);
-
     await updateUserByClient(formData);
   };
 
