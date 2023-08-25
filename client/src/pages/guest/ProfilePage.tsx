@@ -15,9 +15,14 @@ import Swal from "sweetalert2";
 type Props = {};
 
 const ProfilePage = (props: Props) => {
-  const { data: userOrders, refetch } = useGetUserOrderQuery();
+  const {
+    data: userOrders,
+    refetch,
+    isFetching: isFetchingUserOrder,
+  } = useGetUserOrderQuery();
   const { token } = useSelector((state: RootState) => state.auth);
-  const { data: userProfile } = useGetCurrentUserQuery();
+  const { data: userProfile, isFetching: isFetchingCurrentUser } =
+    useGetCurrentUserQuery();
   const [updateStatusOrderClient, updateStatusOrderClientResult] =
     useUpdateStatusOrderClientMutation();
   const dispatch = useDispatch();
@@ -79,47 +84,70 @@ const ProfilePage = (props: Props) => {
           <div className="w-[calc(calc(100%_/_6))] mx-4"></div>
         </div>
 
-        {userOrders?.response.map((order: IOrder) => (
-          <div
-            className="flex items-center text-[13px] py-[15px] px-2 border border-[#f1f1f1]"
-            key={order._id}
-          >
+        {isFetchingUserOrder &&
+          [...Array(2)].map((_, index) => (
             <div
-              className="w-[calc(calc(100%_/_6))] mx-4 hover:text-main-200 line-clamp-2 whitespace-normal break-words"
-              onClick={() => dispatch(setOrderDetail({ id: order._id }))}
+              role="status"
+              className="w-full p-4 space-y-4 border border-[#f1f1f1] divide-y divide-gray-200 rounded shadow animate-pulse md:p-6"
+              key={index}
             >
-              <Link to={`order/${order._id}`}>DW2{order._id}</Link>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5" />
+                  <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
+                </div>
+                <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12" />
+              </div>
+              <span className="sr-only">Loading...</span>
             </div>
+          ))}
 
-            <div className="w-[calc(calc(100%_/_6))] mx-4">{order.date}</div>
-            <div className="w-[calc(calc(100%_/_6))] mx-4">{order.payment}</div>
-            <div className="w-[calc(calc(100%_/_6))] mx-4">{order.status}</div>
-            <div className="w-[calc(calc(100%_/_6))] mx-4">
-              {formatCurrency(order.total)}
+        {!isFetchingUserOrder &&
+          userOrders?.response.map((order: IOrder) => (
+            <div
+              className="flex items-center text-[13px] py-[15px] px-2 border border-[#f1f1f1]"
+              key={order._id}
+            >
+              <div
+                className="w-[calc(calc(100%_/_6))] mx-4 hover:text-main-200 line-clamp-2 whitespace-normal break-words"
+                onClick={() => dispatch(setOrderDetail({ id: order._id }))}
+              >
+                <Link to={`order/${order._id}`}>DW2{order._id}</Link>
+              </div>
+
+              <div className="w-[calc(calc(100%_/_6))] mx-4">{order.date}</div>
+              <div className="w-[calc(calc(100%_/_6))] mx-4">
+                {order.payment}
+              </div>
+              <div className="w-[calc(calc(100%_/_6))] mx-4">
+                {order.status}
+              </div>
+              <div className="w-[calc(calc(100%_/_6))] mx-4">
+                {formatCurrency(order.total)}
+              </div>
+              <div className="w-[calc(calc(100%_/_6))] mx-4">
+                {order.status === "Đã hủy" ||
+                order.status === "Thành công" ||
+                order.delivery_status === "Giao thành công" ||
+                order.delivery_status === "Đang giao" ? (
+                  <button
+                    type="button"
+                    className="border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-gray-600 text-white dark:hover:bg-gray-700 dark:hover:border-gray-600"
+                  >
+                    Hủy
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg uppercase px-5 py-2.5 text-center mr-2 mb-2"
+                    onClick={() => handleCancelOrder(order, "Đã hủy")}
+                  >
+                    Hủy
+                  </button>
+                )}
+              </div>
             </div>
-            <div className="w-[calc(calc(100%_/_6))] mx-4">
-              {order.status === "Đã hủy" ||
-              order.status === "Thành công" ||
-              order.delivery_status === "Giao thành công" ||
-              order.delivery_status === "Đang giao" ? (
-                <button
-                  type="button"
-                  className="border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-gray-600 text-white dark:hover:bg-gray-700 dark:hover:border-gray-600"
-                >
-                  Hủy
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg uppercase px-5 py-2.5 text-center mr-2 mb-2"
-                  onClick={() => handleCancelOrder(order, "Đã hủy")}
-                >
-                  Hủy
-                </button>
-              )}
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       <div className="w-[30%] flex-shrink-0">
@@ -127,10 +155,25 @@ const ProfilePage = (props: Props) => {
           CHI TIẾT TÀI KHOẢN
         </div>
         <div className="flex flex-col gap-y-1 text-sm text-main-500 mb-2 px-[15px]">
-          <span>{userProfile?.userData.name}</span>
-          <span>{userProfile?.userData.email}</span>
-          <span>{userProfile?.userData.address}</span>
-          <span>{userProfile?.userData.mobile}</span>
+          {isFetchingCurrentUser && (
+            <div role="status" className="max-w-sm animate-pulse">
+              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5" />
+              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5" />
+              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5" />
+              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5" />
+              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]" />
+              <span className="sr-only">Loading...</span>
+            </div>
+          )}
+
+          {!isFetchingCurrentUser && (
+            <>
+              <span>{userProfile?.userData.name}</span>
+              <span>{userProfile?.userData.email}</span>
+              <span>{userProfile?.userData.address}</span>
+              <span>{userProfile?.userData.mobile}</span>
+            </>
+          )}
         </div>
 
         <div className="px-[15px] text-main-200 text-sm">

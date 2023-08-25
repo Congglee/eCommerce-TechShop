@@ -14,7 +14,9 @@ type Props = {};
 const ProfileOrderDetailPage = (props: Props) => {
   const { orderId } = useSelector((state: RootState) => state.order);
   const { id } = useParams();
-  const { data } = useGetOrderDetailQuery(orderId ? orderId : (id as string));
+  const { data, isFetching } = useGetOrderDetailQuery(
+    orderId ? orderId : (id as string)
+  );
 
   return (
     <>
@@ -35,23 +37,36 @@ const ProfileOrderDetailPage = (props: Props) => {
 
       <div className="w-[80%] flex-1">
         <div className="flex flex-col gap-y-1 mb-10">
-          <h2 className="text-2xl font-semibold text-main-500">
-            Đơn hàng DW2{data?.response._id}
-          </h2>
-          <span className="text-base font-medium text-gray-600">
-            Đặt hàng vào {data?.response.date}
-          </span>
-
-          {data?.response.status === "Đã hủy" && (
-            <span className="text-base font-bold text-gray-600">
-              Đơn hàng đã bị hủy
-            </span>
+          {isFetching && (
+            <div role="status" className="w-full animate-pulse">
+              <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[550px] mb-4" />
+              <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-4" />
+              <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-4" />
+              <span className="sr-only">Loading...</span>
+            </div>
           )}
 
-          {data?.response.status === "Thành công" && (
-            <span className="text-base font-bold text-gray-600">
-              Đơn hàng được đặt thành công
-            </span>
+          {!isFetching && (
+            <>
+              <h2 className="text-2xl font-semibold text-main-500">
+                Đơn hàng DW2{data?.response._id}
+              </h2>
+              <span className="text-base font-medium text-gray-600">
+                Đặt hàng vào {data?.response.date}
+              </span>
+
+              {data?.response.status === "Đã hủy" && (
+                <span className="text-base font-bold text-gray-600">
+                  Đơn hàng đã bị hủy
+                </span>
+              )}
+
+              {data?.response.status === "Thành công" && (
+                <span className="text-base font-bold text-gray-600">
+                  Đơn hàng được đặt thành công
+                </span>
+              )}
+            </>
           )}
         </div>
 
@@ -61,32 +76,65 @@ const ProfileOrderDetailPage = (props: Props) => {
               Sản phẩm đơn hàng
             </h3>
 
-            {data?.response.products.map((orderProductItem: any) => (
+            {isFetching && (
               <div
-                className="flex items-start gap-x-6"
-                key={orderProductItem._id}
+                role="status"
+                className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex"
               >
-                <div className="w-[180px]">
-                  <img src={orderProductItem.product.thumb} alt="" />
+                <div className="flex items-center justify-center w-full h-40 bg-gray-300 rounded sm:w-72 dark:bg-gray-700">
+                  <svg
+                    className="w-10 h-10 text-gray-200 dark:text-gray-600"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 18"
+                  >
+                    <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                  </svg>
                 </div>
-
-                <div className="flex-grow w-[calc(100%_-_180px)] flex items-start justify-between gap-x-8 text-main-300">
-                  <h3 className="text-[15px] font-semibold">
-                    {orderProductItem.product.name}
-                  </h3>
-                  <span className="text-sm">
-                    {formatCurrency(orderProductItem.product.price)}VND
-                  </span>
-                  <span className="text-sm">{orderProductItem.count}</span>
-                  <span className="text-sm">
-                    {formatCurrency(
-                      orderProductItem.product.price * orderProductItem.count
-                    )}
-                    VND
-                  </span>
+                <div className="w-full gap-y-2 flex flex-col">
+                  <div className="flex w-full space-x-2">
+                    <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-32" />
+                    <div className="h-3 bg-gray-300 rounded-full dark:bg-gray-600 w-20" />
+                    <div className="h-3 bg-gray-300 rounded-full dark:bg-gray-600 w-full" />
+                  </div>
+                  <div className="flex w-full space-x-2">
+                    <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-32" />
+                    <div className="h-3 bg-gray-300 rounded-full dark:bg-gray-600 w-20" />
+                    <div className="h-3 bg-gray-300 rounded-full dark:bg-gray-600 w-full" />
+                  </div>
                 </div>
+                <span className="sr-only">Loading...</span>
               </div>
-            ))}
+            )}
+
+            {!isFetching &&
+              data?.response.products.map((orderProductItem: any) => (
+                <div
+                  className="flex items-start gap-x-6"
+                  key={orderProductItem._id}
+                >
+                  <div className="w-[180px]">
+                    <img src={orderProductItem.product.thumb} alt="" />
+                  </div>
+
+                  <div className="flex-grow w-[calc(100%_-_180px)] flex items-start justify-between gap-x-8 text-main-300">
+                    <h3 className="text-[15px] font-semibold">
+                      {orderProductItem.product.name}
+                    </h3>
+                    <span className="text-sm">
+                      {formatCurrency(orderProductItem.product.price)}VND
+                    </span>
+                    <span className="text-sm">{orderProductItem.count}</span>
+                    <span className="text-sm">
+                      {formatCurrency(
+                        orderProductItem.product.price * orderProductItem.count
+                      )}
+                      VND
+                    </span>
+                  </div>
+                </div>
+              ))}
 
             <div className="flex flex-col text-main-300">
               <h3 className="text-main-500 capitalize text-xl font-semibold mb-4">
@@ -94,20 +142,64 @@ const ProfileOrderDetailPage = (props: Props) => {
               </h3>
 
               <div className="border-b border-main-100 pb-4 text-base text-main-500 mb-4">
-                <div className="flex justify-between mb-1">
-                  <span>Tổng phụ</span>
-                  <span>{formatCurrency(data?.response.total)} VND</span>
-                </div>
+                {isFetching && (
+                  <div
+                    role="status"
+                    className="w-full space-y-4 rounded animate-pulse"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5" />
+                        <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
+                      </div>
+                      <div>
+                        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mb-2.5" />
+                        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12" />
+                      </div>
+                    </div>
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                )}
 
-                <div className="flex justify-between">
-                  <span>Phí vận chuyển</span>
-                  <span>0,00 VND</span>
-                </div>
+                {!isFetching && (
+                  <>
+                    <div className="flex justify-between mb-1">
+                      <span>Tổng phụ</span>
+                      <span>{formatCurrency(data?.response.total)} VND</span>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <span>Phí vận chuyển</span>
+                      <span>0,00 VND</span>
+                    </div>
+                  </>
+                )}
               </div>
 
               <div className="flex justify-between text-lg font-semibold">
-                <span>Tổng tiền</span>
-                <span>{formatCurrency(data?.response.total)} VND</span>
+                {isFetching && (
+                  <div
+                    role="status"
+                    className="w-full space-y-4 rounded animate-pulse"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="h-3 bg-gray-300 rounded-full dark:bg-gray-600 w-28 mb-2.5" />
+                      </div>
+                      <div>
+                        <div className="h-3 bg-gray-300 rounded-full dark:bg-gray-700 w-16 mb-2.5" />
+                      </div>
+                    </div>
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                )}
+
+                {!isFetching && (
+                  <>
+                    <span>Tổng tiền</span>
+                    <span>{formatCurrency(data?.response.total)} VND</span>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -117,39 +209,66 @@ const ProfileOrderDetailPage = (props: Props) => {
               Thông tin đơn hàng
             </h3>
 
-            <div className="flex flex-col">
-              <h3 className="text-base font-semibold mb-2">Người đặt</h3>
-              <div className="flex items-center gap-x-5 text-[13px] text-main-300 mb-4">
-                <GrMail size={20} />
-                <span>{(data?.response?.orderBy as IUser)?.email}</span>
-              </div>
-              <div className="flex items-center gap-x-5 text-[13px] text-main-300 pb-4 border-b border-main-100">
-                <BsFillTelephoneFill size={20} />
-                <span>{data?.response.mobile}</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-y-5">
-              <div>
-                <h3 className="text-base font-semibold mb-[10px]">
-                  Địa chỉ giao hàng
-                </h3>
-                <div className="flex flex-col text-sm gap-y-[2px]">
-                  <span>{data?.response.address}</span>
-                  <span>{data?.response.delivery_status}</span>
+            {isFetching && (
+              <div
+                role="status"
+                className="max-w-sm border border-gray-200 rounded animate-pulse"
+              >
+                <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2.5" />
+                <div className="flex items-baseline mt-4 space-x-6">
+                  <div className="flex items-center w-full space-x-2">
+                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-14" />
+                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full" />
+                  </div>
                 </div>
-              </div>
-
-              <div>
-                <h3 className="text-base font-semibold mb-[10px]">
-                  Địa chỉ thanh toán
-                </h3>
-                <div className="flex flex-col text-sm gap-y-[2px]">
-                  <span>{data?.response.address}</span>
-                  <span>{data?.response.payment_status}</span>
+                <div className="flex items-baseline mt-4 space-x-6">
+                  <div>
+                    <div className="h-2 w-24 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5" />
+                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-2.5" />
+                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-2.5" />
+                  </div>
                 </div>
+                <span className="sr-only">Loading...</span>
               </div>
-            </div>
+            )}
+
+            {!isFetching && (
+              <>
+                <div className="flex flex-col">
+                  <h3 className="text-base font-semibold mb-2">Người đặt</h3>
+                  <div className="flex items-center gap-x-5 text-[13px] text-main-300 mb-4">
+                    <GrMail size={20} />
+                    <span>{(data?.response?.orderBy as IUser)?.email}</span>
+                  </div>
+                  <div className="flex items-center gap-x-5 text-[13px] text-main-300 pb-4 border-b border-main-100">
+                    <BsFillTelephoneFill size={20} />
+                    <span>{data?.response.mobile}</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-y-5">
+                  <div>
+                    <h3 className="text-base font-semibold mb-[10px]">
+                      Địa chỉ giao hàng
+                    </h3>
+                    <div className="flex flex-col text-sm gap-y-[2px]">
+                      <span>{data?.response.address}</span>
+                      <span>{data?.response.delivery_status}</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-base font-semibold mb-[10px]">
+                      Địa chỉ thanh toán
+                    </h3>
+                    <div className="flex flex-col text-sm gap-y-[2px]">
+                      <span>{data?.response.address}</span>
+                      <span>{data?.response.payment_status}</span>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
