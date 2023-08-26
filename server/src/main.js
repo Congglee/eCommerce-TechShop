@@ -20,12 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const corsOptions = {
-  origin: ["https://ecommerce-techshop.vercel.app", "http://localhost:5173"], // or "*", to allow all origins
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use("/api", productRoute);
 app.use("/api", categoryRoute);
