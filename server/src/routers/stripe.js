@@ -103,7 +103,7 @@ router.post("/create-checkout-session", async (req, res) => {
     locale: "auto",
   });
 
-  return res.status(200).json({ url: session.url });
+  res.json({ url: session.url });
 });
 
 const createOrderForStripe = async (customer, data) => {
