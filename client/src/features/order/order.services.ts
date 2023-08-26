@@ -61,7 +61,6 @@ export const orderApi = createApi({
         return {
           url: "/stripe/create-checkout-session",
           method: "POST",
-          mode: "no-cors",
           body,
         };
       },
