@@ -20,11 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const corsOptions = {
-  origin: [process.env.DEPLOY_URL, process.env.LOCAL_URL],
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use("/api", productRoute);
 app.use("/api", categoryRoute);
