@@ -125,7 +125,7 @@ const ProductPage = (props: Props) => {
       </div>
 
       <div
-        className={`fixed top-0 bottom-0 right-0 bg-white px-[10px] w-[60%] z-[50] transition-all duration-200 ease-linear ${
+        className={`769:hidden fixed top-0 bottom-0 right-0 bg-white px-[10px] w-[60%] z-[50] transition-all duration-200 ease-linear ${
           isShow ? "block animate-show-right-up" : "animate-show-right-down"
         }`}
       >
@@ -135,7 +135,8 @@ const ProductPage = (props: Props) => {
               Lọc và sắp xếp
             </span>
             <span className="text-[#1a1b18b3] text-[13px]">
-              Hiển thị 36 trên 36 sản phẩm
+              Hiển thị {data?.products.length} trên {data?.totalProduct} sản
+              phẩm
             </span>
           </div>
 

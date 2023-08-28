@@ -21,7 +21,7 @@ const BurgerMenu = (props: burgerMenuProps) => {
 
   return (
     <div
-      className={`fixed top-0 bottom-0 left-0 bg-main-600 px-[10px] w-[40%] z-[50] ${
+      className={`769:hidden fixed top-0 bottom-0 left-0 bg-main-600 px-[10px] w-[40%] z-[50] ${
         isActive ? "block animate-show-left-up" : "animate-show-left-down"
       }`}
     >
