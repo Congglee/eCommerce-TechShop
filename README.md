@@ -137,11 +137,10 @@ This project was created using the following technologies.
 
 ## Bugs
 
-- When choosing to pay via Stripe gateway on chrome browser got an error: CORS policy (net::ERR_FAILED 500): No 'Access-Control-Allow-Origin' header is present on the requested resource, but when running on another browser or anonymous chrome works fine
+- ...
 
 ## Features in Development
 
-- Responsive website
 - Create cart api
 - Admin Side for manage product, category, account, order, ...
 - Register an account with email verification
