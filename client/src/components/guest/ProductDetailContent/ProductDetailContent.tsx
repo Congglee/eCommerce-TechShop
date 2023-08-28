@@ -69,7 +69,7 @@ const ProductDetailContent = (props: productDetailContentProps) => {
 
   return (
     <>
-      <div className="w-[40%] flex-shrink-0 flex flex-col gap-y-[30px]">
+      <div className="w-[40%] md:w-full flex-shrink-0 flex flex-col gap-y-[30px]">
         <div className="border border-main-700 bg-[#f7f7f7]">
           <img src={selectedImage || product?.thumb} alt="" />
         </div>
@@ -77,7 +77,7 @@ const ProductDetailContent = (props: productDetailContentProps) => {
         <div className="flex flex-wrap mx-[-5px] gap-y-[10px]">
           {product?.images.map((image) => (
             <div
-              className="w-[calc(calc(100%_/_3)_-_10px)] mx-[5px] border border-main-700 p-[10px] cursor-pointer"
+              className="w-[calc(calc(100%_/_3)_-_10px)] md:w-[calc(calc(100%_/_2)_-_10px)] mx-[5px] border border-main-700 p-[10px] cursor-pointer"
               key={image}
               onClick={() => handleImageClick(image)}
             >
@@ -87,8 +87,8 @@ const ProductDetailContent = (props: productDetailContentProps) => {
         </div>
       </div>
 
-      <div className="w-[60%] flex-1 flex">
-        <div className="w-[62.5%] flex-shrink-0">
+      <div className="w-[60%] md:w-full flex-1 flex sm:flex-col">
+        <div className="w-[62.5%] flex-shrink-0 sm:w-full sm:mb-5">
           <div className="text-[#333] text-3xl font-semibold mb-5">
             <span>{formatCurrency(product?.price)} VND</span>
           </div>
@@ -177,7 +177,8 @@ const ProductDetailContent = (props: productDetailContentProps) => {
             </div>
           </div>
         </div>
-        <div className="w-[37.5%] flex-1 flex flex-col gap-y-[10px]">
+
+        <div className="w-[37.5%] flex-1 flex flex-col gap-y-[10px] sm:w-full">
           <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
             <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
               <BsShieldShaded size={18} />

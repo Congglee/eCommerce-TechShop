@@ -2,16 +2,23 @@ import React from "react";
 import icons from "../../../utils/icons";
 import Slider from "react-slick";
 import { newsItems } from "../../../utils/collections";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 const { FaRegComment, FaCalendarAlt } = icons;
 
 type Props = {};
 
 const BlogPosts = (props: Props) => {
+  const { currentWidth } = useSelector((state: RootState) => state.app);
+  let numItemsToShow = 3;
+
+  if (currentWidth <= 768 && currentWidth > 480) numItemsToShow = 2;
+  else if (currentWidth <= 480) numItemsToShow = 1;
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: numItemsToShow,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -26,8 +33,8 @@ const BlogPosts = (props: Props) => {
       <div className="mx-[-10px]">
         <Slider {...settings}>
           {newsItems.map((news) => (
-            <div className="mx-[10px]" key={news.id}>
-              <div className="mb-5 w-[380px] h-[260px]">
+            <div key={news.id}>
+              <div className="mb-5 w-[95%] mx-auto h-[260px]">
                 <img src={news.image} alt="" className="w-full h-full" />
               </div>
 

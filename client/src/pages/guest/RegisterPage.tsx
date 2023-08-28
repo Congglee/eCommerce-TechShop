@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { isEntityError } from "../../utils/helper";
 import { InputItem } from "../../components/guest";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
-import { OvalSpinner } from "../../components/common/LoaderSpinner";
+import { OvalSpinner } from "../../components/common";
 
 const { BiChevronRight } = icons;
 
@@ -65,7 +65,7 @@ const RegisterPage = (props: Props) => {
   return (
     <>
       <div className="bg-[#f7f7f7] py-[15px] mb-5">
-        <div className="px-[170px]">
+        <div className="max-w-[1220px] mx-auto px-5">
           <div>
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               Tạo tài khoản
@@ -78,10 +78,10 @@ const RegisterPage = (props: Props) => {
       <div className="max-w-[1220px] mx-auto px-5">
         <div className="flex items-center justify-center flex-col gap-y-[10px] mb-10">
           <form
-            className="flex flex-col gap-y-[10px]"
+            className="flex flex-col gap-y-[10px] w-[500px] xs:w-[80%]"
             onSubmit={handleRegister}
           >
-            <div className="text-sm text-main-600 w-[500px]">
+            <div className="text-sm text-main-600 w-full">
               <InputItem
                 placeholder="Họ và tên"
                 name="name"
@@ -96,7 +96,7 @@ const RegisterPage = (props: Props) => {
               )}
             </div>
 
-            <div className="text-sm text-main-600 w-[500px]">
+            <div className="text-sm text-main-600 w-full">
               <InputItem
                 type="email"
                 placeholder="Email"
@@ -112,7 +112,7 @@ const RegisterPage = (props: Props) => {
               )}
             </div>
 
-            <div className="text-sm text-main-600 w-[500px]">
+            <div className="text-sm text-main-600 w-full">
               <InputItem
                 type="password"
                 placeholder="Mật khẩu"
@@ -128,7 +128,7 @@ const RegisterPage = (props: Props) => {
               )}
             </div>
 
-            <div className="text-sm text-main-600 w-[500px]">
+            <div className="text-sm text-main-600 w-full">
               <InputItem
                 type="password"
                 placeholder="Xác nhận mật khẩu"
@@ -146,7 +146,7 @@ const RegisterPage = (props: Props) => {
               )}
             </div>
 
-            <button className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px]">
+            <button className="bg-main-200 w-full uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px]">
               <div className="flex items-center justify-center gap-x-2">
                 <span>Đăng ký</span>
                 {registerResult.isLoading && <OvalSpinner />}

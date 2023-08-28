@@ -13,34 +13,30 @@ const HotCollections = (props: Props) => {
         BỘ SƯU TẬP HOT
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {hotCollections.map((item) => (
+      <div className="flex flex-wrap mx-[-10px]">
+        {hotCollections.map((item, index) => (
           <div
-            className="border border-main-700 p-4 flex gap-3 md:gap-5"
-            key={item.title}
+            className="w-[calc(calc(100%_/_3)_-_20px)] xs:w-[calc(calc(100%_/_2)_-_20px)] md:w-[calc(calc(100%_/_2)_-_20px)] mx-[10px] mb-5 border border-main-700 p-[15px] flex flex-wrap"
+            key={index}
           >
-            <div className="w-28 h-28 md:w-36 md:h-36">
-              <img
-                src={item.image}
-                alt=""
-                className="w-full h-full object-cover"
-              />
+            <div className="pl-5 xs:pl-0 xs:w-full xs:h-auto md:pl-0 md:w-full md:h-auto flex-shrink-0 w-[175px] h-[140px]">
+              <img src={item.image} alt="" className="w-full h-full" />
             </div>
 
             <div className="flex-1">
-              <h3 className="uppercase font-semibold mb-1 text-main-500 text-sm">
+              <h3 className="uppercase font-semibold mb-[10px] text-main-500 text-sm">
                 {item.title}
               </h3>
-              <div className="flex flex-col gap-1 mb-4">
-                {item.type.map((elItem) => (
+              <div className="flex flex-col gap-y-[5px] mb-5">
+                {item.type.map((itemType) => (
                   <div
-                    className="flex items-center text-gray-500 text-xs"
-                    key={elItem}
+                    className="flex items-center text-gray-500 text-sm"
+                    key={itemType}
                   >
                     <div>
-                      <BiChevronRight size={14} />
+                      <BiChevronRight size={18} />
                     </div>
-                    <span>{elItem}</span>
+                    <span>{itemType}</span>
                   </div>
                 ))}
               </div>

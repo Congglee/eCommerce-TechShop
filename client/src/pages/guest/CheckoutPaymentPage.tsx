@@ -94,7 +94,7 @@ const CheckoutPaymentPage = (props: Props) => {
       {!createOrderResult.isSuccess && (
         <div className="border border-[#e9e9e9] rounded px-[17px] flex flex-col mb-10">
           <div className="flex items-center py-[11px]">
-            <div className="flex items-center text-sm flex-grow">
+            <div className="flex items-center text-sm flex-grow xs:flex-col xs:items-start">
               <div className="text-sm flex-shrink-0 w-[30%] text-[#707070]">
                 Liên hệ
               </div>
@@ -106,7 +106,7 @@ const CheckoutPaymentPage = (props: Props) => {
           </div>
 
           <div className="flex items-center py-[11px]">
-            <div className="flex items-center text-sm flex-grow">
+            <div className="flex items-center text-sm flex-grow xs:flex-col xs:items-start">
               <div className="text-sm flex-shrink-0 w-[30%] text-[#707070]">
                 Gửi đến
               </div>
@@ -118,7 +118,7 @@ const CheckoutPaymentPage = (props: Props) => {
           </div>
 
           <div className="flex items-center py-[11px]">
-            <div className="flex items-center text-sm flex-grow">
+            <div className="flex items-center text-sm flex-grow xs:flex-col xs:items-start">
               <div className="text-sm flex-shrink-0 w-[30%] text-[#707070]">
                 Phương thức
               </div>

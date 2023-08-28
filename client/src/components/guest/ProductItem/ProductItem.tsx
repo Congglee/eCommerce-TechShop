@@ -5,13 +5,7 @@ import { IProduct } from "../../../interfaces/product.interface";
 import { formatCurrency } from "../../../utils/fn";
 import { StarRating } from "..";
 
-const {
-  AiTwotoneStar,
-  LiaBarsSolid,
-  FaEye,
-  BsFillHeartFill,
-  PiShoppingCartFill,
-} = icons;
+const { LiaBarsSolid, FaEye, BsFillHeartFill, PiShoppingCartFill } = icons;
 
 interface ProductItemProps {
   product?: IProduct;
@@ -19,6 +13,7 @@ interface ProductItemProps {
   isNewArrivals?: boolean;
   isRelateProduct?: boolean;
   isRelateProductSlide?: boolean;
+  isProductsPage?: boolean;
 }
 
 type Props = {};
@@ -32,6 +27,7 @@ const ProductItem = (props: ProductItemProps) => {
     isNewArrivals,
     isRelateProduct,
     isRelateProductSlide,
+    isProductsPage,
   } = props;
 
   const formattedProductDesc = product?.description.replace(/\n/g, "<br/>");
@@ -40,16 +36,23 @@ const ProductItem = (props: ProductItemProps) => {
 
   return (
     <div
-      className={`w-[calc(calc(100%_/_3)_-_22px)] max-[970px]:w-[calc(calc(100%_/_2)_-_22px)] mx-[11px] border border-[#ebebeb] p-[15px] cursor-pointer flex flex-col relative
-      ${isRelateProductSlide && "w-auto mx-2"}
-      ${isRelateProduct && "w-[calc(calc(100%_/_4)_-_20px)] mx-[10px]"}
-      ${isNewArrivals && "w-[calc(calc(100%_/_3)_-_20px)] mx-[10px]"}
+      className={`w-[calc(calc(100%_/_3)_-_20px)] md:w-[calc(calc(100%_/_2)_-_20px)] mx-[10px] border border-[#ebebeb] p-[15px] cursor-pointer flex flex-col relative
+      ${isRelateProductSlide && "md:w-auto w-auto xs:w-auto"}
+      ${
+        isRelateProduct &&
+        "w-[calc(calc(100%_/_4)_-_20px)] mx-[10px] sm:w-[calc(calc(100%_/_2)_-_20px)]"
+      }
+      ${isNewArrivals || isHoverHomePage ? "sm:w-full" : ""}
+      ${
+        isProductsPage &&
+        "md:w-[calc(calc(100%_/_3)_-_20px)] sm:w-[calc(calc(100%_/_2)_-_20px)] mx-[10px]"
+      }
       `}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
       <div
-        className={`mb-5 w-full h-[250px] flex-shrink-0 relative ${
+        className={`mb-5 w-full flex-shrink-0 relative ${
           isHoverHomePage && "relative"
         }`}
         onMouseEnter={() => setIsHoverProductHome(true)}
@@ -62,11 +65,7 @@ const ProductItem = (props: ProductItemProps) => {
               : `/products/${product?.slug}`
           }`}
         >
-          <img
-            src={product?.thumb}
-            alt=""
-            className={`w-full h-full ${isNewArrivals ? "object-cover" : ""}`}
-          />
+          <img src={product?.thumb} alt="" className={`w-full h-full`} />
         </Link>
 
         {isHoverHomePage && isHoverProductHome && (

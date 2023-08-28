@@ -6,6 +6,7 @@ import {
   BiLogoLinkedin,
   BiLogoPinterest,
   BiLogoTwitter,
+  BiSolidUserAccount,
 } from "react-icons/bi";
 import { GrSort, GrMail, GrUnorderedList } from "react-icons/gr";
 import {
@@ -13,6 +14,8 @@ import {
   AiOutlineUnorderedList,
   AiOutlineCaretDown,
   AiFillStar,
+  AiOutlineClose,
+  AiOutlineUser,
 } from "react-icons/ai";
 import { LiaBarsSolid } from "react-icons/lia";
 import {
@@ -33,8 +36,8 @@ import {
   BsArrowLeft,
 } from "react-icons/bs";
 import { HiOutlineDotsHorizontal, HiShoppingBag, HiGift } from "react-icons/hi";
-import { GiPositionMarker } from "react-icons/gi";
-import { FiChevronDown } from "react-icons/fi";
+import { GiPositionMarker, GiHamburgerMenu } from "react-icons/gi";
+import { FiChevronDown, FiChevronUp, FiFilter } from "react-icons/fi";
 import { PiListBold, PiShoppingCartFill } from "react-icons/pi";
 
 const icons = {
@@ -73,6 +76,12 @@ const icons = {
   FaTty,
   BsArrowLeft,
   FaCcStripe,
+  GiHamburgerMenu,
+  AiOutlineClose,
+  AiOutlineUser,
+  BiSolidUserAccount,
+  FiFilter,
+  FiChevronUp,
 };
 
 export default icons;

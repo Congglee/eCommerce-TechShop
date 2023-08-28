@@ -67,11 +67,11 @@ const ProfilePage = (props: Props) => {
 
   return (
     <>
-      <div className="w-[70%] flex-1 flex flex-col">
+      <div className="w-[70%] md:w-full md:mb-5 flex-shrink-0 flex flex-col pr-6">
         <div className="text-white bg-main-200 py-[14px] px-[15px] uppercase font-semibold text-lg">
           Lịch sử đặt hàng
         </div>
-        <div className="flex items-center uppercase text-[13px] py-[15px] px-3 border border-[#f1f1f1] font-medium">
+        <div className="flex items-start uppercase text-[13px] py-[15px] px-3 border border-[#f1f1f1] font-medium sm:hidden">
           <div className="w-[calc(calc(100%_/_6))] mx-4">Mã đơn hàng</div>
           <div className="w-[calc(calc(100%_/_6))] mx-4">Ngày đặt hàng</div>
           <div className="w-[calc(calc(100%_/_6))] mx-4">
@@ -105,27 +105,29 @@ const ProfilePage = (props: Props) => {
         {!isFetchingUserOrder &&
           userOrders?.response.map((order: IOrder) => (
             <div
-              className="flex items-center text-[13px] py-[15px] px-2 border border-[#f1f1f1]"
+              className="flex items-start text-[13px] 900:text-[11px] py-[15px] px-2 border border-[#f1f1f1] sm:flex-col sm:gap-y-2 sm:text-sm xs:text-xs"
               key={order._id}
             >
               <div
-                className="w-[calc(calc(100%_/_6))] mx-4 hover:text-main-200 line-clamp-2 whitespace-normal break-words"
+                className="w-[calc(calc(100%_/_6))] sm:w-full mx-4 hover:text-main-200 line-clamp-2 whitespace-normal break-words md:line-clamp-3 900:line-clamp-4"
                 onClick={() => dispatch(setOrderDetail({ id: order._id }))}
               >
                 <Link to={`order/${order._id}`}>DW2{order._id}</Link>
               </div>
 
-              <div className="w-[calc(calc(100%_/_6))] mx-4">{order.date}</div>
-              <div className="w-[calc(calc(100%_/_6))] mx-4">
+              <div className="w-[calc(calc(100%_/_6))] sm:w-full mx-4">
+                {order.date}
+              </div>
+              <div className="w-[calc(calc(100%_/_6))] sm:w-full mx-4">
                 {order.payment}
               </div>
-              <div className="w-[calc(calc(100%_/_6))] mx-4">
+              <div className="w-[calc(calc(100%_/_6))] sm:w-full mx-4">
                 {order.status}
               </div>
-              <div className="w-[calc(calc(100%_/_6))] mx-4">
+              <div className="w-[calc(calc(100%_/_6))] sm:w-full mx-4">
                 {formatCurrency(order.total)}
               </div>
-              <div className="w-[calc(calc(100%_/_6))] mx-4">
+              <div className="w-[calc(calc(100%_/_6))] sm:w-full mx-4">
                 {order.status === "Đã hủy" ||
                 order.status === "Thành công" ||
                 order.delivery_status === "Giao thành công" ||
@@ -150,7 +152,7 @@ const ProfilePage = (props: Props) => {
           ))}
       </div>
 
-      <div className="w-[30%] flex-shrink-0">
+      <div className="w-[30%] flex-1 md:w-full">
         <div className="text-white bg-main-200 py-[14px] px-[15px] uppercase font-semibold text-lg mb-5">
           CHI TIẾT TÀI KHOẢN
         </div>

@@ -15,7 +15,7 @@ const CategorySideMenu = (props: Props) => {
 
   return (
     <div className="border border-[#ebebeb]">
-      <div className="py-[10px] px-5 uppercase bg-main-200 text-white text-base font-semibold flex items-center gap-x-[10px]">
+      <div className="py-[10px] px-5 uppercase bg-main-200 text-white text-base font-semibold flex items-center md:items-start gap-x-[10px]">
         <GrUnorderedList size={22} />
         <h3>Thương hiệu</h3>
       </div>
@@ -68,10 +68,9 @@ const CategorySideMenu = (props: Props) => {
         <div className="px-5 flex flex-col">
           {data?.categories.map((category: ICategory) => {
             const isActive = categoryParams === category.slug;
-
             return (
               <div
-                className="flex items-center gap-x-3 py-[14px]"
+                className="flex items-center flex-wrap gap-x-3 py-[14px]"
                 key={category._id}
               >
                 <div className="w-5 h-5">

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { IProduct } from "../../../interfaces/product.interface";
 import ProductItem from "../ProductItem/ProductItem";
 import { ICategory } from "../../../interfaces/category.interface";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 interface NewArrivalsProps {
   products: IProduct[] | undefined;
@@ -23,6 +25,12 @@ const NewArrivals = (props: NewArrivalsProps) => {
   const [isAcer, setIsAcer] = useState<boolean>(true);
   const [isAsus, setIsAsus] = useState<boolean>(false);
   const [isMsi, setMsi] = useState<boolean>(false);
+  const { currentWidth } = useSelector((state: RootState) => state.app);
+
+  let numItemsToShow = 3;
+
+  if (currentWidth <= 768 && currentWidth > 640) numItemsToShow = 2;
+  else if (currentWidth <= 640) numItemsToShow = 1;
 
   return (
     <div>
@@ -106,7 +114,7 @@ const NewArrivals = (props: NewArrivalsProps) => {
 
         {isAcer &&
           acerProducts
-            ?.slice(0, 3)
+            ?.slice(0, numItemsToShow)
             .map((product: IProduct) => (
               <ProductItem
                 key={product._id}
@@ -117,7 +125,7 @@ const NewArrivals = (props: NewArrivalsProps) => {
 
         {isAsus &&
           asusProducts
-            ?.slice(0, 3)
+            ?.slice(0, numItemsToShow)
             .map((product: IProduct) => (
               <ProductItem
                 key={product._id}
@@ -128,7 +136,7 @@ const NewArrivals = (props: NewArrivalsProps) => {
 
         {isMsi &&
           msiProducts
-            ?.slice(0, 3)
+            ?.slice(0, numItemsToShow)
             .map((product: IProduct) => (
               <ProductItem
                 key={product._id}

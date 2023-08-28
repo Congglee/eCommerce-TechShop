@@ -5,7 +5,7 @@ import { useGetCurrentUserQuery } from "../../features/auth/auth.service";
 import { useUpdateUserOrderMutation } from "../../features/user/user.services";
 import { toast } from "react-toastify";
 import { decryptData, encryptData } from "../../utils/fn";
-import { RotatingSpinner } from "../../components/common/LoaderSpinner";
+import { RotatingSpinner } from "../../components/common";
 
 const { BiChevronRight } = icons;
 
@@ -112,7 +112,7 @@ const CheckoutInfoPage = (props: Props) => {
 
   return (
     <>
-      <div className="flex items-center gap-x-1 mb-7">
+      <div className="flex items-center gap-x-1 mb-7 flex-wrap">
         <div className="flex items-center gap-x-1">
           <Link to="/cart">
             <span className="text-sm text-[#349fe2]">Giỏ hàng</span>

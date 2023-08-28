@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { isEntityError } from "../../utils/helper";
 import { InputItem } from "../../components/guest";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
-import { OvalSpinner } from "../../components/common/LoaderSpinner";
+import { OvalSpinner } from "../../components/common";
 
 const initialState: { email: string; password: string } = {
   email: "",
@@ -91,7 +91,7 @@ const LoginPage = (props: Props) => {
   return (
     <>
       <div className="bg-[#f7f7f7] py-[15px] mb-5">
-        <div className="px-[170px]">
+        <div className="max-w-[1220px] mx-auto px-5">
           <div>
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               Đăng nhập
@@ -104,10 +104,10 @@ const LoginPage = (props: Props) => {
       <div className="max-w-[1220px] mx-auto px-5">
         <div className="flex items-center justify-center flex-col gap-y-[10px] mb-10">
           <form
-            className="flex flex-col gap-y-[10px]"
+            className="flex flex-col gap-y-[10px] w-[500px] xs:w-[80%]"
             onSubmit={handleSubmitLogin}
           >
-            <div className="text-sm text-main-600 w-[500px]">
+            <div className="text-sm text-main-600 w-full">
               <InputItem
                 placeholder="Email"
                 name="email"
@@ -122,7 +122,7 @@ const LoginPage = (props: Props) => {
               )}
             </div>
 
-            <div className="text-sm text-main-600 w-[500px]">
+            <div className="text-sm text-main-600 w-full">
               <InputItem
                 type="password"
                 placeholder="Mật khẩu"
@@ -137,7 +137,7 @@ const LoginPage = (props: Props) => {
               )}
             </div>
 
-            <button className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px]">
+            <button className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px] w-full">
               <div className="flex items-center justify-center gap-x-2">
                 <span>Đăng nhập</span>
                 {loginResult.isLoading && <OvalSpinner />}

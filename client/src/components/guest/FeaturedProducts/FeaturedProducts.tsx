@@ -1,11 +1,8 @@
 import React from "react";
 import { IProduct } from "../../../interfaces/product.interface";
-import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";
 import { Link } from "react-router-dom";
 import { StarRating } from "..";
-
-const { AiTwotoneStar } = icons;
 
 interface FeaturedProducts {
   products: IProduct[] | undefined;
@@ -49,10 +46,10 @@ const FeaturedProducts = (props: FeaturedProducts) => {
 
         {products?.slice(0, 9).map((product) => (
           <div
-            className="w-[calc(calc(100%_/_3)_-_20px)] ml-5 mb-5 p-[15px] border border-main-700 flex items-start gap-x-5"
+            className="w-[calc(calc(100%_/_3)_-_20px)] xs:w-full md:w-full ml-5 mb-5 p-[15px] border border-main-700 flex items-start gap-x-5"
             key={product._id}
           >
-            <div className="mb-5 w-[85px] h-[90px] flex-shrink-0">
+            <div className="mb-5 w-[85px] h-[90px] xs:w-[108px] xs:h-[108px] md:w-[185px] md:h-[185px] flex-shrink-0">
               <Link to={`/products/${product.slug}`}>
                 <img src={product.thumb} alt="" className="w-full h-full" />
               </Link>
@@ -74,36 +71,40 @@ const FeaturedProducts = (props: FeaturedProducts) => {
         ))}
       </div>
 
-      <div className="flex flex-col md:flex-row gap-5 md:h-auto">
-        <img
-          src="https://digital-world-2.myshopify.com/cdn/shop/files/banner1-bottom-home2_b96bc752-67d4-45a5-ac32-49dc691b1958_600x.jpg?v=1613166661"
-          alt=""
-          className="md:w-[50%] md:h-auto object-cover"
-        />
+      <div className="flex gap-5 h-[675px] lg:h-[560px] md:h-[420px] sm:flex-col sm:h-full">
+        <div className="w-1/2 h-full sm:w-full">
+          <img
+            src="https://digital-world-2.myshopify.com/cdn/shop/files/banner1-bottom-home2_b96bc752-67d4-45a5-ac32-49dc691b1958_600x.jpg?v=1613166661"
+            alt=""
+            className="h-full w-full object-cover"
+          />
+        </div>
 
-        <div className="flex flex-col gap-y-5 md:w-[25%]">
-          <div className="w-full h-auto">
+        <div className="flex w-[25%] sm:w-full flex-col gap-y-5">
+          <div className="w-full h-[340px] sm:h-full">
             <img
               src="https://digital-world-2.myshopify.com/cdn/shop/files/banner2-bottom-home2_400x.jpg?v=1613166661"
               alt=""
-              className="w-full h-auto object-cover"
+              className="w-full h-full"
             />
           </div>
 
-          <div className="w-full h-auto">
+          <div className="w-full h-[340px] sm:h-full">
             <img
               src="https://digital-world-2.myshopify.com/cdn/shop/files/banner3-bottom-home2_400x.jpg?v=1613166661"
               alt=""
-              className="w-full h-auto object-cover"
+              className="w-full h-full"
             />
           </div>
         </div>
 
-        <img
-          src="https://digital-world-2.myshopify.com/cdn/shop/files/banner4-bottom-home2_92e12df0-500c-4897-882a-7d061bb417fd_400x.jpg?v=1613166661"
-          alt=""
-          className="md:w-[25%] md:h-auto object-cover"
-        />
+        <div className="w-[25%] h-full sm:w-full">
+          <img
+            src="https://digital-world-2.myshopify.com/cdn/shop/files/banner4-bottom-home2_92e12df0-500c-4897-882a-7d061bb417fd_400x.jpg?v=1613166661"
+            alt=""
+            className="w-full h-full"
+          />
+        </div>
       </div>
     </div>
   );

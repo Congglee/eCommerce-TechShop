@@ -42,7 +42,7 @@ const Navigation = (props: Props) => {
   };
 
   return (
-    <div>
+    <div className="md:hidden">
       <div className="max-w-[1220px] px-[20px] mx-auto flex items-center justify-between border-y border-y-[rgba(0,0,0,0.1)] py-2 relative">
         <div className="py-[5px] flex items-center gap-x-[30px]">
           <div className="uppercase text-main-300 text-sm cursor-pointer">

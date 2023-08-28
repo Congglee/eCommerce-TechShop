@@ -18,7 +18,7 @@ const ProfileLayout = (props: Props) => {
   return (
     <>
       <div className="bg-[#f7f7f7] py-[15px] mb-[35px]">
-        <div className="px-[170px]">
+        <div className="max-w-[1220px] mx-auto px-5">
           <div>
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               Tài khoản cá nhân
@@ -28,7 +28,7 @@ const ProfileLayout = (props: Props) => {
         </div>
       </div>
 
-      <div className="max-w-[1220px] mx-auto px-5 flex gap-x-6 mb-10">
+      <div className="max-w-[1220px] mx-auto px-5 flex mb-10 md:flex-col">
         <Outlet />
       </div>
     </>

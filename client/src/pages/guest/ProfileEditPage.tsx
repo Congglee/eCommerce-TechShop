@@ -7,7 +7,7 @@ import { useUpdateUserByClientMutation } from "../../features/user/user.services
 import { isEntityError } from "../../utils/helper";
 import { toast } from "react-toastify";
 import { InputItem } from "../../components/guest";
-import { OvalSpinner } from "../../components/common/LoaderSpinner";
+import { OvalSpinner } from "../../components/common";
 
 const { BsArrowLeft } = icons;
 
@@ -115,22 +115,22 @@ const ProfileEditPage = (props: Props) => {
 
   return (
     <>
-      <div className="w-[25%] flex-shrink-0">
+      <div className="w-[25%] md:w-full md:text-center flex-shrink-0 md:mb-10">
         <div className="mb-[50px]">
-          <span className="bg-main-200 py-[11px] px-[15px] uppercase text-white">
+          <span className="bg-main-200 py-[11px] px-[15px] 900:text-[13px] uppercase text-white">
             Thông tin tài khoản
           </span>
         </div>
 
         <Link to="/profile">
-          <div className="flex items-end gap-x-[6px] text-sm uppercase hover:text-main-200">
+          <div className="flex items-end md:justify-center gap-x-[6px] text-sm uppercase hover:text-main-200">
             <BsArrowLeft size={14} />
             <span>Quay lại tài khoản</span>
           </div>
         </Link>
       </div>
 
-      <div className="w-[75%] flex-1">
+      <div className="w-[75%] md:w-full flex-1">
         <div className="flex flex-col gap-y-1 mb-6">
           <h2 className="text-2xl font-semibold text-main-500">
             Thông tin tài khoản của bạn
@@ -245,7 +245,7 @@ const ProfileEditPage = (props: Props) => {
           </div>
 
           <div className="text-right">
-            <button className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px] w-full max-w-[250px] mt-2">
+            <button className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px] w-full max-w-[250px] xs:max-w-[150px] mt-2">
               <div className="flex items-center justify-center gap-x-2">
                 <span> Cập nhật</span>
                 {updateUserByClientResult.isLoading && <OvalSpinner />}

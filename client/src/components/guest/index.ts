@@ -12,6 +12,7 @@ export { default as FeaturedProducts } from "./FeaturedProducts/FeaturedProducts
 export { default as HotCollections } from "./HotCollections/HotCollections";
 export { default as BlogPosts } from "./BlogPosts/BlogPosts";
 export { default as Brands } from "./Brands/Brands";
+export { default as ProductFilter } from "./ProductFilter/ProductFilter";
 export { default as ProductDetailContent } from "./ProductDetailContent/ProductDetailContent";
 export { default as ProductDetailTabs } from "./ProductDetailTabs/ProductDetailTabs";
 export { default as WarrantyTab } from "./WarrantyTab/WarrantyTab";

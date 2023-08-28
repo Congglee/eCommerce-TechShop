@@ -30,11 +30,11 @@ const CheckoutSuccess = (props: checkoutSuccessProps) => {
 
         <div className="flex flex-col border border-gray-200 rounded mb-[27px] py-4 px-5">
           <h2 className="mb-5 font-medium">Thông tin đơn hàng của quý khách</h2>
-          <div className="flex items-center border border-gray-200 border-b-0 p-3">
-            <div className="text-sm flex-shrink-0 w-[30%] text-[#707070]">
+          <div className="flex items-center xs:flex-col border border-gray-200 border-b-0 p-3">
+            <div className="text-sm flex-shrink-0 w-[30%] xs:w-full text-[#707070]">
               Mã đơn hàng
             </div>
-            <div className="text-sm w-[70%] flex-shrink-0 pl-2">
+            <div className="text-sm w-[70%] flex-shrink-0 pl-2 xs:w-full xs:pl-0 xs:flex-1 xs:break-all">
               DW2{createOrderResult.data?.response._id}
             </div>
           </div>

@@ -2,14 +2,21 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 type Props = {};
 
 const Brands = (props: Props) => {
+  const { currentWidth } = useSelector((state: RootState) => state.app);
+
+  let numItemsToShow = 5;
+  if (currentWidth <= 768) numItemsToShow = 3;
+
   const settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: numItemsToShow,
     slidesToScroll: 2,
     autoplay: true,
     autoplaySpeed: 2000,
@@ -48,7 +55,7 @@ const Brands = (props: Props) => {
           <img src="https://hanoicomputercdn.com/media/brand/lg.png" alt="" />
         </div>
 
-        <div className="pr-10">
+        <div>
           <img src="https://hanoicomputercdn.com/media/brand/msi.png" alt="" />
         </div>
       </Slider>

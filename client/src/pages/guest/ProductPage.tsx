@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import icons from "../../utils/icons";
 import { useGetProductsQuery } from "../../features/product/product.services";
@@ -6,6 +6,7 @@ import { IProduct } from "../../interfaces/product.interface";
 import {
   CategorySideMenu,
   Pagination,
+  ProductFilter,
   ProductItem,
 } from "../../components/guest";
 import { useQueryString } from "../../hooks/useQueryString";
@@ -24,7 +25,7 @@ import {
 } from "../../utils/fn";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 
-const { BiChevronRight, AiOutlineUnorderedList } = icons;
+const { FiFilter, AiOutlineClose } = icons;
 
 type Props = {};
 
@@ -32,6 +33,7 @@ const ProductPage = (props: Props) => {
   const { filterPriceGte, filterPriceLte } = useSelector(
     (state: RootState) => state.product
   );
+  const [isShow, setIsShow] = useState(false);
   const queryString: {
     name?: string;
     sort?: string;
@@ -111,8 +113,8 @@ const ProductPage = (props: Props) => {
 
   return (
     <>
-      <div className="bg-[#f7f7f7] py-[15px] mb-[35px]">
-        <div className="px-[170px]">
+      <div className="bg-[#f7f7f7] py-[15px] mb-[35px] md:mb-5">
+        <div className="max-w-[1220px] mx-auto px-5">
           <div>
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               SẢN PHẨM
@@ -122,99 +124,126 @@ const ProductPage = (props: Props) => {
         </div>
       </div>
 
-      <div className="mb-10">
-        <div className="px-[170px] flex gap-x-[22px]">
-          <div className="w-[25%] flex-shrink-0 flex flex-col gap-y-5">
+      <div
+        className={`fixed top-0 bottom-0 right-0 bg-white px-[10px] w-[60%] z-[50] transition-all duration-200 ease-linear ${
+          isShow ? "block animate-show-right-up" : "animate-show-right-down"
+        }`}
+      >
+        <div className="flex items-center justify-center py-[10px] mb-1">
+          <div className="w-full flex flex-col items-center justify-center">
+            <span className="text-main-500 text-sm font-semibold uppercase">
+              Lọc và sắp xếp
+            </span>
+            <span className="text-[#1a1b18b3] text-[13px]">
+              Hiển thị 36 trên 36 sản phẩm
+            </span>
+          </div>
+
+          <button className="ml-auto" onClick={() => setIsShow(false)}>
+            <AiOutlineClose size={28} />
+          </button>
+        </div>
+
+        <div className="border border-solid border-[#ccc]">
+          <div className="py-[15px] px-[20px]">
+            <div className="text-main-500 text-[17px] font-semibold mb-[10px]">
+              Sắp xếp theo
+            </div>
+            <select
+              name=""
+              id=""
+              className="border border-solid border-[rgba(26,27,24,.75)] pl-[15px] pr-5 w-full text-xs bg-[#f6f6f6] text-[#1c1d1d] py-[10px]"
+              onChange={handleChangeSort}
+            >
+              <option value="">Bán chạy nhất</option>
+              <option value="-totalRatings">Sản phẩm nổi bật</option>
+              <option value="name">Theo bảng chữ cái, A-Z</option>
+              <option value="-name">Theo bảng chữ cái, Z-A</option>
+              <option value="price">Giá tăng dần</option>
+              <option value="-price">Giá giảm dần</option>
+            </select>
+          </div>
+
+          <div className="py-[15px] px-[20px]">
+            <div className="text-main-500 text-[17px] font-semibold mb-[10px]">
+              Giá
+            </div>
+
+            <div className="border border-solid border-[rgba(26,27,24,0.2)] w-full">
+              <div className="border-b border-solid border-[rgba(26,27,24,0.2)]">
+                <div className="px-[10px] py-[5px] text-main-500 text-sm">
+                  Giá cao nhất là {formatCurrency(highestPriceProduct?.price)}{" "}
+                  VND. Giá trị đầu vào mặc định là VND
+                  <span className="underline">Reset</span>
+                </div>
+              </div>
+
+              <form className="px-4 py-6">
+                <div className="mb-[10px] flex items-center gap-x-[6px]">
+                  <label htmlFor="" className="text-main-500 text-xs">
+                    VND
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Từ"
+                    className="w-full bg-[#f6f6f6] pl-[10px] border-none"
+                    id="gte-input"
+                    value={filterPriceGte}
+                    onChange={handleChangeFilterPriceGte}
+                  />
+                </div>
+
+                <div className="mb-[10px] flex items-center gap-x-[6px]">
+                  <label htmlFor="" className="text-main-500 text-xs">
+                    VND
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Đến"
+                    className="w-full bg-[#f6f6f6] pl-[10px] border-none"
+                    id="lte-input"
+                    value={filterPriceLte}
+                    onChange={handleChangeFilterPriceLte}
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={`mb-10 ${isShow && "opacity-60"}`}>
+        <div className="max-w-[1220px] mx-auto px-5 flex gap-x-[22px] md:flex-col">
+          <div className="flex justify-end sm:justify-center md:mb-5 769:hidden">
+            <button
+              className="px-5 py-2 flex flex-col sm:flex-row sm:w-full items-center sm:justify-center sm:gap-x-2 text-sm border border-main-500"
+              onClick={() => setIsShow(true)}
+            >
+              <div className="mb-2 sm:mb-0">
+                <FiFilter size={20} />
+              </div>
+              <div className="text-main-500 text-sm">Lọc và sắp xếp</div>
+            </button>
+          </div>
+
+          <div className="w-[25%] md:w-full flex-shrink-0 flex flex-col gap-y-5 md:order-2">
             <div>
               <div className="border border-solid border-[#ccc]">
                 <CategorySideMenu />
               </div>
             </div>
 
-            <div>
-              <div className="flex items-center py-[10px] gap-x-2 px-5 bg-main-200 text-white text-base">
-                <AiOutlineUnorderedList size={20} />
-                <span className="uppercase font-semibold">MUA SẮM THEO</span>
-              </div>
-
-              <div className="border border-solid border-[#ccc]">
-                <div className="py-[15px] px-[20px]">
-                  <div className="text-main-500 text-[17px] font-semibold mb-[10px]">
-                    Sắp xếp theo
-                  </div>
-                  <select
-                    name=""
-                    id=""
-                    className="border border-solid border-[rgba(26,27,24,.75)] pl-[15px] pr-5 w-full text-xs bg-[#f6f6f6] text-[#1c1d1d] py-[10px]"
-                    onChange={handleChangeSort}
-                  >
-                    <option value="">Bán chạy nhất</option>
-                    <option value="-totalRatings">Sản phẩm nổi bật</option>
-                    <option value="name">Theo bảng chữ cái, A-Z</option>
-                    <option value="-name">Theo bảng chữ cái, Z-A</option>
-                    <option value="price">Giá tăng dần</option>
-                    <option value="-price">Giá giảm dần</option>
-                  </select>
-                </div>
-
-                <div className="py-[15px] px-[20px]">
-                  <div className="text-main-500 text-[17px] font-semibold mb-[10px]">
-                    Giá
-                  </div>
-
-                  <div className="border border-solid border-[rgba(26,27,24,0.2)] w-full">
-                    <div className="border-b border-solid border-[rgba(26,27,24,0.2)]">
-                      <div className="px-[10px] py-[5px] text-main-500 text-sm">
-                        Giá cao nhất là{" "}
-                        {formatCurrency(highestPriceProduct?.price)} VND. Giá
-                        trị đầu vào mặc định là VND
-                        <span className="underline">Reset</span>
-                      </div>
-                    </div>
-
-                    <form className="px-4 py-6">
-                      <div className="mb-[10px] flex items-center gap-x-[6px]">
-                        <label htmlFor="" className="text-main-500 text-xs">
-                          VND
-                        </label>
-                        <input
-                          type="number"
-                          placeholder="Từ"
-                          className="w-full bg-[#f6f6f6] pl-[10px] border-none"
-                          id="gte-input"
-                          value={filterPriceGte}
-                          onChange={handleChangeFilterPriceGte}
-                        />
-                      </div>
-
-                      <div className="mb-[10px] flex items-center gap-x-[6px]">
-                        <label htmlFor="" className="text-main-500 text-xs">
-                          VND
-                        </label>
-                        <input
-                          type="number"
-                          placeholder="Đến"
-                          className="w-full bg-[#f6f6f6] pl-[10px] border-none"
-                          id="lte-input"
-                          value={filterPriceLte}
-                          onChange={handleChangeFilterPriceLte}
-                        />
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full h-full">
-              <img
-                src="https://digital-world-2.myshopify.com/cdn/shop/files/banner1-bottom-home2_b96bc752-67d4-45a5-ac32-49dc691b1958_300x.jpg?v=1613166661"
-                alt=""
-              />
-            </div>
+            <ProductFilter
+              handleChangeSort={handleChangeSort}
+              highestPriceProduct={highestPriceProduct}
+              filterPriceGte={filterPriceGte}
+              filterPriceLte={filterPriceLte}
+              handleChangeFilterPriceGte={handleChangeFilterPriceGte}
+              handleChangeFilterPriceLte={handleChangeFilterPriceLte}
+            />
           </div>
 
-          <div className="w-[75%] flex-1">
+          <div className="w-[75%] flex-1 md:w-full md:order-1 md:mb-2">
             <div className="flex mx-[-11px] gap-y-5 flex-wrap mb-10">
               {isFetching &&
                 [...Array(3)].map((_, index) => (
@@ -249,7 +278,11 @@ const ProductPage = (props: Props) => {
 
               {!isFetching &&
                 data?.products.map((product: IProduct) => (
-                  <ProductItem key={product._id} product={product} />
+                  <ProductItem
+                    key={product._id}
+                    product={product}
+                    isProductsPage={true}
+                  />
                 ))}
             </div>
 

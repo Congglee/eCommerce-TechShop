@@ -60,7 +60,7 @@ const CartPage = (props: Props) => {
   return (
     <>
       <div className="bg-[#f7f7f7] py-[15px] mb-5">
-        <div className="px-[170px]">
+        <div className="max-w-[1220px] mx-auto px-5">
           <div>
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               GIỎ HÀNG CỦA BẠN
@@ -73,7 +73,7 @@ const CartPage = (props: Props) => {
       <div className="max-w-[1220px] mx-auto px-5">
         <div className="mb-10">
           <div className="border border-main-700 border-b-0">
-            <div className="border-b border-main-700 font-semibold text-lg text-main-800 py-[15px] px-5 flex justify-between items-center">
+            <div className="border-b border-main-700 font-semibold text-lg text-main-800 py-[15px] px-5 flex justify-between items-center md:hidden">
               <div className="w-[60%] flex-shrink-0"></div>
               <div className="w-[40%] flex-1 flex items-center justify-between uppercase">
                 <div>Số lượng</div>
@@ -140,13 +140,10 @@ const CartPage = (props: Props) => {
                 <div className="flex items-center justify-end text-white capitalize text-sm gap-x-[10px]">
                   <button
                     type="button"
-                    className="bg-main-200 py-[11px] px-[15px] capitalize hover:bg-[#333] transition-all duration-200 ease-out"
+                    className="hover:bg-main-200 py-[11px] px-[15px] capitalize bg-[#333] transition-all duration-200 ease-out"
                     onClick={() => dispatch(clearCart())}
                   >
                     Xóa giỏ hàng
-                  </button>
-                  <button className="py-[11px] px-[15px] rounded-[3px] bg-[#333] hover:bg-main-200 transition-all duration-200 ease-out">
-                    Cập nhật giỏ hàng
                   </button>
 
                   <button

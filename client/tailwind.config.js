@@ -35,11 +35,75 @@ export default {
             visibility: "visible;",
           },
         },
+
+        "show-left-up": {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(0)",
+          },
+        },
+
+        "show-left-down": {
+          "0%": {
+            transform: "translateX(0)",
+          },
+          "100%": {
+            transform: "translateX(-100%)",
+          },
+        },
+
+        "show-right-up": {
+          "0%": {
+            transform: "translateX(100%)",
+          },
+          "100%": {
+            transform: "translateX(0)",
+          },
+        },
+
+        "show-right-down": {
+          "0%": {
+            transform: "translateX(0%)",
+          },
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
       },
 
       animation: {
-        "show-up": "show-up 0.3s ease both",
+        "show-up": "show-left-up 0.3s ease both",
+        "show-left-up": "show-left-up 0.3s linear both",
+        "show-left-down": "show-left-down 0.3s linear both",
+
+        "show-right-up": "show-right-up 0.3s linear both",
+        "show-right-down": "show-right-down 0.3s linear both",
       },
+    },
+    screens: {
+      "2xl": { max: "1535px" },
+      // => @media (max-width: 1535px) { ... }
+
+      xl: { max: "1280px" },
+      // => @media (max-width: 1279px) { ... }
+
+      lg: { max: "1024px" },
+      // => @media (max-width: 1023px) { ... }
+
+      md: { max: "768px" },
+      // => @media (max-width: 767px) { ... }
+
+      sm: { max: "640px" },
+      // => @media (max-width: 639px) { ... }
+
+      xs: { max: "480px" },
+      // => @media (max-width: 479px) { ... }
+
+      900: { max: "900px" },
+      769: { min: "769px" },
+      1120: { max: "1120px" },
     },
   },
   plugins: [tailwindcss_forms, tailwindcss_line_clamp],

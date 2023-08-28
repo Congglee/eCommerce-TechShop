@@ -78,9 +78,9 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
 
   return (
     <div className="mb-[30px]">
-      <div className="flex gap-x-1">
+      <div className="flex xs:flex-col gap-x-1 mx-[-5px] text-[15px] md:text-[13px]">
         <div
-          className={`py-[9px] px-5 uppercase text-[15px] text-main-500 border border-main-700 hover:bg-white hover:text-black transition-all duration-500 ease-linear cursor-pointer bg-[#f1f1f1] ${
+          className={`py-[9px] px-5 uppercase text-main-500 border border-main-700 hover:bg-white hover:text-black transition-all duration-500 ease-linear cursor-pointer bg-[#f1f1f1] ${
             activeTab === "description" && "bg-white border-b-transparent"
           }`}
           onClick={() => setActiveTab("description")}
@@ -89,7 +89,7 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
         </div>
 
         <div
-          className={`py-[9px] px-5 uppercase text-[15px] text-main-500 border border-main-700 hover:bg-white hover:text-black transition-all duration-500 ease-linear cursor-pointer bg-[#f1f1f1] ${
+          className={`py-[9px] px-5 uppercase text-main-500 border border-main-700 hover:bg-white hover:text-black transition-all duration-500 ease-linear cursor-pointer bg-[#f1f1f1] ${
             activeTab === "warranty" && "bg-white border-b-transparent"
           }`}
           onClick={() => setActiveTab("warranty")}
@@ -98,7 +98,7 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
         </div>
 
         <div
-          className={`py-[9px] px-5 uppercase text-[15px] text-main-500 border border-main-700 hover:bg-white hover:text-black transition-all duration-500 ease-linear cursor-pointer bg-[#f1f1f1] ${
+          className={`py-[9px] px-5 uppercase text-main-500 border border-main-700 hover:bg-white hover:text-black transition-all duration-500 ease-linear cursor-pointer bg-[#f1f1f1] ${
             activeTab === "delivery" && "bg-white border-b-transparent"
           }`}
           onClick={() => setActiveTab("delivery")}
@@ -107,7 +107,7 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
         </div>
 
         <div
-          className={`py-[9px] px-5 uppercase text-[15px] text-main-500 border border-main-700 hover:bg-white hover:text-black transition-all duration-500 ease-linear cursor-pointer bg-[#f1f1f1] ${
+          className={`py-[9px] px-5 uppercase text-main-500 border border-main-700 hover:bg-white hover:text-black transition-all duration-500 ease-linear cursor-pointer bg-[#f1f1f1] ${
             activeTab === "payment" && "bg-white border-b-transparent"
           }`}
           onClick={() => setActiveTab("payment")}
@@ -116,7 +116,7 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
         </div>
 
         <div
-          className={`py-[9px] px-5 uppercase text-[15px] text-main-500 border border-main-700 hover:bg-white hover:text-black transition-all duration-500 ease-linear cursor-pointer bg-[#f1f1f1] ${
+          className={`py-[9px] px-5 uppercase text-main-500 border border-main-700 hover:bg-white hover:text-black transition-all duration-500 ease-linear cursor-pointer bg-[#f1f1f1] ${
             activeTab === "customer-review" && "bg-white border-b-transparent"
           }`}
           onClick={() => setActiveTab("customer-review")}

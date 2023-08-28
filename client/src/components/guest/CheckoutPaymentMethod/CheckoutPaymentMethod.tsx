@@ -108,33 +108,33 @@ const CheckoutPaymentMethod = (props: checkoutOutPaymentMethodProps) => {
           {paymentMethod === "bank" && (
             <div className="border border-[#e9e9e9] rounded px-[17px] flex flex-col">
               <div className="flex items-center py-[11px]">
-                <div className="flex items-center text-sm flex-grow">
-                  <div className="text-sm flex-shrink-0 w-[30%] text-[#707070]">
+                <div className="flex items-center text-sm flex-grow xs:flex-col">
+                  <div className="text-sm flex-shrink-0 w-[30%] text-[#707070] xs:w-full">
                     Ngân hàng
                   </div>
-                  <div className="flex-1 w-[70%]">
+                  <div className="flex-1 w-[70%] xs:w-full">
                     MB-BANK - Ngân hàng quân đội
                   </div>
                 </div>
               </div>
 
               <div className="flex items-center py-[11px]">
-                <div className="flex items-center text-sm flex-grow">
-                  <div className="text-sm flex-shrink-0 w-[30%] text-[#707070]">
+                <div className="flex items-center text-sm flex-grow xs:flex-col">
+                  <div className="text-sm flex-shrink-0 w-[30%] text-[#707070] xs:w-full">
                     Tài khoản
                   </div>
-                  <div className="flex-1 w-[70%]">
+                  <div className="flex-1 w-[70%] xs:w-full">
                     0953018062003 - LE THANH CONG
                   </div>
                 </div>
               </div>
 
               <div className="flex items-center py-[11px]">
-                <div className="flex items-center text-sm flex-grow">
-                  <div className="text-sm flex-shrink-0 w-[30%] text-[#707070]">
+                <div className="flex items-center text-sm flex-grow xs:flex-col">
+                  <div className="text-sm flex-shrink-0 w-[30%] text-[#707070] xs:w-full">
                     Nội dung chuyển khoản
                   </div>
-                  <div className="flex-1 w-[70%]">
+                  <div className="flex-1 w-[70%] xs:w-full">
                     PAYDW2 - {decryptedUserData.email.toUpperCase()}
                   </div>
                 </div>
@@ -158,7 +158,7 @@ const CheckoutPaymentMethod = (props: checkoutOutPaymentMethodProps) => {
             />
             <label
               htmlFor="bordered-radio-3"
-              className="w-full py-4 ml-[14px] text-sm font-medium text-gray-900 cursor-pointer flex items-center gap-x-3"
+              className="w-full py-4 ml-[14px] text-sm font-medium text-gray-900 cursor-pointer flex items-center gap-x-3 xs:pr-3"
             >
               Thanh toán qua cổng Stripe
               <FaCcStripe size={30} />

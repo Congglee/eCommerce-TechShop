@@ -26,29 +26,32 @@ const CartItem = (props: cartItemProps) => {
 
   return (
     <div
-      className="py-[15px] px-5 border-b border-main-700 flex justify-between"
+      className="py-[15px] px-5 border-b border-main-700 flex justify-between md:flex-col"
       key={cartItem._id}
     >
-      <div className="flex items-center w-[60%] flex-shrink-0 gap-x-5">
-        <div className="w-[215px] h-[215px]">
-          <img src={cartItem.thumb} alt="" className="w-full h-full" />
+      <div className="flex items-center w-[60%] 900:w-[55%] md:w-full md:items-stretch flex-shrink-0 gap-x-5 xs:mb-2">
+        <div className="w-[30%] sm:w-2/5 sm:flex-shrink-0 ">
+          <img
+            src={cartItem.thumb}
+            alt=""
+            className="w-full h-full object-cover xs:object-fill"
+          />
         </div>
 
-        <div className="flex flex-col text-base text-main-600">
-          <span className="hover:text-main-200 cursor-pointer">
+        <div className="flex flex-col text-base text-main-600 w-[70%] sm:w-3/5 sm:flex-1">
+          <span className="hover:text-main-200 cursor-pointer text-sm">
             {cartItem.name}
           </span>
           <button
             type="button"
             className="text-sm text-main-500 text-left hover:text-main-200"
-            onClick={() => handleRemoveFromCart(cartItem)}
           >
-            <span>Remove</span>
+            <span onClick={() => handleRemoveFromCart(cartItem)}>Remove</span>
           </button>
         </div>
       </div>
 
-      <div className="w-[40%] flex-1 flex items-center justify-between">
+      <div className="w-[40%] 900:w-[45%] md:w-full md:px-5 sm:px-0 xs:gap-x-3 flex-1 flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center border border-gray-200 rounded-sm bg-[#f6f6f6] text-main-600 h-[35px]">
             <button
@@ -84,7 +87,7 @@ const CartItem = (props: cartItemProps) => {
           </div>
         </div>
 
-        <div className="text-xl font-semibold text-[#333]">
+        <div className="text-xl font-semibold text-[#333] line-clamp-2 whitespace-normal break-words">
           {formatCurrency(cartItem.price * cartItem.quantity)} VND
         </div>
       </div>

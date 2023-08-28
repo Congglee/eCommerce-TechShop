@@ -19,8 +19,8 @@ const UserFooter = (props: Props) => {
   return (
     <div>
       <div className="bg-main-200">
-        <div className="py-[25px] max-w-[1220px] mx-auto px-5 flex justify-between items-center">
-          <div className="text-white">
+        <div className="py-[25px] max-w-[1220px] mx-auto px-5 flex justify-between items-center md:flex-col md:justify-start md:items-start">
+          <div className="text-white w-1/2 md:mb-[15px] md:w-full">
             <div className="text-xl uppercase">
               ĐĂNG KÝ ĐỂ NHẬN TIN MỚI NHẤT
             </div>
@@ -29,11 +29,11 @@ const UserFooter = (props: Props) => {
             </div>
           </div>
 
-          <form className="relative">
+          <form className="relative w-1/2 md:w-full">
             <input
               type="text"
               placeholder="Địa chỉ email"
-              className="px-5 py-4 outline-none text-white rounded-[30px] w-[590px] pr-12 border-none border-0 text-sm bg-[rgba(255,255,255,.1)] placeholder:text-main-700 placeholder:opacity-50"
+              className="px-5 py-4 outline-none text-white rounded-[30px] w-full pr-12 border-none border-0 text-sm bg-[rgba(255,255,255,.1)] placeholder:text-main-700 placeholder:opacity-50"
             />
             <button className="absolute w-5 h-5 right-5 top-1/2 translate-y-[-50%] text-white">
               <GrMail />
@@ -43,7 +43,7 @@ const UserFooter = (props: Props) => {
       </div>
 
       <div className="bg-[#191919]">
-        <div className="py-[50px] max-w-[1220px] mx-auto px-5 flex justify-between items-center gap-x-5">
+        <div className="py-[50px] max-w-[1220px] mx-auto px-5 flex justify-between gap-x-5 md:flex-col md:items-start md:gap-y-[10px]">
           <div className="basis-1/3 flex-shrink-0">
             <div className="text-white text-[15px] uppercase pl-[15px] mb-5 font-semibold relative after:content-[''] after:absolute after:w-[3px] after:h-[100%] after:bg-main-200 after:top-0 after:left-0">
               VỀ CHÚNG TÔI
@@ -79,7 +79,7 @@ const UserFooter = (props: Props) => {
               </div>
             </div>
 
-            <div className="flex flex-row gap-x-[7px] text-base text-white">
+            <div className="flex flex-row gap-x-[7px] text-base text-white md:mb-[5px]">
               <div className="w-10 h-10 rounded-[3px] bg-[#ffffff1a] cursor-pointer flex items-center justify-center">
                 <BiLogoFacebook />
               </div>
@@ -113,7 +113,7 @@ const UserFooter = (props: Props) => {
 
           <div className="basis-1/6 flex-grow">
             <div className="text-white text-[15px] uppercase pl-[15px] mb-5 font-semibold relative after:content-[''] after:absolute after:w-[3px] after:h-[100%] after:bg-main-200 after:top-0 after:left-0">
-              CHÚNG TA LÀ AI
+              CHÚNG TÔI LÀ AI
             </div>
 
             <div className="text-[#b7b7b7] text-[13px]">
@@ -133,8 +133,10 @@ const UserFooter = (props: Props) => {
         </div>
       </div>
 
-      <div className="bg-[#0f0f0f] px-[170px] py-5">
-        <span className="text-white">Powered by congltph27602</span>
+      <div className="bg-[#0f0f0f] py-5">
+        <div className="max-w-[1220px] mx-auto px-5">
+          <span className="text-white">Powered by congltph27602</span>
+        </div>
       </div>
     </div>
   );

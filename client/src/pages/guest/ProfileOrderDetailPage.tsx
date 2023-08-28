@@ -20,22 +20,22 @@ const ProfileOrderDetailPage = (props: Props) => {
 
   return (
     <>
-      <div className="w-[20%] flex-shrink-0">
-        <div className="mb-[50px]">
-          <span className="bg-main-200 py-[11px] px-[15px] uppercase text-white">
+      <div className="w-[20%] lg:w-[25%] md:w-full md:text-center flex-shrink-0 md:mb-10">
+        <div className="mb-[50px] lg:text-sm 900:text-xs">
+          <span className="bg-main-200 py-[11px] px-[15px] 900:text-[13px] uppercase text-white">
             Chi tiết đơn hàng
           </span>
         </div>
 
         <Link to="/profile">
-          <div className="flex items-end gap-x-[6px] text-sm uppercase hover:text-main-200">
+          <div className="flex items-end md:justify-center gap-x-[6px] text-sm uppercase hover:text-main-200">
             <BsArrowLeft size={14} />
             <span>Quay lại tài khoản</span>
           </div>
         </Link>
       </div>
 
-      <div className="w-[80%] flex-1">
+      <div className="w-[80%] lg:w-[75%] md:w-full flex-1">
         <div className="flex flex-col gap-y-1 mb-10">
           {isFetching && (
             <div role="status" className="w-full animate-pulse">
@@ -48,7 +48,7 @@ const ProfileOrderDetailPage = (props: Props) => {
 
           {!isFetching && (
             <>
-              <h2 className="text-2xl font-semibold text-main-500">
+              <h2 className="text-2xl font-semibold text-main-500 whitespace-normal break-words xs:text-xl">
                 Đơn hàng DW2{data?.response._id}
               </h2>
               <span className="text-base font-medium text-gray-600">
@@ -70,8 +70,8 @@ const ProfileOrderDetailPage = (props: Props) => {
           )}
         </div>
 
-        <div className="flex gap-x-6">
-          <div className="flex flex-col gap-y-6 p-6 bg-main-700 w-[70%]">
+        <div className="flex gap-x-6 xl:flex-col xl:gap-y-5">
+          <div className="flex flex-col gap-y-6 p-6 bg-main-700 w-[70%] xl:w-full">
             <h3 className="text-main-500 text-xl font-semibold capitalize">
               Sản phẩm đơn hàng
             </h3>
@@ -114,11 +114,15 @@ const ProfileOrderDetailPage = (props: Props) => {
                   className="flex items-start gap-x-6"
                   key={orderProductItem._id}
                 >
-                  <div className="w-[180px]">
-                    <img src={orderProductItem.product.thumb} alt="" />
+                  <div className="w-[180px] sm:w-full sm:h-full">
+                    <img
+                      src={orderProductItem.product.thumb}
+                      alt=""
+                      className="w-full h-full"
+                    />
                   </div>
 
-                  <div className="flex-grow w-[calc(100%_-_180px)] flex items-start justify-between gap-x-8 text-main-300">
+                  <div className="flex-grow w-[calc(100%_-_180px)] flex items-start justify-between gap-x-8 text-main-300 900:flex-col 900:gap-y-2 900:w-full">
                     <h3 className="text-[15px] font-semibold">
                       {orderProductItem.product.name}
                     </h3>
@@ -204,7 +208,7 @@ const ProfileOrderDetailPage = (props: Props) => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-y-6 w-[30%] bg-main-700 p-6">
+          <div className="flex flex-col gap-y-6 w-[30%] bg-main-700 p-6 xl:w-full">
             <h3 className="text-main-500 text-xl font-semibold">
               Thông tin đơn hàng
             </h3>

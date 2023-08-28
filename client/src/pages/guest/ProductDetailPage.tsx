@@ -40,7 +40,7 @@ const ProductDetailPage = (props: Props) => {
   return (
     <>
       <div className="bg-[#f7f7f7] py-[15px] mb-5">
-        <div className="px-[170px]">
+        <div className="max-w-[1220px] mx-auto px-5">
           <div>
             <div className="text-[#151515] text-lg font-semibold uppercase mb-[10px]">
               {product?.productData.name}
@@ -51,7 +51,7 @@ const ProductDetailPage = (props: Props) => {
       </div>
 
       <div className="max-w-[1220px] mx-auto px-5">
-        <div className="flex gap-x-[45px] mb-5">
+        <div className="flex gap-x-[45px] mb-5 md:flex-col">
           {isFetchingProduct && (
             <div
               role="status"
@@ -101,7 +101,7 @@ const ProductDetailPage = (props: Props) => {
           refetchProduct={refectProduct}
         />
 
-        <div className="mb-[109px]">
+        <div className="mb-[109px] md:mb-20">
           <RelateProducts relateProducts={relateProducts} />
         </div>
       </div>

@@ -20,20 +20,20 @@ const HomePage = (props: Props) => {
   const dailyDealProduct = data?.products[data?.products.length - 1];
 
   return (
-    <div className="py-[20px]">
+    <div className="py-[20px] md:pt-0 md:pb-[30px]">
       <div className="max-w-[1220px] mx-auto px-5">
         <div className="flex items-stretch mb-[30px]">
-          <div className="flex-shrink-0 w-1/4">
+          <div className="flex-shrink-0 w-1/4 sm:hidden">
             <CategorySideMenu />
           </div>
 
-          <div className="flex-1 w-3/4 pl-5">
+          <div className="flex-1 w-3/4 pl-5 sm:w-full sm:pl-0">
             <Banner />
           </div>
         </div>
 
-        <div className="flex items-stretch gap-x-5 mb-[30px]">
-          <div className="w-[25%] flex-shrink-0">
+        <div className="flex items-stretch gap-x-5 mb-[30px] md:mb-5 sm:flex-col">
+          <div className="w-[25%] md:w-[30%] flex-shrink-0 sm:w-full sm:mb-1">
             {isFetching && (
               <div
                 role="status"
@@ -70,7 +70,10 @@ const HomePage = (props: Props) => {
             )}
           </div>
 
-          <div className="w-[75%] flex-1">
+          <div
+            className="w-[75%] md:w-[70%] flex-1 sm:w-full
+          "
+          >
             <HomeProductTabs
               products={data?.products}
               isFetching={isFetching}

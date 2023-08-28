@@ -21,7 +21,7 @@ const Banner = (props: Props) => {
         <img
           src="https://img.freepik.com/premium-psd/3d-objects-laptop-black-friday-red-background_23-2148660042.jpg"
           alt=""
-          className="w-full max-[1023px]:h-full h-[461px] overflow-hidden"
+          className="w-full h-[461px] md:h-[300px] overflow-hidden"
         />
       </div>
 
@@ -29,7 +29,7 @@ const Banner = (props: Props) => {
         <img
           src="https://nhatkhanhtech.com/wp-content/uploads/2019/10/Banner-gaming_laptops.jpg"
           alt=""
-          className="w-full max-[1023px]:h-full h-[461px] overflow-hidden"
+          className="w-full h-[461px] md:h-[300px] overflow-hidden"
         />
       </div>
 
@@ -37,7 +37,7 @@ const Banner = (props: Props) => {
         <img
           src="https://cdn.tgdd.vn/Files/2021/12/20/1405435/laptopgamingdohoah22_1280x720-800-resize.jpg"
           alt=""
-          className="w-full max-[1023px]:h-full h-[461px] overflow-hidden"
+          className="w-full h-[461px] md:h-[300px] overflow-hidden"
         />
       </div>
     </Slider>

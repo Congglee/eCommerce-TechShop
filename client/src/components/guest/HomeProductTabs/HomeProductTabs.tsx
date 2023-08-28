@@ -20,14 +20,14 @@ const HomeProductTabs = (props: HomeProductTabs) => {
 
   let numItemsToShow = 3;
 
-  if (currentWidth < 970 && currentWidth > 480) numItemsToShow = 2;
-  else if (currentWidth <= 480) numItemsToShow = 1;
+  if (currentWidth <= 768 && currentWidth > 640) numItemsToShow = 2;
+  else if (currentWidth <= 640) numItemsToShow = 1;
 
   return (
     <>
-      <div className="flex gap-x-5 mb-5 border-b-[2px] border-main-200 pb-[15px]">
+      <div className="flex sm:flex-col sm:gap-x-0 sm:gap-y-[10px] gap-x-5 mb-5 border-b-[2px] border-main-200 pb-[15px]">
         <button
-          className={`text-[#151515] text-xl uppercase font-semibold transition-all duration-200 ease-linear ${
+          className={`text-[#151515] text-xl md:text-lg uppercase font-semibold transition-all duration-200 ease-linear sm:w-full sm:border-b sm:border-main-700 sm:text-left sm:pl-5 sm:py-[5px] ${
             isBestSeller ? "opacity-100" : "opacity-50"
           }`}
           onClick={() => {
@@ -40,7 +40,7 @@ const HomeProductTabs = (props: HomeProductTabs) => {
         </button>
 
         <button
-          className={`text-[#151515] text-xl uppercase font-semibold border-l border-main-700 pl-5 transition-all duration-200 ease-linear ${
+          className={`text-[#151515] text-xl md:text-lg uppercase font-semibold border-l border-main-700 pl-5 transition-all duration-200 ease-linear sm:border-l-0 sm:border-b sm:border-main-700 sm:text-left sm:py-[5px] ${
             isNewArrivals ? "opacity-100" : "opacity-50"
           }`}
           onClick={() => {
@@ -53,7 +53,7 @@ const HomeProductTabs = (props: HomeProductTabs) => {
         </button>
 
         <button
-          className={`text-[#151515] text-xl uppercase font-semibold border-l border-main-700 pl-5 transition-all duration-200 ease-linear ${
+          className={`text-[#151515] text-xl md:text-lg uppercase font-semibold border-l border-main-700 pl-5 transition-all duration-200 ease-linear sm:border-l-0 sm:border-b sm:border-main-700 sm:text-left sm:py-[5px] ${
             isMackbook ? "opacity-100" : "opacity-50"
           }`}
           onClick={() => {
@@ -66,7 +66,7 @@ const HomeProductTabs = (props: HomeProductTabs) => {
         </button>
       </div>
 
-      <div className="flex mx-[-11px] gap-y-[18px] mb-5">
+      <div className="flex mx-[-10px] gap-y-[18px] mb-5">
         {isFetching &&
           [...Array(3)].map((_, index) => (
             <div
@@ -137,13 +137,13 @@ const HomeProductTabs = (props: HomeProductTabs) => {
             ))}
       </div>
 
-      <div className="flex items-center gap-x-5">
+      <div className="flex items-center gap-x-5 sm:flex-col sm:items-stretch sm:gap-y-5">
         <div>
-          <img src={banner1} alt="" />
+          <img src={banner1} alt="" className="w-full h-full" />
         </div>
 
         <div>
-          <img src={banner2} alt="" />
+          <img src={banner2} alt="" className="w-full h-full" />
         </div>
       </div>
     </>

@@ -36,7 +36,7 @@ const Breadcrumb = (props: breadCrumbProps) => {
   const breadcrumb = useBreadcrumbs(routes);
 
   return (
-    <div className="flex items-center text-sm text-[#1c1d1d] gap-x-1">
+    <div className="flex flex-wrap items-center text-sm text-[#1c1d1d] gap-x-1">
       {breadcrumb
         // ?.filter((item) => !item.match.route === false)
         .map(({ match, breadcrumb }, index, self) => {
