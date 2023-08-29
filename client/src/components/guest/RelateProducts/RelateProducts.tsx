@@ -36,7 +36,7 @@ const RelateProducts = (props: RelateProducts) => {
       </div>
 
       <div className="w-full">
-        {(relateProducts?.length as number) > 4 ? (
+        {(relateProducts?.length as number) > numItemsToShow ? (
           <Slider {...settings}>
             {relateProducts?.map((product) => (
               <ProductItem
