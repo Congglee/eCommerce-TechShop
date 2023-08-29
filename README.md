@@ -28,7 +28,7 @@ In the first terminal
 $ cd client
 
 #  if you use yarn
-$ yarn install (to install client-side dependencies)
+$ yarn add (to install client-side dependencies)
 $ yarn dev (to start the client)
 
 $ npm install (to install client-side dependencies)
@@ -38,7 +38,7 @@ $ npm run dev (to start the client)
 In the second terminal
 
 - cd server and Set environment variables in .env
-- Create your mongoDB connection url, which you'll use as your MONGO_URL
+- Create your mongoDB connection url, which you'll use as your MONGODB_URL
 - Supply the following credentials
 
 ```
