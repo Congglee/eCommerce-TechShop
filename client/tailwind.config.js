@@ -74,7 +74,7 @@ export default {
       },
 
       animation: {
-        "show-up": "show-left-up 0.3s ease both",
+        "show-up": "show-up 0.3s ease both",
         "show-left-up": "show-left-up 0.3s linear both",
         "show-left-down": "show-left-down 0.3s linear both",
 

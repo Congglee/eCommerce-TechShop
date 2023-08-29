@@ -91,7 +91,7 @@ This project was created using the following technologies.
 
 #### Frontend
 
-- [React js ](https://www.npmjs.com/package/react) - JavaScript library that is used for building user interfaces specifically for single-page applications
+- [ReactJS](https://www.npmjs.com/package/react) - JavaScript library that is used for building user interfaces specifically for single-page applications
 - [Redux Toolkit](https://redux-toolkit.js.org/) - Efficient state management and updates
 - [react-router-dom](https://www.npmjs.com/package/react-router-dom) - Handling dynamic routing and component rendering
 - [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) - A part of Redux Toolkit, simplifying API calls and data fetching

@@ -3,6 +3,7 @@ import icons from "../../../utils/icons";
 import { IProduct } from "../../../interfaces/product.interface";
 import { formatCurrency } from "../../../utils/fn";
 import { StarRating } from "..";
+import { Link } from "react-router-dom";
 
 const { AiFillStar, AiTwotoneStar, PiListBold } = icons;
 
@@ -25,13 +26,17 @@ const DailyDealProduct = (props: DailyDealProps) => {
       </div>
 
       <div>
-        <div className="mb-[15px]">
-          <img src={dailyDealProduct?.thumb} alt="" />
+        <div>
+          <Link to={`/products/${dailyDealProduct?.slug}`}>
+            <img src={dailyDealProduct?.thumb} alt="" />
+          </Link>
         </div>
 
         <div>
           <h2 className="text-base mb-2 text-main-500 line-clamp-2">
-            {dailyDealProduct?.name}
+            <Link to={`/products/${dailyDealProduct?.slug}`}>
+              {dailyDealProduct?.name}
+            </Link>
           </h2>
           <div className="flex items-center justify-center text-[#f1b400] gap-x-[1px] mb-3">
             <StarRating
