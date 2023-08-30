@@ -68,6 +68,7 @@ const LoginPage = (props: Props) => {
           // })) as IProduct[],
         })
       );
+      localStorage.removeItem("orderInfo");
 
       if (
         loginResult.data.accessToken &&
