@@ -111,7 +111,7 @@ const ProfileOrderDetailPage = (props: Props) => {
             {!isFetching &&
               data?.response.products.map((orderProductItem: any) => (
                 <div
-                  className="flex items-start gap-x-6"
+                  className="flex items-start gap-x-8"
                   key={orderProductItem._id}
                 >
                   <div className="w-[180px] sm:w-full sm:h-full">
@@ -122,7 +122,7 @@ const ProfileOrderDetailPage = (props: Props) => {
                     />
                   </div>
 
-                  <div className="flex-grow w-[calc(100%_-_180px)] flex items-start justify-between gap-x-8 text-main-300 900:flex-col 900:gap-y-2 900:w-full">
+                  <div className="flex-grow w-[calc(100%_-_180px)] flex items-start justify-between gap-x-6 text-main-300 900:flex-col 900:gap-y-2 900:w-full">
                     <h3 className="text-[15px] font-semibold">
                       {orderProductItem.product.name}
                     </h3>
@@ -130,12 +130,12 @@ const ProfileOrderDetailPage = (props: Props) => {
                       {formatCurrency(orderProductItem.product.price)}VND
                     </span>
                     <span className="text-sm">{orderProductItem.count}</span>
-                    <span className="text-sm">
+                    <h5 className="text-sm">
                       {formatCurrency(
                         orderProductItem.product.price * orderProductItem.count
                       )}
                       VND
-                    </span>
+                    </h5>
                   </div>
                 </div>
               ))}
