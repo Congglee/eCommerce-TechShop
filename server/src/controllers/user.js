@@ -53,7 +53,7 @@ const register = async (req, res) => {
                 <h2 style="font-size: 24px; color: #333;">Xác nhận đăng ký tài khoản</h2>
             </div>
             <div style="font-size: 16px; color: #555;">
-              <p>Cảm ơn bạn đã đăng ký tài khoản với Digital World 2. Vui lòng sử dụng mã OTP sau để xác nhận tài khoản:</p>
+              <p>Cảm ơn bạn đã đăng ký tài khoản với Digital World 2. Vui lòng sử dụng mã OTP sau để xác nhận tài khoản (mã OTP này sẽ hết hạn sau 15 phút kể từ bây giờ):</p>
             <div style="font-size: 20px; color: #00a8e8; padding: 10px; background-color: #f0f0f0; border-radius: 5px; margin-top: 10px;">${token}</div>
             </div>
             <div style="text-align: center; margin-top: 20px; color: #888;">

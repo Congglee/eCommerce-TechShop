@@ -67,6 +67,8 @@ $ npm run dev (to start the server)
 ## Key Features
 
 - User registration, login and logout
+- Register an account with email verification
+- Forgot password, reset password with email verification
 - Authentication/Authorization using JWT Tokens
 - Add Product to Cart
 - Change products's quantity in the cart
@@ -125,6 +127,7 @@ This project was created using the following technologies.
 - [slugify](https://github.com/simov/slugify) - Library for creating URL-friendly slugs from strings
 - [stripe](https://stripe.com) - Payment processing platform for online transactions
 - [joi](https://github.com/hapijs/joi) - Library for data validation in JavaScript applications
+- [nodemailer](https://nodemailer.com/) - A module for Node.js applications to allow easy email sending.
 - [@babel/cli](https://babeljs.io/docs/babel-cli) - Command-line interface for Babel, a JavaScript compiler
 - [@babel/core](https://babel.dev/docs/babel-core) - Core of Babel, responsible for transforming code
 - [@babel/preset-env](https://babeljs.io/docs/babel-preset-env) - Babel preset for transforming modern JavaScript to be compatible with target environments
@@ -143,8 +146,6 @@ This project was created using the following technologies.
 
 - Create cart api
 - Admin Side for manage product, category, account, order, ...
-- Register an account with email verification
-- Forgot password, reset password (use Refresh Token)
 
 > - fix bugs of old features
 
