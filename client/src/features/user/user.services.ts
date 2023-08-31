@@ -17,6 +17,16 @@ interface IUpdateUserByClient {
   updatedUser: IUser;
 }
 
+interface IForgotPasswordResponse {
+  success: boolean;
+  message: string;
+}
+
+interface IResetPasswordResponse {
+  success: boolean;
+  message: string;
+}
+
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
@@ -45,6 +55,29 @@ export const userApi = createApi({
       query: (id) => `/users/id/${id}`,
     }),
 
+    forgotPassword: build.mutation<IForgotPasswordResponse, { email: string }>({
+      query: (body) => {
+        return {
+          url: "/users/forgotPassword",
+          method: "POST",
+          body,
+        };
+      },
+    }),
+
+    resetPassword: build.mutation<
+      IResetPasswordResponse,
+      { password: string; confirmPassword: string; token: string }
+    >({
+      query: (body) => {
+        return {
+          url: "/users/resetPassword",
+          method: "PUT",
+          body,
+        };
+      },
+    }),
+
     updateUserByClient: build.mutation<IUpdateUserByClient, IUser | FormData>({
       query: (body) => {
         return {
@@ -61,4 +94,6 @@ export const {
   useUpdateUserOrderMutation,
   useGetUserQuery,
   useUpdateUserByClientMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
 } = userApi;

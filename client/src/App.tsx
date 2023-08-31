@@ -21,6 +21,8 @@ import {
   CheckoutInfoPage,
   CheckoutPaymentPage,
   CheckoutSuccessPage,
+  FinalRegisterPage,
+  ForgotPasswordPage,
   HomePage,
   LoginPage,
   ProductDetailPage,
@@ -28,6 +30,7 @@ import {
   ProfileOrderDetailPage,
   ProfilePage,
   RegisterPage,
+  ResetPasswordPage,
 } from "./pages/guest";
 import path from "./utils/path";
 import ProfileEditPage from "./pages/guest/ProfileEditPage";
@@ -52,6 +55,18 @@ function App() {
           />
           <Route path={path.LOGIN_PAGE} element={<LoginPage />} />
           <Route path={path.REGISTER_PAGE} element={<RegisterPage />} />
+          <Route
+            path={path.FINAL_REGISTER_PAGE}
+            element={<FinalRegisterPage />}
+          />
+          <Route
+            path={path.FORGOT_PASSWORD_PAGE}
+            element={<ForgotPasswordPage />}
+          />
+          <Route
+            path={path.RESET_PASSWORD_PAGE}
+            element={<ResetPasswordPage />}
+          />
           <Route path={path.CART_PAGE} element={<CartPage />} />
 
           <Route path={path.PROFILE_PAGE} element={<ProfileLayout />}>

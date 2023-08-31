@@ -13,10 +13,11 @@ type Props = {};
 interface breadCrumbProps {
   product?: IProduct;
   order?: IOrder;
+  status?: string;
 }
 
 const Breadcrumb = (props: breadCrumbProps) => {
-  const { product, order } = props;
+  const { product, order, status } = props;
 
   const routes = [
     { path: "/:slug", breadcrumb: product?.name },
@@ -31,6 +32,18 @@ const Breadcrumb = (props: breadCrumbProps) => {
     { path: "/cart", breadcrumb: "Giỏ hàng" },
     { path: "/login", breadcrumb: "Đăng nhập" },
     { path: "/register", breadcrumb: "Đăng ký" },
+    { path: "/finalregister", breadcrumb: "Đăng ký" },
+    {
+      path: "/finalregister/:status",
+      breadcrumb: `${
+        status === "success"
+          ? "Đăng ký tài khoản thành công"
+          : "Đăng ký tài khoản thất bại"
+      }`,
+    },
+    { path: "/forgotpassword", breadcrumb: "Quên mật khẩu" },
+    { path: "/resetpassword", breadcrumb: "Đổi mật khẩu" },
+    { path: "/resetpassword/:token", breadcrumb: "" },
   ];
 
   const breadcrumb = useBreadcrumbs(routes);
@@ -40,10 +53,14 @@ const Breadcrumb = (props: breadCrumbProps) => {
       {breadcrumb
         // ?.filter((item) => !item.match.route === false)
         .map(({ match, breadcrumb }, index, self) => {
-          return (
+          return match.route?.path !== "/resetpassword/:token" ? (
             <Link
               key={match.pathname}
-              to={match.pathname === "/category" ? "#" : match.pathname}
+              to={
+                match.pathname === "/category" || "/resetpassword"
+                  ? "#"
+                  : match.pathname
+              }
             >
               <div className="flex gap-x-1 items-center">
                 <span className="hover:text-main-200 capitalize">
@@ -52,6 +69,8 @@ const Breadcrumb = (props: breadCrumbProps) => {
                 {index !== self.length - 1 && <BiChevronRight size={14} />}
               </div>
             </Link>
+          ) : (
+            ""
           );
         })}
     </div>

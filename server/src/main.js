@@ -16,11 +16,17 @@ const app = express();
 
 const port = process.env.PORT || 8888;
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [process.env.LOCAL_URL, process.env.DEPLOY_URL],
+    methods: ["POST", "PUT", "GET", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use("/api", productRoute);
 app.use("/api", categoryRoute);

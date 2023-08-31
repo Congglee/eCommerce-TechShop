@@ -8,8 +8,11 @@ const path = {
 
   LOGIN_PAGE: "login",
   REGISTER_PAGE: "register",
-  CART_PAGE: "cart",
+  FINAL_REGISTER_PAGE: "finalregister/:status",
+  FORGOT_PASSWORD_PAGE: "forgotpassword",
+  RESET_PASSWORD_PAGE: "resetpassword/:token",
 
+  CART_PAGE: "cart",
   CHECKOUT_PAGE: "checkout",
   CHECKOUT_INFO_PAGE: "info",
   CHECKOUT_PAYMENT_PAGE: "payment",

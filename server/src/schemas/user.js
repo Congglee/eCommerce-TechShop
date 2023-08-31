@@ -89,3 +89,23 @@ export const updateUserAdminSchema = Joi.object({
     "any.empty": "isBlocked không được để trống",
   }),
 });
+
+export const resetPasswordSchema = Joi.object({
+  password: Joi.string().trim().required().min(6).messages({
+    "string.min": "Mật khẩu phải có ít nhất {#limit} ký tự",
+    "string.empty": "Mật khẩu không được để trống",
+    "any.required": "Trường mật khẩu là bắt buộc",
+  }),
+  confirmPassword: Joi.string()
+    .trim()
+    .required()
+    .valid(Joi.ref("password"))
+    .messages({
+      "string.empty": "Xác nhận mật khẩu không được để trống",
+      "any.required": "Trường xác nhận mật khẩu là bắt buộc",
+      "any.only": "Xác nhận mật khẩu không khớp",
+    }),
+  token: Joi.string().trim().messages({
+    "string.empty": "Token không được để trống",
+  }),
+});

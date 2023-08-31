@@ -18,6 +18,11 @@ interface ICurrentUserResponse {
   userData: IUser;
 }
 
+interface IFinalRegister {
+  success: boolean;
+  message: string;
+}
+
 export const authApi = createApi({
   reducerPath: "authApi",
   tagTypes: ["Auth"],
@@ -26,8 +31,10 @@ export const authApi = createApi({
     prepareHeaders(headers, { getState }) {
       const token = (getState() as RootState).auth.token;
       if (token) headers.set("authorization", `Bearer ${token}`);
+
       return headers;
     },
+    credentials: "include",
   }),
   endpoints: (build) => ({
     login: build.mutation<ILoginResponse, { email: string; password: string }>({
@@ -53,11 +60,25 @@ export const authApi = createApi({
       },
     }),
 
+    finalRegister: build.mutation<IFinalRegister, { token: string }>({
+      query: (body) => {
+        return {
+          url: `/users/finalRegister/${body.token}`,
+          method: "PUT",
+          body,
+        };
+      },
+    }),
+
     getCurrentUser: build.query<ICurrentUserResponse, void>({
       query: () => "/users/currentUser",
     }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetCurrentUserQuery } =
-  authApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useGetCurrentUserQuery,
+  useFinalRegisterMutation,
+} = authApi;

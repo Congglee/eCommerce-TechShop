@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import icons from "../../utils/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../features/auth/auth.service";
 import { useDispatch } from "react-redux";
@@ -28,9 +27,6 @@ type Props = {};
 const LoginPage = (props: Props) => {
   const [formValue, setFormValue] = useState(initialState);
   const [login, loginResult] = useLoginMutation();
-  // const { cartProducts } = useSelector((state: RootState) => state.cart);
-  // const [updateCarts, updateCartsResult] = useUpdateCartsMutation();
-  // const { data } = useGetCurrentUserQuery();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,12 +37,6 @@ const LoginPage = (props: Props) => {
   const handleSubmitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await login(formValue);
-    // await updateCarts({
-    //   cart: cartProducts.map((cart) => ({
-    //     product: cart._id,
-    //     quantity: cart.quantity,
-    //   })),
-    // });
   };
 
   const errorForm: LoginFormError = useMemo(() => {
@@ -62,10 +52,6 @@ const LoginPage = (props: Props) => {
           isLoggedIn: true,
           userData: loginResult.data.userData,
           token: loginResult.data.accessToken,
-          // cartProducts: data?.userData.cart.map((cartItem: any) => ({
-          //   ...cartItem.product,
-          //   quantity: cartItem.quantity,
-          // })) as IProduct[],
         })
       );
       localStorage.removeItem("orderInfo");
@@ -153,7 +139,7 @@ const LoginPage = (props: Props) => {
                 <Link to="/products">Quay lại cửa hàng</Link>
               </span>
               <span className="text-main-600 text-sm hover:text-main-200">
-                <Link to="/">Quên mật khẩu?</Link>
+                <Link to="/forgotpassword">Quên mật khẩu?</Link>
               </span>
             </div>
           </form>

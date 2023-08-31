@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
-import icons from "../../utils/icons";
-import { Link } from "react-router-dom";
-import { useRegisterMutation } from "../../features/auth/auth.service";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  useFinalRegisterMutation,
+  useRegisterMutation,
+} from "../../features/auth/auth.service";
 import { toast } from "react-toastify";
 import { isEntityError } from "../../utils/helper";
 import { InputItem } from "../../components/guest";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 import { OvalSpinner } from "../../components/common";
-
-const { BiChevronRight } = icons;
+import Swal from "sweetalert2";
 
 const initialState: {
   name: string;
@@ -34,6 +35,9 @@ type Props = {};
 const RegisterPage = (props: Props) => {
   const [formValue, setFormValue] = useState(initialState);
   const [register, registerResult] = useRegisterMutation();
+  const [finalRegister, finalRegisterResult] = useFinalRegisterMutation();
+  const [token, setToken] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e: any) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
@@ -50,17 +54,71 @@ const RegisterPage = (props: Props) => {
     }
   }, [registerResult]);
 
+  const handleSubmitFinalRegister = async (token: string) => {
+    await finalRegister({ token });
+  };
+
   useEffect(() => {
+    const createVerifyMailMessage = async () => {
+      const { value } = await Swal.fire({
+        title: registerResult.data?.message,
+        input: "text",
+        inputLabel: "Mã xác thực đăng ký tài khoản",
+        inputPlaceholder: "Điền vào mã xác thực",
+        confirmButtonText: "Xác nhận",
+        confirmButtonColor: "#ad8af1",
+      });
+      setToken(value);
+    };
     if (registerResult.isSuccess) {
-      toast.success("Đăng ký tài khoản thành công, vui lòng đăng nhập");
+      createVerifyMailMessage();
     }
   }, [registerResult.isSuccess]);
 
   useEffect(() => {
     if (registerResult.isError) {
-      toast.error((registerResult.error as any).data.message);
+      toast.error((registerResult.error as any)?.data?.message);
     }
   }, [registerResult.isError]);
+
+  useEffect(() => {
+    if (token) {
+      handleSubmitFinalRegister(token);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    const createRegisterSuccessMessage = async () => {
+      const result = await Swal.fire({
+        title: finalRegisterResult.data?.message,
+        icon: "success",
+        confirmButtonText: "Đăng nhập",
+        showCancelButton: true,
+        cancelButtonText: "Hủy",
+      });
+
+      if (result.isConfirmed) {
+        navigate("/login");
+      }
+    };
+
+    const createRegisterFailMessage = async () => {
+      await Swal.fire({
+        title: (finalRegisterResult.error as any)?.data?.message,
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Xác nhận",
+      });
+    };
+
+    if (finalRegisterResult.isSuccess) {
+      createRegisterSuccessMessage();
+      setToken("");
+    } else if (finalRegisterResult.isError) {
+      createRegisterFailMessage();
+      setToken("");
+    }
+  }, [finalRegisterResult.isSuccess, finalRegisterResult.isError]);
 
   return (
     <>
