@@ -133,7 +133,7 @@ const ProductItem = (props: ProductItemProps) => {
           </div>
 
           <div className="text-base text-right leading-[18px]">
-            {product?.price.toLocaleString()} VND
+            {formatCurrency(product?.price)} VND
           </div>
         </div>
 
