@@ -279,7 +279,7 @@ const getProducts = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       success: false,
-      mes: error?.message,
+      message: error?.message,
     });
   }
 };

@@ -1,4 +1,3 @@
-import { IProduct } from "../../interfaces/product.interface";
 import { IUser } from "./../../interfaces/user.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet, useParams } from "react-router-dom";
-import icons from "../utils/icons";
 import Breadcrumb from "../components/guest/Breadcrumb/Breadcrumb";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useGetOrderDetailQuery } from "../features/order/order.services";
-
-const { BiChevronRight } = icons;
+import useAccessDeniedHandler from "../hooks/useHandleAccess";
 
 type Props = {};
 
 const ProfileLayout = (props: Props) => {
   const { orderId } = useSelector((state: RootState) => state.order);
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { id } = useParams();
   const { data } = useGetOrderDetailQuery(orderId ? orderId : (id as string));
+  const handleAccessDenied = useAccessDeniedHandler();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      handleAccessDenied();
+    }
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -29,7 +35,7 @@ const ProfileLayout = (props: Props) => {
       </div>
 
       <div className="max-w-[1220px] mx-auto px-5 flex mb-10 md:flex-col">
-        <Outlet />
+        {isLoggedIn && <Outlet />}
       </div>
     </>
   );
