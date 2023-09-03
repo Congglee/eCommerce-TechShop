@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { IProduct } from "../../../interfaces/product.interface";
+import { ICartItem, IProduct } from "../../../interfaces/product.interface";
 import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../features/cart/cart.slice";
 import { StarRating } from "..";
-import { useParams } from "react-router-dom";
 
 const {
   BiLogoFacebook,
@@ -33,7 +32,7 @@ const ProductDetailContent = (props: productDetailContentProps) => {
   const [value, setValue] = useState(1);
   const [selectedImage, setSelectedImage] = useState(product?.thumb);
 
-  const handleAddToCartStorage = async (product: IProduct) => {
+  const handleAddToCartStorage = async (product: ICartItem) => {
     // if (isLoggedIn) {
     //   await addToCartMutation({
     //     id: product._id,
@@ -158,7 +157,7 @@ const ProductDetailContent = (props: productDetailContentProps) => {
 
           <button
             className="w-full bg-main-200 text-white font-bold py-[11px] px-[15px] uppercase text-sm hover:bg-[#333] transition-all duration-150 ease-out mb-5"
-            onClick={() => handleAddToCartStorage(product as IProduct)}
+            onClick={() => handleAddToCartStorage(product as ICartItem)}
           >
             Thêm vào giỏ hàng
           </button>

@@ -148,7 +148,7 @@ const RegisterPage = (props: Props) => {
               />
 
               {errorForm?.name && (
-                <span className="mt-1 text-[13px] italic text-red-600 pl-2">
+                <span className="mt-1 text-[13px] italic text-red-600 pl-1">
                   <span className="font-semibold">{errorForm?.name}</span>
                 </span>
               )}
@@ -164,7 +164,7 @@ const RegisterPage = (props: Props) => {
               />
 
               {errorForm?.email && (
-                <span className="mt-1 text-[13px] italic text-red-600 pl-2">
+                <span className="mt-1 text-[13px] italic text-red-600 pl-1">
                   <span className="font-semibold">{errorForm?.email}</span>
                 </span>
               )}
@@ -180,7 +180,7 @@ const RegisterPage = (props: Props) => {
               />
 
               {errorForm?.password && (
-                <span className="mt-1 text-[13px] italic text-red-600 pl-2">
+                <span className="mt-1 text-[13px] italic text-red-600 pl-1">
                   <span className="font-semibold">{errorForm?.password}</span>
                 </span>
               )}
@@ -196,7 +196,7 @@ const RegisterPage = (props: Props) => {
               />
 
               {errorForm?.confirmPassword && (
-                <span className="mt-1 text-[13px] italic text-red-600 pl-2">
+                <span className="mt-1 text-[13px] italic text-red-600 pl-1">
                   <span className="font-semibold">
                     {errorForm?.confirmPassword}
                   </span>

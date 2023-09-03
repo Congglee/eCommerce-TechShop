@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { formatCurrency } from "../../../utils/fn";
-import { IProduct } from "../../../interfaces/product.interface";
+import { ICartItem } from "../../../interfaces/product.interface";
 
 type Props = {};
 
@@ -13,7 +13,7 @@ const CheckoutProducts = (props: Props) => {
 
   return (
     <>
-      {cartProducts.map((cartItem: IProduct) => (
+      {cartProducts.map((cartItem: ICartItem) => (
         <div className="flex items-center gap-x-[14px] mb-5" key={cartItem._id}>
           <div className="relative flex-shrink-0">
             <div className="w-[60px] h-[60px] bg-white border border-[#dadada] rounded-[10px] overflow-hidden">
@@ -21,7 +21,7 @@ const CheckoutProducts = (props: Props) => {
             </div>
 
             <div className="absolute top-[-8px] right-[-8px] w-5 h-5 bg-[rgba(115,115,115,0.9)] rounded-full flex items-center justify-center text-xs text-white">
-              <span>{cartItem.quantity}</span>
+              <span>{cartItem.cartQuantity}</span>
             </div>
           </div>
 
@@ -30,7 +30,9 @@ const CheckoutProducts = (props: Props) => {
           </div>
 
           <div className="text-sm flex-1 text-right">
-            <span>{formatCurrency(cartItem.price)} VND</span>
+            <span>
+              {formatCurrency(cartItem.price * cartItem.cartQuantity)} VND
+            </span>
           </div>
         </div>
       ))}

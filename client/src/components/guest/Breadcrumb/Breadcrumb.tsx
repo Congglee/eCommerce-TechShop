@@ -57,7 +57,8 @@ const Breadcrumb = (props: breadCrumbProps) => {
             <Link
               key={match.pathname}
               to={
-                match.pathname === "/category" || "/resetpassword"
+                match.pathname === "/category" ||
+                match.pathname === "/resetpassword"
                   ? "#"
                   : match.pathname
               }

@@ -12,6 +12,7 @@ interface productFilterProps {
   filterPriceLte: string;
   handleChangeFilterPriceGte: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeFilterPriceLte: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmitFilter: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const ProductFilter = (props: productFilterProps) => {
@@ -22,6 +23,7 @@ const ProductFilter = (props: productFilterProps) => {
     filterPriceLte,
     handleChangeFilterPriceGte,
     handleChangeFilterPriceLte,
+    handleSubmitFilter,
   } = props;
 
   return (
@@ -66,7 +68,7 @@ const ProductFilter = (props: productFilterProps) => {
                 </div>
               </div>
 
-              <form className="px-4 py-6">
+              <form className="px-4 py-6" onSubmit={handleSubmitFilter}>
                 <div className="mb-[10px] flex items-center gap-x-[6px]">
                   <label htmlFor="" className="text-main-500 text-xs">
                     VND
@@ -94,6 +96,13 @@ const ProductFilter = (props: productFilterProps) => {
                     onChange={handleChangeFilterPriceLte}
                   />
                 </div>
+
+                <button
+                  type="submit"
+                  className="mt-1 bg-main-200 uppercase h-10 px-[15px] text-white text-sm font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 w-full"
+                >
+                  <span>Áp dụng</span>
+                </button>
               </form>
             </div>
           </div>

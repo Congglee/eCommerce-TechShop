@@ -34,6 +34,7 @@ const ProductPage = (props: Props) => {
     (state: RootState) => state.product
   );
   const [isShow, setIsShow] = useState(false);
+  const [filterPriceUrl, setFilterPriceUrl] = useState("");
   const queryString: {
     name?: string;
     sort?: string;
@@ -44,6 +45,7 @@ const ProductPage = (props: Props) => {
   const { name, sort, price_filter_gte, price_filter_lte, page } = queryString;
   const { category } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { data, isFetching } = useGetProductsQuery({
     name: name || "",
@@ -54,6 +56,7 @@ const ProductPage = (props: Props) => {
     page: page || 1,
     limit: import.meta.env.VITE_APP_LIMIT_PRODUCT_PER_PAGE || 6,
   });
+
   const highestPriceProduct = data?.products.reduce(
     (prevProduct, currentProduct) => {
       if (currentProduct.price > prevProduct.price) {
@@ -63,7 +66,6 @@ const ProductPage = (props: Props) => {
     },
     data?.products[0]
   );
-  const navigate = useNavigate();
 
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -92,7 +94,7 @@ const ProductPage = (props: Props) => {
       price_filter_lte,
       page
     );
-    navigate(filterPriceGteUrl);
+    setFilterPriceUrl(filterPriceGteUrl);
   };
 
   const handleChangeFilterPriceLte = (
@@ -108,7 +110,12 @@ const ProductPage = (props: Props) => {
       price_filter_gte,
       page
     );
-    navigate(filterPriceLteUrl);
+    setFilterPriceUrl(filterPriceLteUrl);
+  };
+
+  const handleSubmitFilter = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(filterPriceUrl);
   };
 
   return (
@@ -241,6 +248,7 @@ const ProductPage = (props: Props) => {
               filterPriceLte={filterPriceLte}
               handleChangeFilterPriceGte={handleChangeFilterPriceGte}
               handleChangeFilterPriceLte={handleChangeFilterPriceLte}
+              handleSubmitFilter={handleSubmitFilter}
             />
           </div>
 

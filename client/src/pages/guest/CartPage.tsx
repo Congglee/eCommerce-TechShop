@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import icons from "../../utils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Link } from "react-router-dom";
-import { IProduct } from "../../interfaces/product.interface";
+import { ICartItem, IProduct } from "../../interfaces/product.interface";
 import { formatCurrency } from "../../utils/fn";
 import {
   clearCart,
@@ -15,8 +14,6 @@ import {
 import { toast } from "react-toastify";
 import CartItem from "../../components/guest/CartItem/CartItem";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
-
-const { BiChevronRight } = icons;
 
 type Props = {};
 
@@ -100,7 +97,7 @@ const CartPage = (props: Props) => {
             )}
 
             {cartProducts.length > 0 &&
-              cartProducts.map((cartItem: IProduct) => (
+              cartProducts.map((cartItem: ICartItem) => (
                 <CartItem
                   key={cartItem._id}
                   cartItem={cartItem}

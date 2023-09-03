@@ -180,7 +180,7 @@ const ProfileEditPage = (props: Props) => {
           <div className="text-sm text-main-600 w-full">
             <InputItem
               type="password"
-              name="name"
+              name="password"
               value={formValue.name}
               handleChange={handleChange}
               placeholder="Mật khẩu"

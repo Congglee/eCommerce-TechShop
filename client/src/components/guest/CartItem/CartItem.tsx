@@ -1,11 +1,11 @@
 import React from "react";
-import { IProduct } from "../../../interfaces/product.interface";
+import { ICartItem, IProduct } from "../../../interfaces/product.interface";
 import { useDispatch } from "react-redux";
 import { formatCurrency } from "../../../utils/fn";
 import { setCartQuantity } from "../../../features/cart/cart.slice";
 
 interface cartItemProps {
-  cartItem: IProduct;
+  cartItem: ICartItem;
   handleDecreaseCart: (cartItem: IProduct) => void;
   handleIncreaseCart: (cartItem: IProduct) => void;
   handleRemoveFromCart: (cartItem: IProduct) => void;
@@ -65,7 +65,7 @@ const CartItem = (props: cartItemProps) => {
             <input
               type="number"
               id="Quantity"
-              value={cartItem.quantity}
+              value={cartItem.cartQuantity}
               onChange={(e) =>
                 dispatch(
                   setCartQuantity({
@@ -88,7 +88,7 @@ const CartItem = (props: cartItemProps) => {
         </div>
 
         <div className="text-xl font-semibold text-[#333] line-clamp-2 whitespace-normal break-words">
-          {formatCurrency(cartItem.price * cartItem.quantity)} VND
+          {formatCurrency(cartItem.price * cartItem.cartQuantity)} VND
         </div>
       </div>
     </div>

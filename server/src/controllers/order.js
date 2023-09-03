@@ -17,10 +17,10 @@ const createOrder = async (req, res) => {
 
     let total = 0;
     const products = cart.map((item) => {
-      total += item.price * item.quantity;
+      total += item.price * item.cartQuantity;
       return {
         product: item._id,
-        count: item.quantity,
+        count: item.cartQuantity,
       };
     });
 

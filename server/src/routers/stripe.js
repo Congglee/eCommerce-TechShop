@@ -12,12 +12,12 @@ const router = express.Router();
 router.post("/create-checkout-session", async (req, res) => {
   const { cartProducts } = req.body;
   const selectedFields = cartProducts.map(
-    ({ _id, name, price, thumb, quantity }) => ({
+    ({ _id, name, price, thumb, cartQuantity }) => ({
       _id,
       name,
       price,
       thumb,
-      quantity,
+      cartQuantity,
     })
   );
 
@@ -41,7 +41,7 @@ router.post("/create-checkout-session", async (req, res) => {
         },
         unit_amount: Math.floor(item.price / 100),
       },
-      quantity: item.quantity,
+      quantity: item.cartQuantity,
     };
   });
 
@@ -110,7 +110,7 @@ const createOrderForStripe = async (customer, data) => {
   const items = JSON.parse(customer.metadata.cart);
   const products = items.map((item) => ({
     product: item._id,
-    count: item.quantity,
+    count: item.cartQuantity,
   }));
 
   const timestamp = data.created;

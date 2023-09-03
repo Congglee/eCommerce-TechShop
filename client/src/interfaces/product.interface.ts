@@ -21,3 +21,7 @@ export interface IProduct {
   description: string;
   categoryId: ICategory | string;
 }
+
+export interface ICartItem extends IProduct {
+  cartQuantity: number;
+}

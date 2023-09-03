@@ -14,7 +14,7 @@ import { ICategory } from "../../interfaces/category.interface";
 import RelateProducts from "../../components/guest/RelateProducts/RelateProducts";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 
-const { BiChevronRight, BsArrowLeft } = icons;
+const { BsArrowLeft } = icons;
 
 type Props = {};
 
