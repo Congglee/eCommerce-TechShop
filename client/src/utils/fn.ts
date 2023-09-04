@@ -6,7 +6,7 @@ export const generateRange = (start: number, end: number) => {
 };
 // start = 3, end = 6 ==> [3, 4, 5, 6]
 
-export const formatCurrency = (amount: number | undefined) => {
+export const formatCurrency = (amount: number | undefined | string) => {
   return ((amount as number) / 100).toLocaleString("vi-VN", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,

@@ -74,11 +74,11 @@ const ProductFilter = (props: productFilterProps) => {
                     VND
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Từ"
                     className="w-full bg-[#f6f6f6] pl-[10px] border-none"
                     id="gte-input"
-                    value={filterPriceGte}
+                    value={filterPriceGte === "0,00" ? "0" : filterPriceGte}
                     onChange={handleChangeFilterPriceGte}
                   />
                 </div>
@@ -88,11 +88,11 @@ const ProductFilter = (props: productFilterProps) => {
                     VND
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Đến"
                     className="w-full bg-[#f6f6f6] pl-[10px] border-none"
                     id="lte-input"
-                    value={filterPriceLte}
+                    value={filterPriceLte === "0,00" ? "0" : filterPriceLte}
                     onChange={handleChangeFilterPriceLte}
                   />
                 </div>

@@ -48,20 +48,36 @@ const BurgerMenu = (props: burgerMenuProps) => {
 
       <div className="mb-5">
         {!isLoggedIn && (
-          <Link to="/login">
-            <div className="flex items-center text-white py-[10px]">
-              <AiOutlineUser size={20} />
-              <span className="pl-2 uppercase">Đăng nhập</span>
-            </div>
-          </Link>
+          <>
+            <Link to="/login">
+              <div className="flex items-center text-white py-[10px]">
+                <AiOutlineUser size={20} />
+                <span className="pl-2 uppercase">Đăng nhập</span>
+              </div>
+            </Link>
+
+            <Link to="/register">
+              <div className="flex items-center text-white py-[10px]">
+                <BiSolidUserAccount size={20} />
+                <span className="pl-2 uppercase">Tạo tài khoản</span>
+              </div>
+            </Link>
+          </>
         )}
 
         {isLoggedIn && (
-          <Link to="/profile">
-            <div className="flex items-center text-white py-[10px]">
-              <span className="pl-2 uppercase">Tài khoản</span>
-            </div>
-          </Link>
+          <>
+            <Link to="/profile">
+              <div className="flex items-center text-white py-[10px]">
+                <span className="pl-2 uppercase">Tài khoản</span>
+              </div>
+            </Link>
+            <Link to="/forgotpassword">
+              <div className="flex items-center text-white py-[10px]">
+                <span className="pl-2 uppercase">Đổi mật khẩu</span>
+              </div>
+            </Link>
+          </>
         )}
 
         {isLoggedIn && (
@@ -75,13 +91,6 @@ const BurgerMenu = (props: burgerMenuProps) => {
             <span className="pl-2 uppercase">Đăng xuất</span>
           </button>
         )}
-
-        <Link to="/register">
-          <div className="flex items-center text-white py-[10px]">
-            <BiSolidUserAccount size={20} />
-            <span className="pl-2 uppercase">Tạo tài khoản</span>
-          </div>
-        </Link>
       </div>
 
       <div>

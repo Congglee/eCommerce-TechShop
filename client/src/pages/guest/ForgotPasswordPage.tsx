@@ -100,7 +100,7 @@ const ForgotPasswordPage = (props: Props) => {
               />
 
               {errors?.email && (
-                <span className="mt-1 text-[13px] italic text-red-600 pl-2">
+                <span className="mt-1 text-[13px] italic text-red-600 pl-1">
                   <span className="font-semibold">{errors?.email}</span>
                 </span>
               )}

@@ -29,9 +29,7 @@ const ProductItem = (props: ProductItemProps) => {
     isRelateProductSlide,
     isProductsPage,
   } = props;
-
   const formattedProductDesc = product?.description.replace(/\n/g, "<br/>");
-
   const { category } = useParams();
 
   return (

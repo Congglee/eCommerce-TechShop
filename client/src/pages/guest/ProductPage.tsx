@@ -85,10 +85,12 @@ const ProductPage = (props: Props) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
-    dispatch(setFilterPriceGte(value));
+    const numericValue = value.replace(/[^\d]/g, "");
+    const formattedValue = formatCurrency(numericValue);
+    dispatch(setFilterPriceGte(formattedValue));
 
     const filterPriceGteUrl = handleFilterPriceGteUrl(
-      value,
+      numericValue,
       name,
       sort,
       price_filter_lte,
@@ -101,10 +103,12 @@ const ProductPage = (props: Props) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
-    dispatch(setFilterPriceLte(value));
+    const numericValue = value.replace(/[^\d]/g, "");
+    const formattedValue = formatCurrency(numericValue);
+    dispatch(setFilterPriceLte(formattedValue));
 
     const filterPriceLteUrl = handleFilterPriceLteUrl(
-      value,
+      numericValue,
       name,
       sort,
       price_filter_gte,

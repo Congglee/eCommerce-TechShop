@@ -65,7 +65,7 @@ const Navigation = (props: Props) => {
             </Link>
 
             <div
-              className={`absolute left-0 right-0 top-12 z-20 bg-white shadow-[0px_2px_20px_#00000017] w-full px-10 py-[30px] overflow-hidden rounded-md transition-all duration-300 easse-[cubic-bezier(0.95,0.05,0.795,0.035)] ${
+              className={`absolute left-0 right-0 top-12 z-20 bg-white shadow-[0px_2px_20px_#00000017] w-full px-10 py-[30px] overflow-hidden rounded-md transition-all duration-300 ease-[cubic-bezier(0.95,0.05,0.795,0.035)] ${
                 isHoverMenu ? "visible opacity-100" : "invisible opacity-0"
               }`}
             >

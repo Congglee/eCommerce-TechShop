@@ -19,6 +19,7 @@ const initialFormState: FormStateType = {
   address: "",
   mobile: "",
   avatar: "",
+  password: "",
 };
 
 type UpdateUserClientFormError =
@@ -181,12 +182,12 @@ const ProfileEditPage = (props: Props) => {
             <InputItem
               type="password"
               name="password"
-              value={formValue.name}
+              value={formValue.password}
               handleChange={handleChange}
               placeholder="Mật khẩu"
               style="border-transparent border-2 bg-gray-400 w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-gray-500 focus:ring-0 rounded-[4px]"
-              isReadOnly
               isDefaultValue
+              isReadOnly
               defaultValue={123456}
             />
           </div>
