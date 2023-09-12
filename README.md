@@ -24,6 +24,15 @@ In order to run this project locally, simply fork and clone the repository or do
 
 In the first terminal
 
+```
+#  --- .env  ---
+
+VITE_APP_API_URL =
+VITE_APP_LIMIT_PRODUCT_PER_PAGE =
+VITE_APP_LIMIT_ADMIN_USER_PER_PAGE =
+VITE_APP_SECRET_KEY =
+```
+
 ```bash
 $ cd client
 
@@ -44,17 +53,26 @@ In the second terminal
 ```
 #  --- .env  ---
 
-MONGODB_URL =
 PORT = 8080
+JWT_SECRET =
 
 CLOUDINARY_NAME =
 CLOUDINARY_KEY =
 CLOUDINARY_SECRET =
 
-JWT_SECRET =
-STRIPE_KEY =
+MONGODB_URL_LOCAL =
+MONGODB_URL =
 
-CLIENT_URL = your-local-client-url
+CLIENT_URL =
+SERVER_URL =
+
+LOCAL_URL =
+DEPLOY_URL =
+
+EMAIL_APP_PASSWORD =
+EMAIL_NAME =
+
+STRIPE_KEY =
 ```
 
 ```
@@ -83,6 +101,8 @@ $ npm run dev (to start the server)
 - Pay for orders via Stripe
 - Client-side order management
 - Update account information
+- 404 page not found
+- Admin: Update, Delete, Manage user (sort users by name, creation date, search users by name, email)
 - Form validation
 
 <br/>
@@ -107,11 +127,14 @@ This project was created using the following technologies.
 - [React Icons](https://react-icons.github.io/react-icons) - Integrating icons into React components
 - [jwt-decode](https://github.com/auth0/jwt-decode) - Decoding JSON Web Tokens (JWTs)
 - [crypto-js](https://github.com/brix/crypto-js) - Providing cryptographic functions for data security
+- [react-hook-form](https://www.react-hook-form.com/) - Efficiently manage and validate forms in React applications
+- [use-react-router-breadcrumbs](https://github.com/icd2k3/use-react-router-breadcrumbs#readme) - Generate breadcrumb navigation for React Router routes
+- [flowbite](https://flowbite.com/) - Streamline web development with a UI library for building responsive interfaces
 
 #### Backend
 
-- [Node js](https://nodejs.org/en/) -A runtime environment to help build fast server applications using JS
-- [Express js](https://www.npmjs.com/package/express) -The server for handling and routing HTTP requests
+- [Node js](https://nodejs.org/en/) - A runtime environment to help build fast server applications using JS
+- [Express js](https://www.npmjs.com/package/express) - The server for handling and routing HTTP requests
 - [Mongoose](https://mongoosejs.com/) - For modeling and mapping MongoDB data to JavaScript
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - Used for authentication by generating and verifying JSON Web Tokens
 - [cookie-parser](https://www.npmjs.com/package/cookie-parser) - Middleware for managing cookies in Node.js web applications
@@ -128,6 +151,7 @@ This project was created using the following technologies.
 - [stripe](https://stripe.com) - Payment processing platform for online transactions
 - [joi](https://github.com/hapijs/joi) - Library for data validation in JavaScript applications
 - [nodemailer](https://nodemailer.com/) - A module for Node.js applications to allow easy email sending.
+- [uniqid](https://github.com/adamhalasz/uniqid/) - Generate unique IDs for elements in JavaScript applications
 - [@babel/cli](https://babeljs.io/docs/babel-cli) - Command-line interface for Babel, a JavaScript compiler
 - [@babel/core](https://babel.dev/docs/babel-core) - Core of Babel, responsible for transforming code
 - [@babel/preset-env](https://babeljs.io/docs/babel-preset-env) - Babel preset for transforming modern JavaScript to be compatible with target environments
@@ -203,11 +227,19 @@ This project was created using the following technologies.
 
 ---
 
-![profilorderdetailpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912641/ecommerce-techshop/profileorderdetailpage-techshop_r3wz1i.png)
+![profilorderdetailpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1694484191/ecommerce-techshop/DIGITAL_WORLD_2_12.09.2023_09_01_ihk4yz.png)
 
 ---
 
-![dropdowmenu](https://res.cloudinary.com/di3eto0bg/image/upload/v1692914917/ecommerce-techshop/dropdowmenu-techshop_szcdsq.jpg)
+![dropdowmenu](https://res.cloudinary.com/di3eto0bg/image/upload/v1694484188/ecommerce-techshop/dropmenu2-update_grglr4.jpg)
+
+---
+
+![productpage2](https://res.cloudinary.com/di3eto0bg/image/upload/v1694484188/ecommerce-techshop/DIGITAL_WORLD_2_12.09.2023_08_59_h7jpum.png)
+
+---
+
+![productpage3](https://res.cloudinary.com/di3eto0bg/image/upload/v1694484189/ecommerce-techshop/DIGITAL_WORLD_2_12.09.2023_08_59_1_eg7rhs.png)
 
 ---
 

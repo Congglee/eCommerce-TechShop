@@ -20,9 +20,11 @@ const AdminLayout = (props: Props) => {
   const handleAccessDenied = useRoleAccessDeniedHandler();
 
   useEffect(() => {
+    if (!isLoggedIn) handleAccessDenied();
+
     if (token) {
       const { isAdmin } = jwt_decode(token) as { isAdmin: boolean };
-      if (!isLoggedIn || !isAdmin) handleAccessDenied();
+      if (!isAdmin) handleAccessDenied();
     }
   }, [isLoggedIn, token]);
 
