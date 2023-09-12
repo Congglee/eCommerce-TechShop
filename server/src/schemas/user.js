@@ -76,10 +76,6 @@ export const updateUserAdminSchema = Joi.object({
   address: Joi.string().trim().messages({
     "string.empty": "Địa chỉ không được để trống",
   }),
-  password: Joi.string().trim().min(6).messages({
-    "string.min": "Password phải có ít nhất {#limit} ký tự",
-    "string.empty": "Password không được để trống",
-  }),
   isAdmin: Joi.boolean().messages({
     "any.empty": "Quyền của người dùng không được để trống",
     "any.base": "Quyền isAdmin phải là true hoặc false",

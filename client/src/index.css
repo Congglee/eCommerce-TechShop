@@ -34,3 +34,19 @@
   right: 20px !important;
   z-index: 10 !important;
 }
+
+.scroll {
+  @apply w-full h-full overflow-y-scroll pr-[15px];
+}
+
+.scroll::-webkit-scrollbar {
+  @apply w-[6px];
+}
+
+.scroll::-webkit-scrollbar-track {
+  @apply bg-main-500 rounded-[10px];
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  @apply rounded-[10px] bg-main-100;
+}

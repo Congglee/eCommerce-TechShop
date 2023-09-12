@@ -343,7 +343,7 @@ const resetPassword = async (req, res) => {
 const getUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findById(id).select("-password -isAdmin");
+    const user = await User.findById(id).select("-password");
 
     return res.status(200).json({
       success: user ? true : false,
@@ -359,16 +359,60 @@ const getUser = async (req, res) => {
 
 const getUsers = async (req, res) => {
   try {
-    const user = await User.find().select("-password -refreshToken");
+    const queries = { ...req.query };
+    const excludeFields = ["limit", "sort", "page", "fields"];
+    excludeFields.forEach((item) => delete queries[item]);
+
+    let queryString = JSON.stringify(queries);
+    queryString = queryString.replace(
+      /\b(gte|gt|lt|lte)\b/g,
+      (matchedItem) => `$${matchedItem}`
+    );
+
+    const formattedQueries = JSON.parse(queryString);
+
+    if (req.query.name) {
+      delete formattedQueries.name;
+      formattedQueries["$or"] = [
+        { name: { $regex: req.query.name, $options: "i" } },
+        { email: { $regex: req.query.name, $options: "i" } },
+      ];
+    }
+
+    let queryCommand = User.find(formattedQueries);
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      queryCommand = queryCommand.sort(sortBy);
+    }
+
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      queryCommand = queryCommand.select(fields);
+    } else {
+      queryCommand = queryCommand.select("-__v");
+    }
+
+    const page = +req.query.page || 1;
+    const limit = +req.query.limit || 100;
+    const skip = (page - 1) * limit;
+
+    queryCommand = queryCommand.skip(skip).limit(limit);
+
+    const response = await queryCommand.exec();
+    const totalUser = await User.countDocuments(formattedQueries);
+    const totalPages = Math.ceil(totalUser / +limit);
 
     return res.status(200).json({
-      success: user ? true : false,
-      users: user,
+      success: response ? true : false,
+      totalPages,
+      totalUser,
+      users: response ? response : "Không lấy được tài khoản người dùng",
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Lỗi server: " + error.message, success: false });
+    return res.status(400).status({
+      success: false,
+      message: error.message,
+    });
   }
 };
 
@@ -408,17 +452,7 @@ const updateUserByClient = async (req, res) => {
     }
 
     const { _id } = req.user;
-    const { email, mobile } = req.body;
-    const checkEmail = await User.findOne({
-      _id: { $ne: _id },
-      email,
-    });
-    if (checkEmail) {
-      return res.status(401).json({
-        success: false,
-        message: "Email đã tồn tại, vui lòng nhập lại email khác!",
-      });
-    }
+    const { mobile } = req.body;
 
     if (mobile) {
       const checkMobile = await User.findOne({
@@ -542,7 +576,10 @@ const updateUserByAdmin = async (req, res) => {
       abortEarly: false,
     });
     if (error) {
-      const errors = error.details.map((errItem) => errItem.message);
+      const errors = error.details.reduce((acc, errItem) => {
+        acc[errItem.path[0]] = errItem.message;
+        return acc;
+      }, {});
       return res.status(400).json({
         success: false,
         message: errors,
@@ -550,6 +587,28 @@ const updateUserByAdmin = async (req, res) => {
     }
 
     const { id } = req.params;
+    const { mobile, email } = req.body;
+
+    const checkMail = await User.findOne({ _id: { $ne: id }, email });
+    if (checkMail) {
+      throw new Error(
+        `Email ${email} đã được sử dụng, vui lòng sử dụng email khác`
+      );
+    }
+
+    if (mobile) {
+      const checkMobile = await User.findOne({
+        _id: { $ne: id },
+        mobile,
+      });
+      if (checkMobile) {
+        return res.status(401).json({
+          success: false,
+          message:
+            "Số điện thoại đã tồn tại, vui lòng nhập lại số điện thoại khác!",
+        });
+      }
+    }
 
     const updateUser = await User.findByIdAndUpdate(id, req.body, {
       new: true,

@@ -20,15 +20,15 @@ const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    setSeletedSort(state, action) {
+    setSeletedSort: (state, action) => {
       state.seletedSort = action.payload;
     },
 
-    setFilterPriceGte(state, action) {
+    setFilterPriceGte: (state, action) => {
       state.filterPriceGte = action.payload;
     },
 
-    setFilterPriceLte(state, action) {
+    setFilterPriceLte: (state, action) => {
       state.filterPriceLte = action.payload;
     },
   },

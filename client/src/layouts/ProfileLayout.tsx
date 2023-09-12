@@ -4,7 +4,7 @@ import Breadcrumb from "../components/guest/Breadcrumb/Breadcrumb";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useGetOrderDetailQuery } from "../features/order/order.services";
-import useAccessDeniedHandler from "../hooks/useHandleAccess";
+import { useAccessDeniedHandler } from "../hooks/useHandleAccess";
 
 type Props = {};
 

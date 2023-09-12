@@ -29,7 +29,7 @@ router.post("/users/refreshToken", refreshAccessToken);
 router.post("/users/forgotPassword", forgotPassword);
 
 router.get("/users", [verifyAccessToken, isAdminRole], getUsers);
-router.get("/users/id/:id", verifyAccessToken, getUser);
+router.get("/users/id/:id", [verifyAccessToken, isAdminRole], getUser);
 router.get("/users/currentUser", verifyAccessToken, getCurrentUser);
 router.get("/users/logOut", logOut);
 

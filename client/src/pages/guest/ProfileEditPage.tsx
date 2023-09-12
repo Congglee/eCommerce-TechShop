@@ -151,6 +151,8 @@ const ProfileEditPage = (props: Props) => {
               type="email"
               name="email"
               value={formValue.email}
+              style="border-transparent border-2 bg-gray-400 w-full py-[6px] px-[10px] placeholder:text-sm font-light focus:border-2 focus:border-gray-500 focus:ring-0 rounded-[4px]"
+              isReadOnly
               handleChange={handleChange}
               placeholder="Email"
             />

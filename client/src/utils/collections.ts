@@ -135,4 +135,26 @@ const newsItems = [
   },
 ];
 
-export { hotCollections, newsItems };
+const roles = [
+  {
+    label: "Khách",
+    value: 0,
+  },
+  {
+    label: "Admin",
+    value: 1,
+  },
+];
+
+const blockStatus = [
+  {
+    label: "Đang hoạt động",
+    value: 0,
+  },
+  {
+    label: "Bị khóa",
+    value: 1,
+  },
+];
+
+export { hotCollections, newsItems, roles, blockStatus };

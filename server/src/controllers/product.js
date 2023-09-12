@@ -274,7 +274,7 @@ const getProducts = async (req, res) => {
       success: response ? true : false,
       totalPages,
       totalProduct,
-      products: response ? response : "Cannot get products",
+      products: response ? response : "Không lấy được sản phẩm",
     });
   } catch (error) {
     return res.status(400).json({

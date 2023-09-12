@@ -12,4 +12,5 @@ export interface IUser {
   refreshToken?: string;
   address?: string;
   mobile?: string;
+  createdAt?: string;
 }

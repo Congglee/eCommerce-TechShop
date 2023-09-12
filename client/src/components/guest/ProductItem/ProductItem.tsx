@@ -147,7 +147,7 @@ const ProductItem = (props: ProductItemProps) => {
               dangerouslySetInnerHTML={{
                 __html: formattedProductDesc as string,
               }}
-              className="text-[13px] leading-[18px] text-main-500 mb-[15px] line-clamp-[12]"
+              className="text-[13px] leading-[18px] text-main-500 mb-[15px] line-clamp-[11]"
             ></div>
           </Link>
 

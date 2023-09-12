@@ -28,4 +28,25 @@ const useAccessDeniedHandler = () => {
   return handleAccessDenied;
 };
 
-export default useAccessDeniedHandler;
+const useRoleAccessDeniedHandler = () => {
+  const navigate = useNavigate();
+
+  const handleAccessDenied = async () => {
+    try {
+      await Swal.fire({
+        title: "Bạn có không có quyền để truy cập trang này",
+        text: "Vui lòng quay lại trang chủ",
+        icon: "error",
+        confirmButtonText: "Quay lại",
+      });
+
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return handleAccessDenied;
+};
+
+export { useAccessDeniedHandler, useRoleAccessDeniedHandler };

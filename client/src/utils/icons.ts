@@ -1,4 +1,5 @@
 import {
+  BiCategoryAlt,
   BiChevronRight,
   BiLogoFacebook,
   BiLogoGoogle,
@@ -16,6 +17,8 @@ import {
   AiFillStar,
   AiOutlineClose,
   AiOutlineUser,
+  AiFillSetting,
+  AiOutlineDashboard,
 } from "react-icons/ai";
 import { LiaBarsSolid } from "react-icons/lia";
 import {
@@ -38,7 +41,8 @@ import {
 import { HiOutlineDotsHorizontal, HiShoppingBag, HiGift } from "react-icons/hi";
 import { GiPositionMarker, GiHamburgerMenu } from "react-icons/gi";
 import { FiChevronDown, FiChevronUp, FiFilter } from "react-icons/fi";
-import { PiListBold, PiShoppingCartFill } from "react-icons/pi";
+import { PiCircleFill, PiListBold, PiShoppingCartFill } from "react-icons/pi";
+import { CgWebsite } from "react-icons/cg";
 
 const icons = {
   BiChevronRight,
@@ -82,6 +86,11 @@ const icons = {
   BiSolidUserAccount,
   FiFilter,
   FiChevronUp,
+  BiCategoryAlt,
+  AiFillSetting,
+  AiOutlineDashboard,
+  CgWebsite,
+  PiCircleFill,
 };
 
 export default icons;

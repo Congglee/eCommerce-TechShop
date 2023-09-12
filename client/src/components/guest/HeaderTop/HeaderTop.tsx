@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
 import { logOut } from "../../../features/auth/auth.slice";
+import jwt_decode from "jwt-decode";
 
 const {
   FaRegMoneyBillAlt,
@@ -24,10 +25,13 @@ const HeaderTop = (props: Props) => {
   const { data, isFetching, refetch, isError } = useGetCurrentUserQuery();
   const { isLoggedIn, token } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (token) {
       refetch();
+      const decodedToken = jwt_decode(token) as { isAdmin: boolean };
+      setIsAdmin(decodedToken.isAdmin);
     }
   }, [token]);
 
@@ -53,7 +57,7 @@ const HeaderTop = (props: Props) => {
 
         <div className="flex items-center text-white text-xs cursor-pointer gap-x-[10px] 900:gap-x-[5px]">
           <div className="hover:text-[#151515] transition-all duration-200 ease-linear">
-            {isLoggedIn ? (
+            {isLoggedIn && !data?.userData.isBlocked ? (
               <div
                 className="flex items-center gap-x-2 relative"
                 onMouseEnter={() => setIsHover(true)}
@@ -73,7 +77,7 @@ const HeaderTop = (props: Props) => {
                 </div>
 
                 <div
-                  className={`z-10 absolute top-[35px] right-0 left-0 bg-main-500 divide-y divide-gray-100 rounded-lg shadow w-[165px] after:content-[''] after:absolute after:w-full after:h-1 after:top-0 after:left-0 after:bg-transparent after:translate-y-[-100%] transition-all duration-200 ease-linear ${
+                  className={`z-10 absolute top-[35px] right-0 left-0 bg-main-200 divide-y divide-gray-100 rounded-lg shadow w-[165px] after:content-[''] after:absolute after:w-full after:h-1 after:top-0 after:left-0 after:bg-transparent after:translate-y-[-100%] transition-all duration-200 ease-linear ${
                     isHover ? "opacity-100 visible" : "opacity-0 invisible"
                   }`}
                 >
@@ -93,7 +97,7 @@ const HeaderTop = (props: Props) => {
                       </Link>
                     </li>
 
-                    {data?.userData.isAdmin && (
+                    {data?.userData && isAdmin && (
                       <li>
                         <Link
                           to="/admin"

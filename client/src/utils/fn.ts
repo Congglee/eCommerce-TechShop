@@ -1,4 +1,5 @@
 import CryptoJS from "crypto-js";
+import moment from "moment";
 
 export const generateRange = (start: number, end: number) => {
   const length = end + 1 - start;
@@ -11,6 +12,11 @@ export const formatCurrency = (amount: number | undefined | string) => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+};
+
+export const formatDate = (inputDate?: string) => {
+  const formattedDate = moment(inputDate).format("DD/MM/YYYY");
+  return formattedDate;
 };
 
 export const handleSortUrl = (
@@ -40,11 +46,16 @@ export const handleNameUrl = (
   price_filter_lte?: string,
   page?: string | number,
   isCategory: boolean = false,
-  categoryUrlValue?: string
+  categoryUrlValue?: string,
+  isAdmin: boolean = false,
+  adminUrlValue?: string
 ) => {
-  const baseEndpoint = isCategory
-    ? `/category/${categoryUrlValue}`
-    : "/products";
+  let baseEndpoint;
+  if (isAdmin) {
+    baseEndpoint = `/admin/${adminUrlValue}`;
+  } else {
+    baseEndpoint = isCategory ? `/category/${categoryUrlValue}` : "/products";
+  }
 
   const nameUrl = `${baseEndpoint}?name=${value}${
     sort || price_filter_gte || price_filter_lte || page

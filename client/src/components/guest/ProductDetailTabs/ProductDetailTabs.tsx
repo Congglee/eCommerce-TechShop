@@ -269,13 +269,19 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
                   <span className="flex items-center text-sm italic">
                     <div className="w-10 h-10 rounded-full overflow-hidden mr-2">
                       <img
-                        src={(rate.postedBy as IUser)?.avatar as string}
+                        src={
+                          ((rate.postedBy as IUser)?.avatar as string)
+                            ? ((rate.postedBy as IUser)?.avatar as string)
+                            : "https://www.shutterstock.com/image-vector/user-profile-icon-trendy-flat-260nw-1923506948.jpg"
+                        }
                         alt=""
                         className="w-full h-full"
                       />
                     </div>
                     <strong className="pr-1">
-                      {(rate.postedBy as IUser)?.name}
+                      {(rate.postedBy as IUser)?.name
+                        ? (rate.postedBy as IUser)?.name
+                        : "Người dùng ẩn danh"}
                     </strong>
                     vào
                     <strong className="pl-1">{rate.date}</strong>

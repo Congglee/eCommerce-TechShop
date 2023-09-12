@@ -7,12 +7,13 @@ const { HiOutlineDotsHorizontal } = icons;
 const usePagination = (
   totalProductCount: number,
   currentPage: number,
+  limitDataPerPage: number = 6,
   siblingCount = 1
 ) => {
   const paginationArray = useMemo(() => {
-    const limitProductPerPage =
-      import.meta.env.VITE_APP_LIMIT_PRODUCT_PER_PAGE || 6;
-    const paginationCount = Math.ceil(totalProductCount / limitProductPerPage);
+    // const limitProductPerPage =
+    //   import.meta.env.VITE_APP_LIMIT_PRODUCT_PER_PAGE || 6;
+    const paginationCount = Math.ceil(totalProductCount / limitDataPerPage);
     const totalPaginationItem = siblingCount + 5;
 
     if (paginationCount <= totalPaginationItem)

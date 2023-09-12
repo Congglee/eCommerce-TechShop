@@ -1,20 +1,27 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import productReducer from "../features/product/product.slice";
 import { productApi } from "../features/product/product.services";
+
 import categoryReducer from "../features/category/category.slice";
 import { categoryApi } from "../features/category/category.services";
+
 import authReducer, { IAuthState } from "../features/auth/auth.slice";
 import { authApi } from "../features/auth/auth.service";
-import { cartApi } from "../features/cart/cart.services";
+
 import cartReducer, { ICartState } from "../features/cart/cart.slice";
-import { userReducer } from "../features/user/user.slice";
+import { cartApi } from "../features/cart/cart.services";
+
+import userReducer from "../features/user/user.slice";
 import { userApi } from "../features/user/user.services";
+
 import { orderReducer } from "../features/order/order.slice";
+import { orderApi } from "../features/order/order.services";
+
+import appReducer from "../features/app.slice";
 
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-import { orderApi } from "../features/order/order.services";
-import appReducer from "../features/app.slice";
 
 const commonConfig = {
   key: "tech-shop/user",

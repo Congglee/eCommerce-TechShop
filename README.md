@@ -136,7 +136,7 @@ This project was created using the following technologies.
 
 #### Database
 
-- [MongoDB ](https://www.mongodb.com/) - It provides a free cloud service to store MongoDB collections
+- [MongoDB](https://www.mongodb.com/) - It provides a free cloud service to store MongoDB collections
 
 ## Bugs
 

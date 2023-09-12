@@ -22,10 +22,14 @@ const path = {
   PROFILE_ORDER_DETAIL_PAGE: "order/:id",
   PROFILE_EDIT_PAGE: "edit",
 
+  NOT_FOUND_PAGE: "*",
+
   ADMIN_DASHBOARD: "admin",
   ADMIN_PRODUCT_PAGE: "products",
   ADMIN_CATEGORY_PAGE: "categories",
   ADMIN_USER_PAGE: "users",
+  ADMIN_ORDER_PAGE: "orders",
+
   ADMIN_CREATE_PAGE: "create",
   ADMIN_UPDATE_PAGE: "update",
 };

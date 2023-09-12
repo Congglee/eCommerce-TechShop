@@ -25,6 +25,7 @@ import {
   ForgotPasswordPage,
   HomePage,
   LoginPage,
+  NotFoundPage,
   ProductDetailPage,
   ProductPage,
   ProfileOrderDetailPage,
@@ -127,6 +128,8 @@ function App() {
             <Route path={path.ADMIN_UPDATE_PAGE} element={<UpdateUserPage />} />
           </Route>
         </Route>
+
+        <Route path={path.NOT_FOUND_PAGE} element={<NotFoundPage />} />
       </Routes>
     </>
   );

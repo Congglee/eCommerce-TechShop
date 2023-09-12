@@ -1,12 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export const initialState = [];
+interface IUserState {
+  isShowUpdateUserDrawer: boolean;
+  userId: string;
+}
+
+const initialState: IUserState = {
+  isShowUpdateUserDrawer: false,
+  userId: "",
+};
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    showUpdateUserDrawer: (state, action) => {
+      state.isShowUpdateUserDrawer = action.payload;
+    },
+
+    setUserDetail: (state, action: PayloadAction<{ id: string }>) => {
+      state.userId = action.payload.id;
+    },
+  },
 });
 
-export const {} = userSlice.actions;
-export const userReducer = userSlice.reducer;
+export const { showUpdateUserDrawer, setUserDetail } = userSlice.actions;
+
+const userReducer = userSlice.reducer;
+export default userReducer;

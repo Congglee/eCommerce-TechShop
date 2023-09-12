@@ -9,7 +9,7 @@ import icons from "../utils/icons";
 import { RootState } from "../store/store";
 import { IProduct } from "../interfaces/product.interface";
 import { formatCurrency } from "../utils/fn";
-import useAccessDeniedHandler from "../hooks/useHandleAccess";
+import { useAccessDeniedHandler } from "../hooks/useHandleAccess";
 
 const { PiShoppingCartFill, FiChevronDown, FiChevronUp } = icons;
 

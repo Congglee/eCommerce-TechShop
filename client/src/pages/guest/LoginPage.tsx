@@ -9,6 +9,7 @@ import { isEntityError } from "../../utils/helper";
 import { InputItem } from "../../components/guest";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 import { OvalSpinner } from "../../components/common";
+import Swal from "sweetalert2";
 
 const initialState: { email: string; password: string } = {
   email: "",
@@ -61,9 +62,26 @@ const LoginPage = (props: Props) => {
         typeof loginResult.data.accessToken === "string"
       ) {
         const { isAdmin }: any = jwt_decode(loginResult.data.accessToken);
-        if (isAdmin) navigate("/admin");
-        else {
-          navigate("/");
+        if (isAdmin) {
+          navigate("/admin");
+        } else {
+          if (loginResult.data.userData.isBlocked)
+            Swal.fire({
+              icon: "warning",
+              title: "Tài khoản bị chặn",
+              text: "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ với quản trị viên của website để mở khóa.",
+              confirmButtonText: "Xác nhận",
+            }).then(() => {
+              dispatch(
+                setUser({
+                  isLoggedIn: false,
+                  userData: undefined,
+                  token: "",
+                })
+              );
+              navigate("/login");
+            });
+          else navigate("/");
         }
       }
     }

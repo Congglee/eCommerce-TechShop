@@ -12,7 +12,7 @@ interface IGetUserResponse {
   userData: IUser;
 }
 
-interface IUpdateUserByClient {
+interface IUpdateUserResponse {
   success: boolean;
   updatedUser: IUser;
 }
@@ -27,8 +27,16 @@ interface IResetPasswordResponse {
   message: string;
 }
 
+interface IGetUsersResponse {
+  success: boolean;
+  totalPages: number;
+  totalUser: number;
+  users: IUser[];
+}
+
 export const userApi = createApi({
   reducerPath: "userApi",
+  tagTypes: ["Users"],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_API_URL,
     prepareHeaders(headers, { getState }) {
@@ -48,6 +56,51 @@ export const userApi = createApi({
           method: "PUT",
           body,
         };
+      },
+    }),
+
+    getUsers: build.query<
+      IGetUsersResponse,
+      {
+        name?: string;
+        sort?: string;
+        limit?: string | number;
+        page?: string | number;
+      }
+    >({
+      query: ({ name, sort, limit, page }) => {
+        let queryString = "users";
+        const params = [];
+
+        if (name) params.push(`name=${name}`);
+        if (sort) params.push(`sort=${sort}`);
+        if (limit) params.push(`limit=${limit}`);
+        if (page) params.push(`page=${page}`);
+
+        if (params.length > 0) queryString += `?${params.join("&")}`;
+
+        return queryString;
+      },
+      providesTags(result, error, params) {
+        if (error || !result) {
+          return [{ type: "Users", id: "LIST" }];
+        }
+
+        const hasFilter = Object.keys(params).some((key) =>
+          ["name", "sort", "limit", "page"].includes(key)
+        );
+
+        if (hasFilter) {
+          return [
+            ...result.users.map(({ _id }) => ({
+              type: "Users" as const,
+              id: _id,
+            })),
+            { type: "Users" as const, id: "LIST" },
+          ];
+        }
+
+        return [{ type: "Users" as const, id: "LIST" }];
       },
     }),
 
@@ -78,7 +131,7 @@ export const userApi = createApi({
       },
     }),
 
-    updateUserByClient: build.mutation<IUpdateUserByClient, IUser | FormData>({
+    updateUserByClient: build.mutation<IUpdateUserResponse, IUser | FormData>({
       query: (body) => {
         return {
           url: "/users/updateClient",
@@ -86,6 +139,31 @@ export const userApi = createApi({
           body,
         };
       },
+    }),
+
+    updateUserByAdmin: build.mutation<
+      IUpdateUserResponse,
+      { id: string; body: IUser }
+    >({
+      query: (data) => {
+        return {
+          url: `/users/updateAdmin/${data.id}`,
+          method: "PUT",
+          body: data.body,
+        };
+      },
+      invalidatesTags: (result, error, data) =>
+        error ? [] : [{ type: "Users", id: data.id }],
+    }),
+
+    deleteUser: build.mutation({
+      query(id) {
+        return {
+          url: `/users/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: (result, error, id) => [{ type: "Users", id }],
     }),
   }),
 });
@@ -96,4 +174,7 @@ export const {
   useUpdateUserByClientMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useGetUsersQuery,
+  useUpdateUserByAdminMutation,
+  useDeleteUserMutation,
 } = userApi;

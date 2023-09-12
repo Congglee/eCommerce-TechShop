@@ -19,7 +19,11 @@ interface IPaginationProps {
 const Pagination = (props: IPaginationProps) => {
   const { name, sort, price_filter_gte, price_filter_lte, totalCount } = props;
   const navigate = useNavigate();
-  const pagination = usePagination(totalCount, 1);
+  const pagination = usePagination(
+    totalCount,
+    1,
+    import.meta.env.VITE_APP_LIMIT_PRODUCT_PER_PAGE
+  );
   const queryString = useQueryString();
   const page = Number(queryString.page) || 1;
 

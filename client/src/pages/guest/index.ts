@@ -12,3 +12,4 @@ export { default as CheckoutPaymentPage } from "./CheckoutPaymentPage";
 export { default as ProfilePage } from "./ProfilePage";
 export { default as ProfileOrderDetailPage } from "./ProfileOrderDetailPage";
 export { default as CheckoutSuccessPage } from "./CheckoutSuccessPage";
+export { default as NotFoundPage } from "./NotFoundPage";
