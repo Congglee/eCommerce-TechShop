@@ -11,7 +11,7 @@ type Props = {};
 
 const Navigation = (props: Props) => {
   const [isHoverMenu, setIsHoverMenu] = useState<boolean>(false);
-  const { data } = useGetCategoriesQuery();
+  const { data } = useGetCategoriesQuery({});
   const navigate = useNavigate();
   const { category } = useParams();
   const queryString: {
@@ -89,16 +89,18 @@ const Navigation = (props: Props) => {
                     LAPTOP
                   </h3>
                   <div className="text-[15px] flex flex-col gap-y-[10px] text-main-500">
-                    {data?.categories.map((category) => (
-                      <Link
-                        key={category._id}
-                        to={`/category/${category.slug}`}
-                      >
-                        <span className="hover:text-main-200">
-                          {category.name}
-                        </span>
-                      </Link>
-                    ))}
+                    {data?.categories
+                      .filter((category) => category.name !== "uncategorized")
+                      .map((category) => (
+                        <Link
+                          key={category._id}
+                          to={`/category/${category.slug}`}
+                        >
+                          <span className="hover:text-main-200">
+                            {category.name}
+                          </span>
+                        </Link>
+                      ))}
                   </div>
                 </div>
 
