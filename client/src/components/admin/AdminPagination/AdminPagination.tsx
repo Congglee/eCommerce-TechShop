@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import usePagination from "../../../hooks/usePagination";
 import { useQueryString } from "../../../hooks/useQueryString";
 import { handlePageUrl } from "../../../utils/fn";
@@ -19,8 +19,9 @@ const AdminPagination = (props: IAdminPaginationProps) => {
   const pagination = usePagination(
     totalCount,
     1,
-    import.meta.env.VITE_APP_LIMIT_ADMIN_USER_PER_PAGE
+    import.meta.env.VITE_APP_LIMIT_ADMIN_PER_PAGE
   );
+
   const queryString = useQueryString();
   const page = Number(queryString.page) || 1;
 
@@ -57,9 +58,9 @@ const AdminPagination = (props: IAdminPaginationProps) => {
           return (
             <li key={item as number}>
               <button
-                className={`flex items-center justify-center px-3 h-8 border  hover:bg-blue-100 hover:text-blue-500 border-gray-700 bg-gray-700 text-white ${
+                className={`flex items-center justify-center px-3 h-8 border   bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white ${
                   isActive &&
-                  "bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white"
+                  "hover:bg-blue-100 hover:text-blue-500 border-gray-700 bg-gray-700 text-white"
                 }`}
                 onClick={() => handlePaginationUrl(item as number)}
               >

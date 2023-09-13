@@ -56,7 +56,11 @@ const AdminHeader = (props: Props) => {
             </button>
 
             <Link to="/" className="flex ml-2 ipad:mr-24">
-              <img src={logo} className="h-8 mr-3" alt="FlowBite Logo" />
+              <img
+                src={logo}
+                className="h-8 mr-3 w-52 object-contain mobile:w-full"
+                alt="FlowBite Logo"
+              />
             </Link>
           </div>
           <div className="flex items-center">

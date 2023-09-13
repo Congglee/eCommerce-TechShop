@@ -13,6 +13,7 @@ import {
 import { isEntityError } from "../../../utils/helper";
 import { toast } from "react-toastify";
 import { blockStatus, roles } from "../../../utils/collections";
+import useHandlerError from "../../../hooks/useHandleError";
 
 const { AiOutlineClose } = icons;
 
@@ -46,7 +47,7 @@ const UpdateUser = (props: Props) => {
     defaultValues: initialFormState,
   });
 
-  const { data, isFetching, refetch } = useGetUserQuery(userId);
+  const { data, refetch } = useGetUserQuery(userId);
   const user = data?.userData;
   const [updateUserByAdmin, updateUserByAdminResult] =
     useUpdateUserByAdminMutation();
@@ -87,20 +88,7 @@ const UpdateUser = (props: Props) => {
     }
   }, [updateUserByAdminResult.isSuccess]);
 
-  useEffect(() => {
-    if (updateUserByAdminResult.isError) {
-      if (isEntityError(updateUserByAdminResult.error)) {
-        const errorMessage = updateUserByAdminResult.error.data.message;
-        Object.keys(errorMessage).forEach((key) => {
-          setError(key as keyof typeof initialFormState, {
-            message: errorMessage[key] as string,
-            type: "Server",
-          });
-        });
-      }
-      toast.error((updateUserByAdminResult.error as any).data.message);
-    }
-  }, [updateUserByAdminResult.isError]);
+  useHandlerError(updateUserByAdminResult, setError, initialFormState);
 
   const handleCloseDrawer = () => {
     clearErrors();

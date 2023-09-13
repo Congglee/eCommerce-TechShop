@@ -10,7 +10,7 @@ const { GrUnorderedList } = icons;
 type Props = {};
 
 const CategorySideMenu = (props: Props) => {
-  const { data, isFetching } = useGetCategoriesQuery();
+  const { data, isFetching } = useGetCategoriesQuery({});
   const { category: categoryParams } = useParams();
 
   return (
@@ -66,28 +66,30 @@ const CategorySideMenu = (props: Props) => {
 
       {!isFetching && (
         <div className="px-5 flex flex-col">
-          {data?.categories.map((category: ICategory) => {
-            const isActive = categoryParams === category.slug;
-            return (
-              <div
-                className="flex items-center flex-wrap gap-x-3 py-[14px]"
-                key={category._id}
-              >
-                <div className="w-5 h-5">
-                  <img src={laptop_icon} alt="" />
+          {data?.categories
+            .filter((category) => category.name !== "uncategorized")
+            .map((category: ICategory) => {
+              const isActive = categoryParams === category.slug;
+              return (
+                <div
+                  className="flex items-center flex-wrap gap-x-3 py-[14px]"
+                  key={category._id}
+                >
+                  <div className="w-5 h-5">
+                    <img src={laptop_icon} alt="" />
+                  </div>
+                  <Link to={`/category/${category.slug}`}>
+                    <span
+                      className={`text-base ${
+                        isActive ? "text-main-200" : "text-main-600"
+                      }`}
+                    >
+                      {category.name}
+                    </span>
+                  </Link>
                 </div>
-                <Link to={`/category/${category.slug}`}>
-                  <span
-                    className={`text-base ${
-                      isActive ? "text-main-200" : "text-main-600"
-                    }`}
-                  >
-                    {category.name}
-                  </span>
-                </Link>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       )}
     </div>

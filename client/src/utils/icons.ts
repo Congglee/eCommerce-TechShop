@@ -1,4 +1,5 @@
 import {
+  BiBookAdd,
   BiCategoryAlt,
   BiChevronRight,
   BiLogoFacebook,
@@ -91,6 +92,7 @@ const icons = {
   AiOutlineDashboard,
   CgWebsite,
   PiCircleFill,
+  BiBookAdd,
 };
 
 export default icons;

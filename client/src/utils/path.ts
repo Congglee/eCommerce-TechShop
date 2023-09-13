@@ -31,7 +31,7 @@ const path = {
   ADMIN_ORDER_PAGE: "orders",
 
   ADMIN_CREATE_PAGE: "create",
-  ADMIN_UPDATE_PAGE: "update",
+  ADMIN_UPDATE_PAGE: "update/:id",
 };
 
 export default path;

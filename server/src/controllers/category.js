@@ -22,6 +22,18 @@ const createCategory = async (req, res) => {
       });
     }
 
+    const categoryName = req.body.name;
+    const existingCategory = await Category.findOne({
+      name: { $regex: categoryName, $options: "i" },
+    });
+    if (existingCategory) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Danh mục có cùng tên đã tồn tại, vui lòng nhập lại tên danh mục",
+      });
+    }
+
     const newCategorySlug = slugify(req.body.name, { lower: true });
     const newCategory = await Category.create({
       ...req.body,
@@ -32,7 +44,7 @@ const createCategory = async (req, res) => {
       success: newCategory ? true : false,
       createdCategory: newCategory
         ? newCategory
-        : "Thêm danh mục sản phẩm không thành công",
+        : "Thêm danh mục danh mục không thành công",
     });
   } catch (error) {
     return res.status(400).json({
@@ -44,13 +56,53 @@ const createCategory = async (req, res) => {
 
 const getCategories = async (req, res) => {
   try {
-    const categories = await Category.find().select(
-      "name _id image slug products"
+    const queries = { ...req.query };
+    const excludeFields = ["limit", "sort", "page", "fields"];
+    excludeFields.forEach((item) => delete queries[item]);
+
+    let queryString = JSON.stringify(queries);
+    queryString = queryString.replace(
+      /\b(gte|gt|lt|lte)\b/g,
+      (matchedItem) => `$${matchedItem}`
     );
 
-    return res.json({
-      success: categories ? true : false,
-      categories: categories ? categories : "Không lấy được danh mục sản phẩm",
+    const formattedQueries = JSON.parse(queryString);
+
+    if (queries?.name)
+      formattedQueries.name = { $regex: queries.name, $options: "i" };
+
+    let queryCommand = Category.find(formattedQueries).populate({
+      path: "products",
+      select: "name slug thumb price",
+    });
+
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      queryCommand = queryCommand.sort(sortBy);
+    }
+
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      queryCommand = queryCommand.select(fields);
+    } else {
+      queryCommand = queryCommand.select("-__v");
+    }
+
+    const page = +req.query.page || 1;
+    const limit = +req.query.limit || 100;
+    const skip = (page - 1) * limit;
+
+    queryCommand = queryCommand.skip(skip).limit(limit);
+
+    const response = await queryCommand.exec();
+    const totalCategory = await Category.countDocuments(formattedQueries);
+    const totalPages = Math.ceil(totalCategory / +limit);
+
+    return res.status(200).json({
+      success: response ? true : false,
+      totalPages,
+      totalCategory,
+      categories: response ? response : "Không lấy được danh mục",
     });
   } catch (error) {
     return res.status(400).json({

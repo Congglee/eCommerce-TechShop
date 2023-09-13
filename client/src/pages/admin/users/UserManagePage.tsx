@@ -6,7 +6,7 @@ import {
 import { formatDate, handleNameUrl, handleSortUrl } from "../../../utils/fn";
 import { useQueryString } from "../../../hooks/useQueryString";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AdminPagination } from "../../../components/admin";
+import { AdminPagination, UserLoadingRow } from "../../../components/admin";
 import { useDispatch } from "react-redux";
 import {
   setUserDetail,
@@ -35,7 +35,7 @@ const UserManagePage = (props: Props) => {
     name: name || "",
     page: page || 1,
     sort: sort || "",
-    limit: import.meta.env.VITE_APP_LIMIT_ADMIN_USER_PER_PAGE || 8,
+    limit: import.meta.env.VITE_APP_LIMIT_ADMIN_PER_PAGE || 8,
   });
   const [deleteUser, deleteUserResult] = useDeleteUserMutation();
 
@@ -181,76 +181,80 @@ const UserManagePage = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {data?.users.map((user, index) => (
-              <tr
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                key={user._id}
-              >
-                <td className="px-4 py-3 text-base font-semibold text-white">
-                  {index + 1}
-                </td>
+            {isFetching &&
+              [...Array(3)].map((_, index) => <UserLoadingRow key={index} />)}
 
-                <td className="px-4 py-3 text-white">{user.name}</td>
-                <td className="px-4 py-3">{user.email}</td>
-                <td className="px-4 py-3">
-                  <img
-                    className="w-10 h-10 rounded-full"
-                    src={user.avatar as string}
-                    alt="Jese image"
-                  />
-                </td>
-                <td className="px-4 py-3 font-medium whitespace-normal break-words">
-                  {user.address}
-                </td>
-                <td className="px-4 py-3">{user.mobile}</td>
-                <td className="px-4 py-3">
-                  {user.isAdmin ? "Admin" : "Khách"}
-                </td>
-                <td className="px-4 py-3">
-                  {user.isBlocked ? (
-                    <div className="flex items-start gap-x-3 gap-y-2 flex-col desktop2xl:flex-row desktop2xl:items-center">
-                      <div className="text-red-600">
-                        <PiCircleFill size={14} />
+            {!isFetching &&
+              data?.users.map((user, index) => (
+                <tr
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  key={user._id}
+                >
+                  <td className="px-4 py-3 text-base font-semibold text-white">
+                    {index + 1}
+                  </td>
+
+                  <td className="px-4 py-3 text-white">{user.name}</td>
+                  <td className="px-4 py-3">{user.email}</td>
+                  <td className="px-4 py-3">
+                    <img
+                      className="w-10 h-10 rounded-full"
+                      src={user.avatar as string}
+                      alt="Jese image"
+                    />
+                  </td>
+                  <td className="px-4 py-3 font-medium whitespace-normal break-words">
+                    {user.address}
+                  </td>
+                  <td className="px-4 py-3">{user.mobile}</td>
+                  <td className="px-4 py-3">
+                    {user.isAdmin ? "Admin" : "Khách"}
+                  </td>
+                  <td className="px-4 py-3">
+                    {user.isBlocked ? (
+                      <div className="flex items-start gap-x-3 gap-y-2 flex-col desktop2xl:flex-row desktop2xl:items-center">
+                        <div className="text-red-600">
+                          <PiCircleFill size={14} />
+                        </div>
+                        <span>Bị khóa</span>
                       </div>
-                      <span>Bị khóa</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-start gap-x-3 gap-y-2 flex-col desktop2xl:flex-row desktop2xl:items-center">
-                      <div className="text-green-600">
-                        <PiCircleFill size={14} />
+                    ) : (
+                      <div className="flex items-start gap-x-3 gap-y-2 flex-col desktop2xl:flex-row desktop2xl:items-center">
+                        <div className="text-green-600">
+                          <PiCircleFill size={14} />
+                        </div>
+                        <span>Đang hoạt động</span>
                       </div>
-                      <span>Đang hoạt động</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">{formatDate(user.createdAt)}</td>
+
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-x-2">
+                      <button
+                        className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm  text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
+                        onClick={() => {
+                          dispatch(showUpdateUserDrawer(true));
+                          dispatch(setUserDetail({ id: user._id }));
+                        }}
+                      >
+                        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                          Sửa
+                        </span>
+                      </button>
+
+                      <button
+                        className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+                        onClick={() => handleDeleteUser(user._id)}
+                      >
+                        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                          Xóa
+                        </span>
+                      </button>
                     </div>
-                  )}
-                </td>
-                <td className="px-4 py-3">{formatDate(user.createdAt)}</td>
-
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-x-2">
-                    <button
-                      className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm  text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
-                      onClick={() => {
-                        dispatch(showUpdateUserDrawer(true));
-                        dispatch(setUserDetail({ id: user._id }));
-                      }}
-                    >
-                      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        Sửa
-                      </span>
-                    </button>
-
-                    <button
-                      className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
-                      onClick={() => handleDeleteUser(user._id)}
-                    >
-                      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        Xóa
-                      </span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

@@ -14,7 +14,7 @@ const AdminLayout = (props: Props) => {
   );
 
   return (
-    <div className="font-Inter relative h-screen overflow-x-hidden">
+    <div className="font-Inter relative overflow-x-hidden">
       <AdminHeader />
 
       <Sidebar />
@@ -26,7 +26,7 @@ const AdminLayout = (props: Props) => {
       </div>
 
       <div
-        className={`absolute top-0 right-0 w-[250px] tablet:w-[320px] ipad:w-[360px] laptop:w-[450px] h-full bg-gray-800 z-[60] p-5 
+        className={`fixed top-0 right-0 w-[250px] tablet:w-[320px] ipad:w-[360px] laptop:w-[450px] h-full bg-gray-800 z-[60] p-5 
         ${
           isShowUpdateUserDrawer
             ? "animate-show-right-up"
