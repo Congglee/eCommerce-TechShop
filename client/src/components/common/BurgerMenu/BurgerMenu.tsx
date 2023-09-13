@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import icons from "../../../utils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { logOut } from "../../../features/auth/auth.slice";
+import jwt_decode from "jwt-decode";
+import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
 
 const { AiOutlineUser, BiSolidUserAccount, AiOutlineClose } = icons;
 
@@ -15,9 +17,24 @@ interface burgerMenuProps {
 
 const BurgerMenu = (props: burgerMenuProps) => {
   const { handleSubmit, isActive, setIsActive } = props;
-  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn, token } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { data, isError } = useGetCurrentUserQuery();
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (token) {
+      const decodedToken = jwt_decode(token) as { isAdmin: boolean };
+      setIsAdmin(decodedToken.isAdmin);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(logOut());
+    }
+  }, [isError]);
 
   return (
     <div
@@ -72,6 +89,15 @@ const BurgerMenu = (props: burgerMenuProps) => {
                 <span className="pl-2 uppercase">Tài khoản</span>
               </div>
             </Link>
+
+            {data?.userData && isAdmin && (
+              <Link to="/admin">
+                <div className="flex items-center text-white py-[10px]">
+                  <span className="pl-2 uppercase">Quản lý website</span>
+                </div>
+              </Link>
+            )}
+
             <Link to="/forgotpassword">
               <div className="flex items-center text-white py-[10px]">
                 <span className="pl-2 uppercase">Đổi mật khẩu</span>

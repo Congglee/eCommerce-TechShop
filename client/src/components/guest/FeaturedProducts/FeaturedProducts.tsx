@@ -21,10 +21,10 @@ const FeaturedProducts = (props: FeaturedProducts) => {
           [...Array(9)].map((_, index) => (
             <div
               role="status"
-              className="w-[calc(calc(100%_/_3)_-_20px)] ml-5 mb-5 space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center"
+              className="w-[calc(calc(100%_/_3)_-_20px)] xs:w-full md:w-full ml-5 mb-5 p-[15px] border border-main-700 flex items-start gap-x-5"
               key={index}
             >
-              <div className="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
+              <div className="flex items-center justify-center w-full h-32 bg-gray-300 rounded sm:w-80 dark:bg-gray-700">
                 <svg
                   className="w-10 h-10 text-gray-200 dark:text-gray-600"
                   aria-hidden="true"

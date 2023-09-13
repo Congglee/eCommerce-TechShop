@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useLocation, useSearchParams } from "react-router-dom";
 import { Footer, Header } from "../components/guest";
 import { ToastContainer } from "react-toastify";

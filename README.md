@@ -164,10 +164,11 @@ This project was created using the following technologies.
 
 ## Bugs
 
-- ...
+- Animation is run when the component is rendered or re-rendered
 
 ## Features in Development
 
+- Handle clicking outside the side menu to hide the side menu
 - Create cart api
 - Admin Side for manage product, category, account, order, ...
 

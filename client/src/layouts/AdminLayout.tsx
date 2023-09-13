@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { AdminHeader, Sidebar } from "../components/admin";
 import { Outlet } from "react-router-dom";
 import { UpdateUserPage } from "../pages/admin";
@@ -6,9 +5,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRoleAccessDeniedHandler } from "../hooks/useHandleAccess";
-import jwt_decode from "jwt-decode";
-import useIsMounted from "../hooks/useMounted";
 
 type Props = {};
 
@@ -16,17 +12,6 @@ const AdminLayout = (props: Props) => {
   const { isShowUpdateUserDrawer } = useSelector(
     (state: RootState) => state.user
   );
-  const { isLoggedIn, token } = useSelector((state: RootState) => state.auth);
-  const handleAccessDenied = useRoleAccessDeniedHandler();
-
-  useEffect(() => {
-    if (!isLoggedIn) handleAccessDenied();
-
-    if (token) {
-      const { isAdmin } = jwt_decode(token) as { isAdmin: boolean };
-      if (!isAdmin) handleAccessDenied();
-    }
-  }, [isLoggedIn, token]);
 
   return (
     <div className="font-Inter relative h-screen overflow-x-hidden">

@@ -26,19 +26,11 @@ interface productDetailContentProps {
 const ProductDetailContent = (props: productDetailContentProps) => {
   const { product } = props;
   const dispatch = useDispatch();
-  // const [addToCartMutation, addToCartMutationResult] = useAddToCartMutation();
-  // const { data, refetch } = useGetCurrentUserQuery();
-  // const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+
   const [value, setValue] = useState(1);
   const [selectedImage, setSelectedImage] = useState(product?.thumb);
 
   const handleAddToCartStorage = async (product: ICartItem) => {
-    // if (isLoggedIn) {
-    //   await addToCartMutation({
-    //     id: product._id,
-    //     quantity: value,
-    //   });
-    // }
     dispatch(addToCart({ product: product, productQuantity: value }));
     toast.success(`Thêm sản phẩm ${product.name} vào giỏ hàng thành công`, {
       position: "bottom-right",
@@ -52,19 +44,6 @@ const ProductDetailContent = (props: productDetailContentProps) => {
   useEffect(() => {
     setSelectedImage(product?.thumb);
   }, [product]);
-
-  // useEffect(() => {
-  //   if (addToCartMutationResult.isSuccess) {
-  //     refetch();
-  //     dispatch(setCurrentUser({ userData: data?.userData }));
-  //   }
-  // }, [addToCartMutationResult.isSuccess, refetch, dispatch, data?.userData]);
-
-  // useEffect(() => {
-  //   if (addToCartMutationResult.isError) {
-  //     toast.error((addToCartMutationResult.error as any).data.message);
-  //   }
-  // }, [addToCartMutationResult.isError]);
 
   return (
     <>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import {
   AdminLayout,
@@ -35,6 +36,41 @@ import {
 } from "./pages/guest";
 import path from "./utils/path";
 import ProfileEditPage from "./pages/guest/ProfileEditPage";
+import { useSelector } from "react-redux";
+import { RootState } from "./store/store";
+import {
+  useAccessDeniedHandler,
+  useRoleAccessDeniedHandler,
+} from "./hooks/useHandleAccess";
+import jwt_decode from "jwt-decode";
+
+interface RouteProps {
+  children: React.ReactNode;
+}
+
+function ProtectedRoute({ children }: RouteProps) {
+  const { isLoggedIn, token } = useSelector((state: RootState) => state.auth);
+  const handleAccessDenied = useAccessDeniedHandler();
+  const handleRoleAccessDenied = useRoleAccessDeniedHandler();
+  const [isAdminRole, setIsAdminRole] = useState(false);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      handleAccessDenied();
+      setIsAdminRole(false);
+    } else if (token) {
+      const { isAdmin } = jwt_decode(token) as { isAdmin: boolean };
+      setIsAdminRole(isAdmin);
+
+      if (!isAdmin) {
+        handleRoleAccessDenied();
+        setIsAdminRole(false);
+      }
+    }
+  }, [isLoggedIn, token, handleAccessDenied, handleRoleAccessDenied]);
+
+  return isLoggedIn && isAdminRole ? children : null;
+}
 
 function App() {
   return (
@@ -70,8 +106,16 @@ function App() {
           />
           <Route path={path.CART_PAGE} element={<CartPage />} />
 
-          <Route path={path.PROFILE_PAGE} element={<ProfileLayout />}>
+          <Route
+            path={path.PROFILE_PAGE}
+            element={
+              <ProtectedRoute>
+                <ProfileLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<ProfilePage />} />
+            <Route path={path.PROFILE_PAGE} element={<ProfilePage />} />
             <Route
               path={path.PROFILE_ORDER_DETAIL_PAGE}
               element={<ProfileOrderDetailPage />}
@@ -83,7 +127,14 @@ function App() {
           </Route>
         </Route>
 
-        <Route path={path.CHECKOUT_PAGE} element={<CheckoutLayout />}>
+        <Route
+          path={path.CHECKOUT_PAGE}
+          element={
+            <ProtectedRoute>
+              <CheckoutLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<CheckoutInfoPage />} />
           <Route
             path={path.CHECKOUT_INFO_PAGE}
@@ -99,7 +150,14 @@ function App() {
           />
         </Route>
 
-        <Route path={path.ADMIN_DASHBOARD} element={<AdminLayout />}>
+        <Route
+          path={path.ADMIN_DASHBOARD}
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<DashboardPage />} />
           <Route path={path.ADMIN_PRODUCT_PAGE}>
             <Route index element={<ProductManagePage />} />

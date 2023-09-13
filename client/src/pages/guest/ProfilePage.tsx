@@ -91,12 +91,12 @@ const ProfilePage = (props: Props) => {
               className="w-full p-4 space-y-4 border border-[#f1f1f1] divide-y divide-gray-200 rounded shadow animate-pulse md:p-6"
               key={index}
             >
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5" />
+              <div className="flex justify-between gap-x-10">
+                <div className="w-[80%]">
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full mb-2.5" />
                   <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
                 </div>
-                <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12" />
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-[20%]" />
               </div>
               <span className="sr-only">Loading...</span>
             </div>

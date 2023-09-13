@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import Breadcrumb from "../components/guest/Breadcrumb/Breadcrumb";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useGetOrderDetailQuery } from "../features/order/order.services";
-import { useAccessDeniedHandler } from "../hooks/useHandleAccess";
 
 type Props = {};
 
@@ -13,13 +11,6 @@ const ProfileLayout = (props: Props) => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { id } = useParams();
   const { data } = useGetOrderDetailQuery(orderId ? orderId : (id as string));
-  const handleAccessDenied = useAccessDeniedHandler();
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      handleAccessDenied();
-    }
-  }, [isLoggedIn]);
 
   return (
     <>
