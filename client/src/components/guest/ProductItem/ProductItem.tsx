@@ -30,7 +30,8 @@ const ProductItem = (props: ProductItemProps) => {
     isRelateProductSlide,
     isProductsPage,
   } = props;
-  const formattedProductDesc = product?.description;
+
+  const hasHtmlTags = /<[^>]*>/g.test(product?.description as string);
   const { category } = useParams();
 
   return (
@@ -144,12 +145,25 @@ const ProductItem = (props: ProductItemProps) => {
                 : `/products/${product?.slug}`
             }`}
           >
-            <div
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(formattedProductDesc as string),
-              }}
-              className="text-[13px] leading-[18px] text-main-500 mb-[15px] line-clamp-[11]"
-            ></div>
+            {hasHtmlTags ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(product?.description as string),
+                }}
+                className="text-[13px] text-main-500 line-clamp-[10]"
+              ></div>
+            ) : (
+              <ul className="text-[13px] leading-[18px] text-main-500 mb-[15px] line-clamp-[11]">
+                {product?.description?.split("\n").map((item, index) => (
+                  <li
+                    className="list-disc list-inside list-image-[initial]"
+                    key={index}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
           </Link>
 
           <div className="flex items-center gap-x-2">

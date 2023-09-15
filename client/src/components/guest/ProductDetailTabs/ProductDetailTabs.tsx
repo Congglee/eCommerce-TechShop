@@ -128,25 +128,27 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
       </div>
 
       <div className="p-5 border border-main-700 mt-[-1px]">
-        {activeTab === "description" && hasHtmlTags ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(product?.description as string),
-            }}
-            className="text-sm text-main-500"
-          ></div>
-        ) : (
-          <ul className="flex flex-col gap-y-[5px] w-[90%]">
-            {product?.description?.split("\n").map((item, index) => (
-              <li
-                className="text-sm text-main-500 list-disc list-inside list-image-[initial]"
-                key={index}
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        )}
+        {activeTab === "description" ? (
+          hasHtmlTags ? (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(product?.description as string),
+              }}
+              className="text-sm text-main-500"
+            ></div>
+          ) : (
+            <ul className="flex flex-col gap-y-[5px] w-[90%]">
+              {product?.description?.split("\n").map((item, index) => (
+                <li
+                  className="text-sm text-main-500 list-disc list-inside list-image-[initial]"
+                  key={index}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )
+        ) : null}
 
         {activeTab === "warranty" && <WarrantyTab />}
 
