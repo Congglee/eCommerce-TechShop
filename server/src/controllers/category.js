@@ -40,7 +40,7 @@ const createCategory = async (req, res) => {
       slug: newCategorySlug,
     });
 
-    return res.json({
+    return res.status(200).json({
       success: newCategory ? true : false,
       createdCategory: newCategory
         ? newCategory
@@ -116,7 +116,7 @@ const getCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const category = await Category.findById(id).populate("products");
-    const products = await Product.find({ categoryId: req.params.id }).select(
+    const products = await Product.find({ category: req.params.id }).select(
       "-createdAt -__v -updatedAt"
     );
 
@@ -136,8 +136,6 @@ const getCategory = async (req, res) => {
 
 const deleteCategory = async (req, res) => {
   try {
-    const categoryId = req.params.id;
-
     const category = await Category.findById(req.params.id);
     if (!category) {
       return res.status(404).json({
@@ -146,14 +144,14 @@ const deleteCategory = async (req, res) => {
       });
     }
 
-    const products = await Product.find({ categoryId });
+    const products = await Product.find({ category });
 
     if (products.length > 0) {
       const uncategorized = await Category.findOne({ name: "uncategorized" });
 
       await Product.updateMany(
-        { categoryId: category._id },
-        { $set: { categoryId: uncategorized._id } }
+        { category: category._id },
+        { $set: { category: uncategorized._id } }
       );
     }
 
@@ -188,17 +186,35 @@ const updateCategory = async (req, res) => {
     }
 
     const { id } = req.params;
-    const updateCategory = await Category.findById(id);
-    if (!updateCategory)
+    const category = await Category.findById(id);
+    if (!category)
       return res.status(400).json({
         success: false,
         message: "Không tìm thấy danh mục",
       });
 
-    const updateCategorySlug = slugify(req.body.name, { lower: true });
+    const categoryName = req.body.name;
+    let newSlug = category.slug;
+    if (categoryName) {
+      const existingCategory = await Category.findOne({
+        _id: { $ne: id },
+        name: { $regex: categoryName, $options: "i" },
+      });
+
+      newSlug = slugify(req.body.name, { lower: true });
+
+      if (existingCategory) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "Danh mục trùng tên đã tồn tại, vui lòng nhập lại tên danh mục",
+        });
+      }
+    }
+
     const updatedCategory = await Category.findByIdAndUpdate(
       id,
-      { ...req.body, slug: updateCategorySlug },
+      { ...req.body, slug: newSlug },
       {
         new: true,
       }

@@ -24,7 +24,7 @@ const Breadcrumb = (props: breadCrumbProps) => {
     { path: "/", breadcrumb: "Trang chủ" },
     { path: "/products", breadcrumb: "Sản phẩm" },
     { path: "/category", breadcrumb: "Danh mục" },
-    { path: ":category", breadcrumb: (product?.categoryId as ICategory)?.name },
+    { path: ":category", breadcrumb: (product?.category as ICategory)?.name },
     { path: "/profile", breadcrumb: "Tài khoản" },
     { path: "/profile/order", breadcrumb: "Đơn hàng" },
     { path: "/profile/order/:id", breadcrumb: `DW2${order?._id}` },

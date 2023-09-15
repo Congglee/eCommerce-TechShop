@@ -13,6 +13,11 @@ interface IGetProductApiResponse {
   productData: IProduct;
 }
 
+interface ICreateProductApiResponse {
+  success: boolean;
+  createdProduct: IProduct;
+}
+
 interface IRatingProductResponse {
   success: boolean;
   updatedProduct: IProduct;
@@ -90,6 +95,21 @@ export const productApi = createApi({
       },
     }),
 
+    createProduct: build.mutation<
+      ICreateProductApiResponse,
+      Omit<IProduct, "_id"> | FormData
+    >({
+      query: (body) => {
+        return {
+          url: "/products",
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: (result, error, body) =>
+        error ? [] : [{ type: "Products", id: "LIST" }],
+    }),
+
     getProduct: build.query<IGetProductApiResponse, string>({
       query: (slug) => `products/slug/${slug}`,
     }),
@@ -115,4 +135,5 @@ export const {
   useGetProductsQuery,
   useGetProductQuery,
   useRatingProductMutation,
+  useCreateProductMutation,
 } = productApi;

@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../../store/store";
 import { IUser } from "../../interfaces/user.interface";
-import { IProduct } from "../../interfaces/product.interface";
 
 interface IUpdateUserCartResponse {
   success: boolean;

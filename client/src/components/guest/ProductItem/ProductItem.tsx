@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { IProduct } from "../../../interfaces/product.interface";
 import { formatCurrency } from "../../../utils/fn";
 import { StarRating } from "..";
+import DOMPurify from "dompurify";
 
 const { LiaBarsSolid, FaEye, BsFillHeartFill, PiShoppingCartFill } = icons;
 
@@ -29,7 +30,7 @@ const ProductItem = (props: ProductItemProps) => {
     isRelateProductSlide,
     isProductsPage,
   } = props;
-  const formattedProductDesc = product?.description.replace(/\n/g, "<br/>");
+  const formattedProductDesc = product?.description;
   const { category } = useParams();
 
   return (
@@ -145,7 +146,7 @@ const ProductItem = (props: ProductItemProps) => {
           >
             <div
               dangerouslySetInnerHTML={{
-                __html: formattedProductDesc as string,
+                __html: DOMPurify.sanitize(formattedProductDesc as string),
               }}
               className="text-[13px] leading-[18px] text-main-500 mb-[15px] line-clamp-[11]"
             ></div>

@@ -11,15 +11,16 @@ interface IRating {
 export interface IProduct {
   _id: string;
   name: string;
-  slug: string;
+  slug?: string;
   thumb: string;
   images: string[];
   price: number;
   quantity: number;
-  ratings: IRating[];
-  totalRatings: number;
-  description: string;
-  categoryId: ICategory | string;
+  ratings?: IRating[];
+  totalRatings?: number;
+  brand: string;
+  description?: string;
+  category: ICategory | string;
 }
 
 export interface ICartItem extends IProduct {

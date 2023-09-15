@@ -8,6 +8,7 @@ dotenv.config();
 
 import productRoute from "./routers/product.js";
 import categoryRoute from "./routers/category.js";
+import brandRoute from "./routers/brand.js";
 import userRoute from "./routers/user.js";
 import orderRoute from "./routers/order.js";
 import stripePayment from "./routers/stripe.js";
@@ -30,6 +31,7 @@ app.use(
 
 app.use("/api", productRoute);
 app.use("/api", categoryRoute);
+app.use("/api", brandRoute);
 app.use("/api", userRoute);
 app.use("/api", orderRoute);
 app.use("/api/stripe", stripePayment);

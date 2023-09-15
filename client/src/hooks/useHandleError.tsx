@@ -11,14 +11,22 @@ const useHandlerError = (
     if (errorResult.isError) {
       if (isEntityError(errorResult.error)) {
         const errorMessage = errorResult.error.data.message;
-        Object.keys(errorMessage).forEach((key) => {
-          setError(key as keyof typeof initialFormState, {
-            message: errorMessage[key] as string,
-            type: "Server",
+        if (errorMessage && typeof errorMessage === "object") {
+          Object.keys(errorMessage).forEach((key) => {
+            setError(key as keyof typeof initialFormState, {
+              message: errorMessage[key] as string,
+              type: "Server",
+            });
           });
-        });
+        }
       }
-      toast.error((errorResult.error as any).data.message);
+
+      toast.error(
+        (errorResult.error &&
+          errorResult.error.data &&
+          errorResult.error.data.message) ||
+          "An error occurred."
+      );
     }
   }, [errorResult.isError]);
 };

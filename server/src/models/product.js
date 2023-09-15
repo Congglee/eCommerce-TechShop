@@ -25,9 +25,16 @@ var productSchema = new mongoose.Schema(
       type: Number,
       default: 1,
     },
+    model: {
+      type: String,
+    },
     sold: {
       type: Number,
       default: 0,
+    },
+    brand: {
+      type: String,
+      required: true,
     },
     ratings: [
       {
@@ -41,7 +48,7 @@ var productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    categoryId: {
+    category: {
       type: mongoose.Types.ObjectId,
       ref: "Category",
     },

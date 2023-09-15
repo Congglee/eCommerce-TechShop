@@ -158,6 +158,9 @@ const CategoryManagePage = (props: Props) => {
                 Danh mục
               </th>
               <th scope="col" className="px-4 py-3">
+                Thương hiệu
+              </th>
+              <th scope="col" className="px-4 py-3">
                 Ngày tạo
               </th>
 
@@ -177,6 +180,9 @@ const CategoryManagePage = (props: Props) => {
                     <div className="flex items-center justify-between">
                       <div className="w-full h-5 bg-gray-300 rounded-full dark:bg-gray-700" />
                     </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 mb-2.5" />
                   </td>
                   <td className="px-4 py-3">
                     <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 mb-2.5" />
@@ -215,6 +221,13 @@ const CategoryManagePage = (props: Props) => {
                   </td>
 
                   <td className="px-4 py-3 text-white">{category.name}</td>
+                  <td className="px-4 py-3 text-white">
+                    {category.brand.map((item, index) => (
+                      <span key={index}>
+                        {index > 0 && " - "} {item}
+                      </span>
+                    ))}
+                  </td>
                   <td className="px-4 py-3 text-white">
                     {formatDate(category.createdAt)}
                   </td>

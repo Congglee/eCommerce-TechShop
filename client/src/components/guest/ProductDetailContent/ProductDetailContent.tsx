@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../features/cart/cart.slice";
 import { StarRating } from "..";
+import DOMPurify from "dompurify";
 
 const {
   BiLogoFacebook,
@@ -21,10 +22,11 @@ const {
 interface productDetailContentProps {
   product: IProduct | undefined;
   slug?: string;
+  hasHtmlTags: boolean;
 }
 
 const ProductDetailContent = (props: productDetailContentProps) => {
-  const { product } = props;
+  const { product, hasHtmlTags } = props;
   const dispatch = useDispatch();
 
   const [value, setValue] = useState(1);
@@ -79,21 +81,30 @@ const ProductDetailContent = (props: productDetailContentProps) => {
               />
             </div>
             <span className="text-main-500 text-sm">
-              {product?.ratings.length} đánh giá
+              {product?.ratings?.length} đánh giá
             </span>
           </div>
 
           <div className="mb-5">
-            <ul className="flex flex-col gap-y-[5px] w-[90%]">
-              {product?.description.split("\n").map((item) => (
-                <li
-                  className="text-sm text-main-500 list-[square] list-inside list-image-[initial]"
-                  key={item}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
+            {hasHtmlTags ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(product?.description as string),
+                }}
+                className="text-sm text-main-500"
+              ></div>
+            ) : (
+              <ul className="flex flex-col gap-y-[5px] w-[90%]">
+                {product?.description?.split("\n").map((item, index) => (
+                  <li
+                    className="text-sm text-main-500 list-disc list-inside list-image-[initial]"
+                    key={index}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="flex items-center gap-x-5 mb-5">

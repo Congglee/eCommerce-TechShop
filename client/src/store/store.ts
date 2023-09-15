@@ -6,6 +6,8 @@ import { productApi } from "../features/product/product.services";
 import categoryReducer from "../features/category/category.slice";
 import { categoryApi } from "../features/category/category.services";
 
+import { brandApi } from "../features/brand/brand.services";
+
 import authReducer, { IAuthState } from "../features/auth/auth.slice";
 import { authApi } from "../features/auth/auth.service";
 
@@ -63,6 +65,8 @@ export const store = configureStore({
     order: orderReducer,
     [orderApi.reducerPath]: orderApi.reducer,
 
+    [brandApi.reducerPath]: brandApi.reducer,
+
     app: appReducer,
   },
 
@@ -73,7 +77,8 @@ export const store = configureStore({
       .concat(authApi.middleware)
       .concat(cartApi.middleware)
       .concat(userApi.middleware)
-      .concat(orderApi.middleware),
+      .concat(orderApi.middleware)
+      .concat(brandApi.middleware),
 });
 
 // store.dispatch(getCartTotals());

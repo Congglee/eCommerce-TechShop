@@ -5,7 +5,7 @@ import { formatCurrency } from "../../../utils/fn";
 import { StarRating } from "..";
 import { Link } from "react-router-dom";
 
-const { AiFillStar, AiTwotoneStar, PiListBold } = icons;
+const { AiFillStar, PiListBold } = icons;
 
 interface DailyDealProps {
   dailyDealProduct?: IProduct;

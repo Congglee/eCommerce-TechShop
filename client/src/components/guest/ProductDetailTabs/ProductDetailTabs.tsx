@@ -11,16 +11,18 @@ import { useRatingProductMutation } from "../../../features/product/product.serv
 import moment from "moment";
 import { toast } from "react-toastify";
 import { isEntityError } from "../../../utils/helper";
+import DOMPurify from "dompurify";
 
 const { AiTwotoneStar } = icons;
 
 interface productDetailTabsProps {
   product: IProduct | undefined;
   refetchProduct: any;
+  hasHtmlTags: boolean;
 }
 
 const ProductDetailTabs = (props: productDetailTabsProps) => {
-  const { product, refetchProduct } = props;
+  const { product, refetchProduct, hasHtmlTags } = props;
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { data } = useGetCurrentUserQuery();
   const [rating, setRating] = useState(0);
@@ -30,7 +32,7 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
   const [comment, setComment] = useState("");
   const [ratingProduct, ratingProductResult] = useRatingProductMutation();
 
-  const alreadyRating = product?.ratings.find(
+  const alreadyRating = product?.ratings?.find(
     (item) => (item.postedBy as IUser)?._id === data?.userData?._id
   );
 
@@ -126,12 +128,19 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
       </div>
 
       <div className="p-5 border border-main-700 mt-[-1px]">
-        {activeTab === "description" && (
-          <ul className="flex flex-col gap-y-[2px] w-[90%]">
-            {product?.description.split("\n").map((item) => (
+        {activeTab === "description" && hasHtmlTags ? (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(product?.description as string),
+            }}
+            className="text-sm text-main-500"
+          ></div>
+        ) : (
+          <ul className="flex flex-col gap-y-[5px] w-[90%]">
+            {product?.description?.split("\n").map((item, index) => (
               <li
                 className="text-sm text-main-500 list-disc list-inside list-image-[initial]"
-                key={item}
+                key={index}
               >
                 {item}
               </li>
@@ -159,7 +168,7 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
                 />
               </div>
               <span className="text-sm text-main-500">
-                Dựa trên {product?.ratings.length} đánh giá
+                Dựa trên {product?.ratings?.length} đánh giá
               </span>
               <div>
                 {isLoggedIn && alreadyRating && (
@@ -256,7 +265,7 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
               </div>
             )}
 
-            {product?.ratings.map((rate) => (
+            {product?.ratings?.map((rate) => (
               <div
                 className="pt-6 mt-6 border-t border-[rgba(0,0,0,0.1)]"
                 key={rate._id}

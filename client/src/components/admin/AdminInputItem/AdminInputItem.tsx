@@ -11,6 +11,8 @@ type Props = {
   inputId: string;
   label: string;
   rules?: RegisterOptions;
+  className?: string;
+  isMutipleFile?: boolean;
 };
 
 const AdminInputItem = ({
@@ -22,9 +24,11 @@ const AdminInputItem = ({
   inputId,
   label,
   rules,
+  className,
+  isMutipleFile,
 }: Props) => {
   return (
-    <div>
+    <div className={className}>
       <label
         htmlFor={inputId}
         className={`${
@@ -38,6 +42,7 @@ const AdminInputItem = ({
       <input
         type={type}
         id={inputId}
+        multiple={isMutipleFile ? true : false}
         className={`
           ${
             errorMessage

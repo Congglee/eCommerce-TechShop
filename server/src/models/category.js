@@ -11,6 +11,12 @@ var categorySchema = new mongoose.Schema(
       type: String,
       slug: "name",
     },
+    brand: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     products: [{ type: mongoose.Types.ObjectId, ref: "Product" }],
   },
   { timestamps: true }

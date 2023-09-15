@@ -8,6 +8,12 @@ import {
 
 const createProduct = async (req, res) => {
   try {
+    const thumb = req?.files?.thumb?.[0]?.path;
+    const images = req.files?.images?.map((item) => item.path);
+
+    if (thumb) req.body.thumb = thumb;
+    if (images) req.body.images = images;
+
     const { error } = createProductSchema.validate(req.body, {
       abortEarly: false,
     });
@@ -65,15 +71,15 @@ const updateProduct = async (req, res) => {
     }
 
     const { id } = req.params;
-    const { categoryId: newCategoryId } = req.body;
+    const { category: newCategory } = req.body;
 
     const product = await Product.findById(id);
     if (!product) throw new Error("Product not found");
 
-    const oldCategoryId = product.categoryId;
+    const oldCategory = product.category;
 
-    if (oldCategoryId && oldCategoryId.toString() !== newCategoryId) {
-      const oldCategory = await Category.findById(oldCategoryId);
+    if (oldCategory && oldCategory.toString() !== newCategory) {
+      const oldCategory = await Category.findById(oldCategory);
       if (oldCategory) {
         oldCategory.products = oldCategory.products.filter(
           (productId) => productId.toString() !== id
@@ -83,7 +89,7 @@ const updateProduct = async (req, res) => {
       } else {
         return res.status(400).json({
           success: false,
-          message: `Không tìm thấy danh mục cũ: ${oldCategoryId}`,
+          message: `Không tìm thấy danh mục cũ: ${oldCategory}`,
         });
       }
     }
@@ -136,7 +142,7 @@ const deleteProduct = async (req, res) => {
 
     if (!deleteProduct) throw new Error("Không tìm thấy sản phẩm");
 
-    await Category.findByIdAndUpdate(deleteProduct.categoryId, {
+    await Category.findByIdAndUpdate(deleteProduct.category, {
       $pull: { products: id },
     });
 
@@ -157,7 +163,7 @@ const deleteProduct = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findById(id).populate("categoryId", "name");
+    const product = await Product.findById(id).populate("category", "name");
 
     if (product) {
       return res.status(200).json({
@@ -183,7 +189,7 @@ const getProductBySlug = async (req, res) => {
     const productSlug = req.params.slug;
     const product = await Product.findOne({ slug: productSlug })
       .populate({
-        path: "categoryId",
+        path: "category",
         select: "name slug",
       })
       .populate({
@@ -232,7 +238,7 @@ const getProducts = async (req, res) => {
         slug: queries.category.toLowerCase(),
       });
       if (category) {
-        formattedQueries.categoryId = category._id;
+        formattedQueries.category = category._id;
       } else {
         return res.status(200).json({
           success: false,
@@ -244,7 +250,7 @@ const getProducts = async (req, res) => {
     }
 
     let queryCommand = Product.find(formattedQueries).populate({
-      path: "categoryId",
+      path: "category",
       select: "name slug",
     });
 

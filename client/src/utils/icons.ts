@@ -44,6 +44,7 @@ import { GiPositionMarker, GiHamburgerMenu } from "react-icons/gi";
 import { FiChevronDown, FiChevronUp, FiFilter } from "react-icons/fi";
 import { PiCircleFill, PiListBold, PiShoppingCartFill } from "react-icons/pi";
 import { CgWebsite } from "react-icons/cg";
+import { RiDeleteBin2Fill } from "react-icons/ri";
 
 const icons = {
   BiChevronRight,
@@ -93,6 +94,7 @@ const icons = {
   CgWebsite,
   PiCircleFill,
   BiBookAdd,
+  RiDeleteBin2Fill,
 };
 
 export default icons;

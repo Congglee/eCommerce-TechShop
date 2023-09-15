@@ -14,7 +14,15 @@ import { isAdminRole, verifyAccessToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 
-router.post("/products", [verifyAccessToken, isAdminRole], createProduct);
+router.post(
+  "/products",
+  [verifyAccessToken, isAdminRole],
+  uploadCloud.fields([
+    { name: "images", maxCount: 10 },
+    { name: "thumb", maxCount: 1 },
+  ]),
+  createProduct
+);
 
 router.get("/products", getProducts);
 router.get("/products/id/:id", getProductById);
@@ -30,7 +38,10 @@ router.put("/products/ratings", verifyAccessToken, ratings);
 router.put(
   "products/uploadimage/:id",
   [verifyAccessToken, isAdminRole],
-  uploadCloud.array("images", 10),
+  uploadCloud.fields([
+    { name: "images", maxCount: 10 },
+    { name: "thumb", maxCount: 1 },
+  ]),
   uploadImagesProducts
 );
 

@@ -10,7 +10,6 @@ import {
   useGetUserQuery,
   useUpdateUserByAdminMutation,
 } from "../../../features/user/user.services";
-import { isEntityError } from "../../../utils/helper";
 import { toast } from "react-toastify";
 import { blockStatus, roles } from "../../../utils/collections";
 import useHandlerError from "../../../hooks/useHandleError";
@@ -47,7 +46,9 @@ const UpdateUser = (props: Props) => {
     defaultValues: initialFormState,
   });
 
-  const { data, refetch } = useGetUserQuery(userId);
+  const { data, refetch } = useGetUserQuery(userId, {
+    skip: !userId,
+  });
   const user = data?.userData;
   const [updateUserByAdmin, updateUserByAdminResult] =
     useUpdateUserByAdminMutation();

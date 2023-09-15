@@ -33,8 +33,12 @@ const ProductDetailPage = (props: Props) => {
   const relateProducts = products?.products.filter(
     (productItem) =>
       productItem._id !== product?.productData._id &&
-      (productItem.categoryId as ICategory)?._id ===
-        (product?.productData.categoryId as ICategory)?._id
+      (productItem.category as ICategory)?._id ===
+        (product?.productData.category as ICategory)?._id
+  );
+
+  const hasHtmlTags = /<[^>]*>/g.test(
+    product?.productData.description as string
   );
 
   return (
@@ -97,7 +101,11 @@ const ProductDetailPage = (props: Props) => {
           )}
 
           {!isFetchingProduct && (
-            <ProductDetailContent product={product?.productData} slug={slug} />
+            <ProductDetailContent
+              product={product?.productData}
+              slug={slug}
+              hasHtmlTags={hasHtmlTags}
+            />
           )}
         </div>
 
@@ -116,6 +124,7 @@ const ProductDetailPage = (props: Props) => {
         <ProductDetailTabs
           product={product?.productData}
           refetchProduct={refectProduct}
+          hasHtmlTags={hasHtmlTags}
         />
 
         <div className="mb-[109px] md:mb-20">

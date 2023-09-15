@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { useCreateCategoryMutation } from "../../../features/category/category.services";
 import { toast } from "react-toastify";
 import useHandlerError from "../../../hooks/useHandleError";
+import { useGetBrandsQuery } from "../../../features/brand/brand.services";
+import { OvalSpinner } from "../../../components/common";
 
 const { BsArrowLeft } = icons;
 
@@ -14,6 +16,7 @@ type FormStateType = Omit<ICategory, "_id"> | ICategory;
 
 const initialFormState: FormStateType = {
   name: "",
+  brand: [],
 };
 
 type Props = {};
@@ -27,6 +30,8 @@ const CreateCategory = (props: Props) => {
   } = useForm<FormStateType>({
     defaultValues: initialFormState,
   });
+  const { data: brandData } = useGetBrandsQuery();
+
   const [createCategory, createCategoryResult] = useCreateCategoryMutation();
 
   const onSubmit = async (data: FormStateType) => {
@@ -55,24 +60,79 @@ const CreateCategory = (props: Props) => {
         </Link>
 
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-          Thêm mới danh mục (thương hiệu)
+          Thêm mới danh mục
         </h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <AdminInputItem
-            name="name"
-            inputId="name"
-            label="Tên danh mục"
-            type="text"
-            placeHolder="Tên danh mục"
-            errorMessage={errors.name?.message}
-            register={register}
-          />
+          <div className="grid gap-4 tablet:grid-cols-2 tablet:gap-6">
+            <AdminInputItem
+              className="tablet:col-span-2"
+              name="name"
+              inputId="name"
+              label="Tên danh mục"
+              type="text"
+              placeHolder="Tên danh mục"
+              errorMessage={errors.name?.message}
+              register={register}
+            />
+
+            <div className="col-span-2">
+              <label
+                htmlFor=""
+                className={`${
+                  errors.brand?.message
+                    ? "block mb-2 text-sm font-medium text-red-700 dark:text-red-500"
+                    : "block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                }`}
+              >
+                Thương hiệu (không bắt buộc)
+              </label>
+              <ul
+                className={`items-center w-full text-sm font-medium text-gray-900 bg-white border rounded-lg grid grid-cols-2 tablet:grid-cols-3 gap-2 dark:bg-gray-700 dark:text-white ${
+                  errors.brand?.message
+                    ? "border-red-500"
+                    : "dark:border-gray-600 border-gray-200"
+                }`}
+              >
+                {brandData?.brands.map((brand) => (
+                  <li
+                    className="w-full border-b border-gray-200 tablet:border-b-0 tablet:border-r dark:border-gray-600"
+                    key={brand._id}
+                  >
+                    <div className="flex items-center pl-3">
+                      <input
+                        id={brand._id}
+                        type="checkbox"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        value={brand.title}
+                        {...register("brand")}
+                      />
+                      <label
+                        htmlFor={brand._id}
+                        className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      >
+                        {brand.title}
+                      </label>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              {errors.brand?.message && (
+                <div className="mt-2 text-sm text-red-600">
+                  {errors.brand?.message}
+                </div>
+              )}
+            </div>
+          </div>
 
           <button
             type="submit"
-            className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+            className="inline-flex items-center gap-x-2 px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
           >
             Thêm danh mục
+            <div className="max-w-[30px] min-h-[20px]">
+              {createCategoryResult.isLoading && <OvalSpinner />}
+            </div>
           </button>
         </form>
       </div>
