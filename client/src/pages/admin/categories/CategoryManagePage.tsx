@@ -6,7 +6,7 @@ import {
   useDeleteCategoryMutation,
   useGetCategoriesQuery,
 } from "../../../features/category/category.services";
-import { formatDate, handleNameUrl, handleSortUrl } from "../../../utils/fn";
+import { formatDate, generateSearchParamsURL } from "../../../utils/fn";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -18,8 +18,11 @@ const { BiBookAdd } = icons;
 type Props = {};
 
 const CategoryManagePage = (props: Props) => {
-  const queryString: { name?: string; sort?: string; page?: string } =
-    useQueryString();
+  const queryString: {
+    name?: string;
+    sort?: string;
+    page?: string;
+  } = useQueryString();
   const { name, sort, page } = queryString;
   const { data, isFetching } = useGetCategoriesQuery({
     name: name || "",
@@ -54,24 +57,36 @@ const CategoryManagePage = (props: Props) => {
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
-    const searchUrl = handleNameUrl(
-      inputValue,
+    const searchUrl = generateSearchParamsURL({
+      name: inputValue,
       sort,
-      undefined,
-      undefined,
+      price_filter_gte: "",
+      price_filter_lte: "",
+      brand: "",
       page,
-      false,
-      undefined,
-      true,
-      categoriesPath
-    );
+      isCategory: false,
+      categoryUrlValue: "",
+      isAdmin: true,
+      adminUrlValue: categoriesPath,
+    });
     navigate(searchUrl);
   };
 
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     dispatch(setSeletedSort(value));
-    const sortUrl = handleSortUrl(value, name, undefined, undefined, page);
+    const sortUrl = generateSearchParamsURL({
+      name,
+      sort: value,
+      price_filter_gte: "",
+      price_filter_lte: "",
+      brand: "",
+      page,
+      isCategory: false,
+      categoryUrlValue: "",
+      isAdmin: true,
+      adminUrlValue: categoriesPath,
+    });
     navigate(sortUrl);
   };
 
@@ -265,6 +280,7 @@ const CategoryManagePage = (props: Props) => {
         sort={sort}
         totalData={data?.categories.length as number}
         totalCount={data?.totalCategory as number}
+        adminPath={categoriesPath}
       />
     </div>
   );

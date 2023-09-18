@@ -371,11 +371,11 @@ const getUsers = async (req, res) => {
 
     const formattedQueries = JSON.parse(queryString);
 
-    if (req.query.name) {
+    if (queries?.name) {
       delete formattedQueries.name;
       formattedQueries["$or"] = [
-        { name: { $regex: req.query.name, $options: "i" } },
-        { email: { $regex: req.query.name, $options: "i" } },
+        { name: { $regex: queries?.name, $options: "i" } },
+        { email: { $regex: queries?.name, $options: "i" } },
       ];
     }
 

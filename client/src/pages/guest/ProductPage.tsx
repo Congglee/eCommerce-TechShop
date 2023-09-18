@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import icons from "../../utils/icons";
 import { useGetProductsQuery } from "../../features/product/product.services";
@@ -14,36 +14,35 @@ import { useQueryString } from "../../hooks/useQueryString";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import {
+  setBrandFilter,
   setFilterPriceGte,
   setFilterPriceLte,
   setSeletedSort,
+  toggleShowProductFilter,
 } from "../../features/product/product.slice";
-import {
-  formatCurrency,
-  handleFilterPriceGteUrl,
-  handleFilterPriceLteUrl,
-  handleSortUrl,
-} from "../../utils/fn";
+import { formatCurrency, generateSearchParamsURL } from "../../utils/fn";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
+import { useGetBrandsQuery } from "../../features/brand/brand.services";
 
 const { FiFilter } = icons;
 
 type Props = {};
 
 const ProductPage = (props: Props) => {
-  const { filterPriceGte, filterPriceLte } = useSelector(
+  const { brandFilter, showProductFilterMobile } = useSelector(
     (state: RootState) => state.product
   );
-  const [isShow, setIsShow] = useState(false);
   const [filterPriceUrl, setFilterPriceUrl] = useState("");
   const queryString: {
     name?: string;
     sort?: string;
+    brand?: string;
     page?: string;
     price_filter_gte?: string;
     price_filter_lte?: string;
   } = useQueryString();
-  const { name, sort, price_filter_gte, price_filter_lte, page } = queryString;
+  const { name, sort, price_filter_gte, price_filter_lte, brand, page } =
+    queryString;
   const { category } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,10 +52,12 @@ const ProductPage = (props: Props) => {
     sort: sort || "",
     filterPriceGte: price_filter_gte || "",
     filterPriceLte: price_filter_lte || "",
+    brand: brand || "",
     category: category,
     page: page || 1,
     limit: import.meta.env.VITE_APP_LIMIT_PRODUCT_PER_PAGE || 6,
   });
+  const { data: brandsData } = useGetBrandsQuery();
 
   const highestPriceProduct = data?.products.reduce(
     (prevProduct, currentProduct) => {
@@ -71,14 +72,19 @@ const ProductPage = (props: Props) => {
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     dispatch(setSeletedSort(value));
-    const sortUrl = handleSortUrl(
-      value,
+    const isCategoryUrl: boolean = category ? true : false;
+    const sortUrl = generateSearchParamsURL({
       name,
+      sort: value,
       price_filter_gte,
       price_filter_lte,
-      page
-    );
-
+      brand,
+      page,
+      isCategory: isCategoryUrl,
+      categoryUrlValue: category,
+      isAdmin: false,
+      adminUrlValue: "",
+    });
     navigate(sortUrl);
   };
 
@@ -86,17 +92,23 @@ const ProductPage = (props: Props) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
-    const numericValue = value.replace(/[^\d]/g, "");
-    const formattedValue = formatCurrency(numericValue);
+    const numbericValue = value.replace(/[^\d]/g, "");
+    const formattedValue = formatCurrency(numbericValue);
     dispatch(setFilterPriceGte(formattedValue));
+    const isCategoryUrl: boolean = category ? true : false;
 
-    const filterPriceGteUrl = handleFilterPriceGteUrl(
-      numericValue,
+    const filterPriceGteUrl = generateSearchParamsURL({
       name,
       sort,
+      price_filter_gte: numbericValue,
       price_filter_lte,
-      page
-    );
+      brand,
+      page,
+      isCategory: isCategoryUrl,
+      categoryUrlValue: category,
+      isAdmin: false,
+      adminUrlValue: "",
+    });
     setFilterPriceUrl(filterPriceGteUrl);
   };
 
@@ -104,17 +116,24 @@ const ProductPage = (props: Props) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
-    const numericValue = value.replace(/[^\d]/g, "");
-    const formattedValue = formatCurrency(numericValue);
+    const numbericValue = value.replace(/[^\d]/g, "");
+    const formattedValue = formatCurrency(numbericValue);
     dispatch(setFilterPriceLte(formattedValue));
+    const isCategoryUrl: boolean = category ? true : false;
 
-    const filterPriceLteUrl = handleFilterPriceLteUrl(
-      numericValue,
+    const filterPriceLteUrl = generateSearchParamsURL({
       name,
       sort,
       price_filter_gte,
-      page
-    );
+      price_filter_lte: numbericValue,
+      brand,
+      page,
+      isCategory: isCategoryUrl,
+      categoryUrlValue: category,
+      isAdmin: false,
+      adminUrlValue: "",
+    });
+
     setFilterPriceUrl(filterPriceLteUrl);
   };
 
@@ -122,6 +141,35 @@ const ProductPage = (props: Props) => {
     e.preventDefault();
     navigate(filterPriceUrl);
   };
+
+  const handleChangeFilterBrand = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    let updatedBrands = [...brandFilter];
+
+    if (checked) updatedBrands.push(value);
+    else updatedBrands = updatedBrands.filter((brand) => brand !== value);
+    dispatch(setBrandFilter(updatedBrands));
+    const isCategoryUrl: boolean = category ? true : false;
+
+    const brandFilterUrl = generateSearchParamsURL({
+      name,
+      sort,
+      price_filter_gte,
+      price_filter_lte,
+      brand: updatedBrands.join(",").toLowerCase(),
+      page,
+      isCategory: isCategoryUrl,
+      categoryUrlValue: category,
+      isAdmin: false,
+      adminUrlValue: "",
+    });
+
+    navigate(brandFilterUrl);
+  };
+
+  useEffect(() => {
+    if (!brand) dispatch(setBrandFilter([]));
+  }, [brand]);
 
   return (
     <>
@@ -137,25 +185,27 @@ const ProductPage = (props: Props) => {
       </div>
 
       <ProductFilterMobile
-        isShow={isShow}
         productLength={data?.products.length}
         totalProduct={data?.totalProduct}
-        handleIsShow={setIsShow}
         handleChangeSort={handleChangeSort}
         highestPriceProduct={highestPriceProduct}
-        filterPriceGte={filterPriceGte}
-        filterPriceLte={filterPriceLte}
         handleChangeFilterPriceGte={handleChangeFilterPriceGte}
         handleChangeFilterPriceLte={handleChangeFilterPriceLte}
         handleSubmitFilter={handleSubmitFilter}
+        brandsData={brandsData?.brands}
+        handleChangeFilterBrand={handleChangeFilterBrand}
       />
 
-      <div className={`mb-10 ${isShow && "opacity-60"}`}>
+      <div
+        className={`mb-10 ${
+          showProductFilterMobile && "opacity-60 pointer-events-none"
+        }`}
+      >
         <div className="max-w-[1220px] mx-auto px-5 flex gap-x-[22px] md:flex-col">
           <div className="flex justify-end sm:justify-center md:mb-5 769:hidden">
             <button
               className="px-5 py-2 flex flex-col sm:flex-row sm:w-full items-center sm:justify-center sm:gap-x-2 text-sm border border-main-500"
-              onClick={() => setIsShow(true)}
+              onClick={() => dispatch(toggleShowProductFilter(true))}
             >
               <div className="mb-2 sm:mb-0">
                 <FiFilter size={20} />
@@ -174,11 +224,11 @@ const ProductPage = (props: Props) => {
             <ProductFilter
               handleChangeSort={handleChangeSort}
               highestPriceProduct={highestPriceProduct}
-              filterPriceGte={filterPriceGte}
-              filterPriceLte={filterPriceLte}
               handleChangeFilterPriceGte={handleChangeFilterPriceGte}
               handleChangeFilterPriceLte={handleChangeFilterPriceLte}
               handleSubmitFilter={handleSubmitFilter}
+              handleChangeFilterBrand={handleChangeFilterBrand}
+              brandsData={brandsData?.brands}
             />
           </div>
 
@@ -228,6 +278,7 @@ const ProductPage = (props: Props) => {
             <Pagination
               name={name}
               sort={sort}
+              brand={brand}
               price_filter_gte={price_filter_gte}
               price_filter_lte={price_filter_lte}
               totalCount={data?.totalProduct as number}

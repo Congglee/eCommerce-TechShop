@@ -1,5 +1,3 @@
-import { IProduct } from "./product.interface";
-
 export interface IUser {
   _id: string;
   name: string;
@@ -8,7 +6,7 @@ export interface IUser {
   avatar?: string | File;
   isAdmin?: boolean;
   isBlocked?: boolean;
-  cart?: IProduct[] | [];
+  // cart?: IProduct[] | [];
   refreshToken?: string;
   address?: string;
   mobile?: string;

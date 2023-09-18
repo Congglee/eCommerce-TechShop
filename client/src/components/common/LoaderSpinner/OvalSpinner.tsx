@@ -1,13 +1,16 @@
 import React from "react";
 import { Oval } from "react-loader-spinner";
 
-type Props = {};
+interface ovalSpinnerProps {
+  width?: string | number;
+  height?: string | number;
+}
 
-const OvalSpinner = (props: Props) => {
+const OvalSpinner = ({ width = 24, height = 24 }: ovalSpinnerProps) => {
   return (
     <Oval
-      height={24}
-      width={24}
+      height={width}
+      width={height}
       color="#75b9ed"
       wrapperStyle={{}}
       wrapperClass=""

@@ -2,20 +2,31 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IProduct } from "../../interfaces/product.interface";
 import { RootState } from "../../store/store";
 
-interface IGetProductsApiResponse {
+interface IGetProductsResponse {
   success: boolean;
   totalPages: number;
   totalProduct: number;
   products: IProduct[];
 }
-interface IGetProductApiResponse {
+interface IGetProductResponse {
   success: boolean;
   productData: IProduct;
 }
 
-interface ICreateProductApiResponse {
+interface ICreateProductResponse {
   success: boolean;
   createdProduct: IProduct;
+}
+
+interface IDeleteProductResponse {
+  success: boolean;
+  message: string;
+  deletedProduct: IProduct;
+}
+
+interface IUpdateProductResponse {
+  success: boolean;
+  updatedProduct: IProduct;
 }
 
 interface IRatingProductResponse {
@@ -36,13 +47,14 @@ export const productApi = createApi({
   }),
   endpoints: (build) => ({
     getProducts: build.query<
-      IGetProductsApiResponse,
+      IGetProductsResponse,
       {
         name?: string;
         sort?: string;
         filterPriceGte?: string;
         filterPriceLte?: string;
         category?: string;
+        brand?: string;
         limit?: string | number;
         page?: string | number;
       }
@@ -53,6 +65,7 @@ export const productApi = createApi({
         filterPriceGte,
         filterPriceLte,
         category,
+        brand,
         limit,
         page,
       }) => {
@@ -64,6 +77,7 @@ export const productApi = createApi({
         if (filterPriceGte) params.push(`price[gte]=${filterPriceGte}`);
         if (filterPriceLte) params.push(`price[lte]=${filterPriceLte}`);
         if (category) params.push(`category=${category}`);
+        if (brand) params.push(`brand=${brand}`);
         if (limit) params.push(`limit=${limit}`);
         if (page) params.push(`page=${page}`);
 
@@ -96,7 +110,7 @@ export const productApi = createApi({
     }),
 
     createProduct: build.mutation<
-      ICreateProductApiResponse,
+      ICreateProductResponse,
       Omit<IProduct, "_id"> | FormData
     >({
       query: (body) => {
@@ -110,8 +124,37 @@ export const productApi = createApi({
         error ? [] : [{ type: "Products", id: "LIST" }],
     }),
 
-    getProduct: build.query<IGetProductApiResponse, string>({
+    getProduct: build.query<IGetProductResponse, string>({
       query: (slug) => `products/slug/${slug}`,
+    }),
+
+    getProductById: build.query<IGetProductResponse, string>({
+      query: (id) => `products/id/${id}`,
+    }),
+
+    updateProduct: build.mutation<
+      IUpdateProductResponse,
+      { id: string; body: IProduct | FormData }
+    >({
+      query: (data) => {
+        return {
+          url: `/products/update/${data.id}`,
+          method: "PUT",
+          body: data.body,
+        };
+      },
+      invalidatesTags: (result, error, data) =>
+        error ? [] : [{ type: "Products", id: data.id }],
+    }),
+
+    deleteProduct: build.mutation<IDeleteProductResponse, string>({
+      query: (id) => {
+        return {
+          url: `products/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: (result, error, id) => [{ type: "Products", id }],
     }),
 
     ratingProduct: build.mutation<
@@ -136,4 +179,7 @@ export const {
   useGetProductQuery,
   useRatingProductMutation,
   useCreateProductMutation,
+  useGetProductByIdQuery,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
 } = productApi;

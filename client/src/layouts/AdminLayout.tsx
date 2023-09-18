@@ -1,10 +1,13 @@
 import { AdminHeader, Sidebar } from "../components/admin";
 import { Outlet } from "react-router-dom";
 import { UpdateUserPage } from "../pages/admin";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRef } from "react";
+import useOutsideClickHandler from "../hooks/useOutsiteClickHandle";
+import { showUpdateUserDrawer } from "../features/user/user.slice";
 
 type Props = {};
 
@@ -12,12 +15,26 @@ const AdminLayout = (props: Props) => {
   const { isShowUpdateUserDrawer } = useSelector(
     (state: RootState) => state.user
   );
+  const dispatch = useDispatch();
+  const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
+  const currentUserRef = useRef<HTMLDivElement | null>(null);
+  const updateUserDrawerRef = useRef<HTMLDivElement | null>(null);
+
+  useOutsideClickHandler(updateUserDrawerRef, () => {
+    dispatch(showUpdateUserDrawer(false));
+  });
 
   return (
     <div className="font-Inter relative overflow-x-hidden">
-      <AdminHeader />
+      <AdminHeader
+        toggleButtonRef={toggleButtonRef}
+        currentUserRef={currentUserRef}
+      />
 
-      <Sidebar />
+      <Sidebar
+        toggleButtonRef={toggleButtonRef}
+        currentUserRef={currentUserRef}
+      />
 
       <div className="p-2 tablet:ml-64">
         <div className="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14 max-w-screen-desktop2xl mx-auto">
@@ -32,6 +49,7 @@ const AdminLayout = (props: Props) => {
             ? "animate-show-right-up"
             : "animate-show-right-down"
         }`}
+        ref={updateUserDrawerRef}
       >
         <div className="scroll">
           <UpdateUserPage />

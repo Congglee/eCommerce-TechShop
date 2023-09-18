@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import icons from "../../../utils/icons";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import useOutsideClickHandler from "../../../hooks/useOutsiteClickHandle";
+import { toggleShowSidebar } from "../../../features/app.slice";
 
 const {
   BiCategoryAlt,
@@ -14,11 +16,25 @@ const {
   CgWebsite,
 } = icons;
 
-type Props = {};
+interface sideBarProps {
+  toggleButtonRef: React.MutableRefObject<HTMLButtonElement | null>;
+  currentUserRef: React.MutableRefObject<HTMLDivElement | null>;
+}
 
-const Sidebar = (props: Props) => {
+const Sidebar = (props: sideBarProps) => {
+  const { toggleButtonRef, currentUserRef } = props;
   const [tabStates, setTabStates] = useState<boolean[]>([]);
   const { showSidebar } = useSelector((state: RootState) => state.app);
+  const dispatch = useDispatch();
+  const sideBarRef = useRef<HTMLDivElement | null>(null);
+
+  useOutsideClickHandler(
+    sideBarRef,
+    () => {
+      dispatch(toggleShowSidebar(false));
+    },
+    [toggleButtonRef, currentUserRef]
+  );
 
   const toggleSidebarTab = (index: number) => {
     const newTabStates = [...tabStates];
@@ -59,6 +75,7 @@ const Sidebar = (props: Props) => {
     <aside
       className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform animate-show-left-down tablet:animate-show-left-up tablet:translate-x-0
        ${showSidebar ? "animate-show-left-up" : "animate-show-left-down"}`}
+      ref={sideBarRef}
     >
       <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
         <ul className="space-y-2 font-medium">

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import icons from "../../../utils/icons";
 import {
@@ -27,6 +27,7 @@ const initialFormState: FormStateType = {
   quantity: 1,
   category: "",
   brand: "",
+  description: "",
 };
 
 type Props = {};
@@ -40,8 +41,8 @@ const CreateProduct = (props: Props) => {
     setError,
     control,
     watch,
-    clearErrors,
-  } = useForm({
+    reset,
+  } = useForm<FormStateType>({
     defaultValues: initialFormState,
   });
   const [createProduct, createProductResult] = useCreateProductMutation();
@@ -53,18 +54,18 @@ const CreateProduct = (props: Props) => {
     thumb: null,
     images: [],
   });
-  const [payload, setPayload] = useState({
-    description: "",
-  });
-
-  const changeValue = useCallback(
-    (e: any) => {
-      setPayload(e);
-    },
-    [payload]
-  );
 
   const handlePreviewThumb = async (file: any) => {
+    if (
+      file &&
+      file.type !== "image/png" &&
+      file.type !== "image/jpg" &&
+      file.type !== "image/jpeg" &&
+      file.type !== "image/webp"
+    ) {
+      toast.warning("Chỉ chấp nhận file .png, .jpg, .jpeg, .webp");
+    }
+
     const base64Thumb = await getBase64(file);
     setPreview((prev) => ({ ...prev, thumb: base64Thumb as string | null }));
   };
@@ -75,9 +76,10 @@ const CreateProduct = (props: Props) => {
       if (
         file.type !== "image/png" &&
         file.type !== "image/jpg" &&
-        file.type !== "image/jpeg"
+        file.type !== "image/jpeg" &&
+        file.type !== "image/webp"
       ) {
-        toast.warning("Chỉ chấp nhận file .png, .jpg, .jpeg");
+        toast.warning("Chỉ chấp nhận file .png, .jpg, .jpeg, .webp");
         return;
       }
       const base64 = await getBase64(file);
@@ -106,7 +108,7 @@ const CreateProduct = (props: Props) => {
     formData.append("category", data.category as string);
     formData.append("description", data.description as string);
 
-    if (data.thumb) formData.append("thumb", data.thumb[0]);
+    if (data.thumb.length > 0) formData.append("thumb", data.thumb[0]);
     else formData.append("thumb", "");
 
     if (data.images.length > 0)
@@ -117,8 +119,10 @@ const CreateProduct = (props: Props) => {
   };
 
   useEffect(() => {
-    if (createProductResult.isSuccess)
+    if (createProductResult.isSuccess) {
       toast.success("Thêm mới sản phẩm thành công");
+      reset();
+    }
   }, [createProductResult.isSuccess]);
 
   useHandlerError(createProductResult, setError, initialFormState);
@@ -247,13 +251,13 @@ const CreateProduct = (props: Props) => {
                   value: item,
                 }))}
               name="brand"
-              label="Thương hiệu (không bắt buộc)"
+              label="Thương hiệu"
               id="brand"
               defaultOptionValue="Chọn một thương hiệu"
             />
 
             <MarkdownEditor
-              label="Product description"
+              label="Mô tả sản phẩm"
               name="description"
               control={control}
               className="tablet:col-span-2"
@@ -263,12 +267,12 @@ const CreateProduct = (props: Props) => {
 
           <button
             type="submit"
-            className="inline-flex items-center gap-x-2 px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+            className="inline-flex items-center justify-center gap-x-2 px-5 py-2 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 min-h-[45px] mobile:w-[250px]"
           >
             Thêm sản phẩm
-            <div className="max-w-[30px] min-h-[20px]">
-              {createProductResult.isLoading && <OvalSpinner />}
-            </div>
+            {createProductResult.isLoading && (
+              <OvalSpinner width={20} height={20} />
+            )}
           </button>
         </form>
       </div>

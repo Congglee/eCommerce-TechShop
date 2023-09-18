@@ -56,6 +56,11 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
+    const files = req?.files;
+
+    if (files?.thumb) req.body.thumb = files.thumb[0]?.path;
+    if (files?.images) req.body.images = files.images?.map((item) => item.path);
+
     const { error } = updateProductSchema.validate(req.body, {
       abortEarly: false,
     });
@@ -74,18 +79,18 @@ const updateProduct = async (req, res) => {
     const { category: newCategory } = req.body;
 
     const product = await Product.findById(id);
-    if (!product) throw new Error("Product not found");
+    if (!product) throw new Error("Không tìm thấy sản phẩm");
 
     const oldCategory = product.category;
 
     if (oldCategory && oldCategory.toString() !== newCategory) {
-      const oldCategory = await Category.findById(oldCategory);
-      if (oldCategory) {
-        oldCategory.products = oldCategory.products.filter(
+      const oldCategoryProducts = await Category.findById(oldCategory);
+      if (oldCategoryProducts) {
+        oldCategoryProducts.products = oldCategoryProducts.products.filter(
           (productId) => productId.toString() !== id
         );
 
-        await oldCategory.save();
+        await oldCategoryProducts.save();
       } else {
         return res.status(400).json({
           success: false,
@@ -150,7 +155,10 @@ const deleteProduct = async (req, res) => {
 
     return res.status(200).json({
       success: deletedProduct ? true : false,
-      deletedProduct: deletedProduct ? deletedProduct : "Cannot delete product",
+      message: "Xóa sản phẩm thành công",
+      deletedProduct: deletedProduct
+        ? deletedProduct
+        : "Xóa sản phẩm không thành công",
     });
   } catch (error) {
     return res.status(400).json({
@@ -249,7 +257,19 @@ const getProducts = async (req, res) => {
       }
     }
 
-    let queryCommand = Product.find(formattedQueries).populate({
+    let brandQueryObject = {};
+    if (queries?.brand) {
+      delete formattedQueries.brand;
+      const brandArr = queries.brand?.split(",");
+      const brandQuery = brandArr.map((item) => ({
+        brand: { $regex: item, $options: "i" },
+      }));
+      brandQueryObject = { $or: brandQuery };
+    }
+
+    const query = { ...brandQueryObject, ...formattedQueries };
+
+    let queryCommand = Product.find(query).populate({
       path: "category",
       select: "name slug",
     });
@@ -273,7 +293,7 @@ const getProducts = async (req, res) => {
     queryCommand = queryCommand.skip(skip).limit(limit);
 
     const response = await queryCommand.exec();
-    const totalProduct = await Product.countDocuments(formattedQueries);
+    const totalProduct = await Product.countDocuments(query);
     const totalPages = Math.ceil(totalProduct / +limit);
 
     return res.status(200).json({

@@ -12,11 +12,13 @@ export const createProductSchema = Joi.object({
     "array.base": "Vui lòng nhập vào ít nhất một ảnh chi tiết sản phẩm",
     "string.empty": "Ảnh sản phẩm không được để trống",
   }),
-  price: Joi.number().required().messages({
+  price: Joi.number().min(0).required().messages({
+    "number.min": "Giá sản phẩm phải lớn hơn hoặc bằng 0",
     "number.empty": "Giá sản phẩm không được để trống",
     "any.required": "Trường giá sản phẩm là bắt buộc",
   }),
-  quantity: Joi.number().messages({
+  quantity: Joi.number().min(0).messages({
+    "number.min": "Số lượng sản phẩm phải lớn hơn hoặc bằng 0",
     "number.empty": "Số lượng sản phẩm không được để trống",
   }),
   brand: Joi.string().trim().required().messages({
@@ -43,10 +45,12 @@ export const updateProductSchema = Joi.object({
     "array.base": "Vui lòng nhập vào ít nhất một ảnh chi tiết sản phẩm",
     "string.empty": "Ảnh sản phẩm không được để trống",
   }),
-  price: Joi.number().messages({
+  price: Joi.number().min(0).messages({
+    "number.min": "Giá sản phẩm phải lớn hơn hoặc bằng 0",
     "number.empty": "Giá sản phẩm không được để trống",
   }),
-  quantity: Joi.number().messages({
+  quantity: Joi.number().min(0).messages({
+    "number.min": "Số lượng sản phẩm phải lớn hơn hoặc bằng 0",
     "number.empty": "Số lượng sản phẩm không được để trống",
   }),
   brand: Joi.string().trim().messages({

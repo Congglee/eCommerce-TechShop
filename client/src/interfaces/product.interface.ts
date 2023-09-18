@@ -4,10 +4,13 @@ import { IUser } from "./user.interface";
 interface IRating {
   _id: string;
   star: number;
-  postedBy: string | IUser;
+  postedBy: IUser;
   comment: string;
   date: string;
 }
+
+type ProductCategory = ICategory | string;
+
 export interface IProduct {
   _id: string;
   name: string;
@@ -20,7 +23,9 @@ export interface IProduct {
   totalRatings?: number;
   brand: string;
   description?: string;
-  category: ICategory | string;
+  sold?: number;
+  category: ProductCategory;
+  updatedAt?: string;
 }
 
 export interface ICartItem extends IProduct {

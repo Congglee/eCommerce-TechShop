@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "../../../assets/logo_digital_new_250x.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,16 +6,30 @@ import { toggleShowSidebar } from "../../../features/app.slice";
 import { RootState } from "../../../store/store";
 import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
 import { logOut } from "../../../features/auth/auth.slice";
+import useOutsideClickHandler from "../../../hooks/useOutsiteClickHandle";
 
-type Props = {};
+interface adminHeader {
+  toggleButtonRef: React.MutableRefObject<HTMLButtonElement | null>;
+  currentUserRef: React.MutableRefObject<HTMLDivElement | null>;
+}
 
-const AdminHeader = (props: Props) => {
+const AdminHeader = (props: adminHeader) => {
+  const { toggleButtonRef, currentUserRef } = props;
+
   const [isShowCurrentUser, setIsShowCurrentUser] = useState(false);
   const { showSidebar } = useSelector((state: RootState) => state.app);
   const { token } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { data, isFetching, refetch, isError } = useGetCurrentUserQuery();
+
+  useOutsideClickHandler(
+    currentUserRef,
+    () => {
+      setIsShowCurrentUser(false);
+    },
+    [toggleButtonRef]
+  );
 
   useEffect(() => {
     if (token) {
@@ -37,6 +51,7 @@ const AdminHeader = (props: Props) => {
             <button
               type="button"
               className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg tablet:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              ref={toggleButtonRef}
               onClick={() => dispatch(toggleShowSidebar(!showSidebar))}
             >
               <span className="sr-only">Open sidebar</span>
@@ -64,7 +79,10 @@ const AdminHeader = (props: Props) => {
             </Link>
           </div>
           <div className="flex items-center">
-            <div className="flex items-center ml-3 relative">
+            <div
+              className="flex items-center ml-3 relative"
+              ref={currentUserRef}
+            >
               <div>
                 <button
                   type="button"

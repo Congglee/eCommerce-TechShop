@@ -2,29 +2,37 @@ import React from "react";
 import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";
 import { IProduct } from "../../../interfaces/product.interface";
+import { IBrand } from "../../../interfaces/brand.interface";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 const { AiOutlineUnorderedList } = icons;
 
 interface productFilterProps {
   handleChangeSort: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   highestPriceProduct?: IProduct;
-  filterPriceGte: string;
-  filterPriceLte: string;
+
   handleChangeFilterPriceGte: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeFilterPriceLte: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmitFilter: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleChangeFilterBrand: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  brandsData?: IBrand[];
 }
 
 const ProductFilter = (props: productFilterProps) => {
   const {
     handleChangeSort,
     highestPriceProduct,
-    filterPriceGte,
-    filterPriceLte,
     handleChangeFilterPriceGte,
     handleChangeFilterPriceLte,
     handleSubmitFilter,
+    handleChangeFilterBrand,
+    brandsData,
   } = props;
+
+  const { brandFilter, filterPriceGte, filterPriceLte } = useSelector(
+    (state: RootState) => state.product
+  );
 
   return (
     <>
@@ -45,7 +53,7 @@ const ProductFilter = (props: productFilterProps) => {
               className="border border-solid border-[rgba(26,27,24,.75)] pl-[15px] pr-5 w-full text-xs bg-[#f6f6f6] text-[#1c1d1d] py-[10px]"
               onChange={handleChangeSort}
             >
-              <option value="">Bán chạy nhất</option>
+              <option value="-sold">Bán chạy nhất</option>
               <option value="-totalRatings">Sản phẩm nổi bật</option>
               <option value="name">Theo bảng chữ cái, A-Z</option>
               <option value="-name">Theo bảng chữ cái, Z-A</option>
@@ -104,6 +112,42 @@ const ProductFilter = (props: productFilterProps) => {
                   <span>Áp dụng</span>
                 </button>
               </form>
+            </div>
+          </div>
+
+          <div className="py-[15px] px-[20px]">
+            <div className="text-main-500 text-[17px] font-semibold mb-[10px]">
+              Thương hiệu
+            </div>
+
+            <div className="border border-solid border-[rgba(26,27,24,0.2)] w-full max-h-[300px] overflow-y-scroll">
+              <div className="border-b border-solid border-[rgba(26,27,24,0.2)]">
+                <div className="px-[10px] py-[5px] text-main-500 text-sm flex justify-between items-center">
+                  <span>{brandFilter.length} đã chọn</span>
+                  <span className="underline">Reset</span>
+                </div>
+              </div>
+
+              <div className="px-4 py-3">
+                {brandsData?.map((brandItem) => (
+                  <div className="flex items-center mb-4" key={brandItem._id}>
+                    <input
+                      onChange={handleChangeFilterBrand}
+                      id={brandItem._id}
+                      type="checkbox"
+                      value={brandItem.title}
+                      checked={brandFilter.includes(brandItem.title)}
+                      className="w-4 h-4 text-main-200 bg-white border-main-500 rounded focus:ring-main-200 focus:ring-1 cursor-pointer"
+                    />
+                    <label
+                      htmlFor={brandItem._id}
+                      className="ml-2 text-main-500 text-sm cursor-pointer"
+                    >
+                      {brandItem.title}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

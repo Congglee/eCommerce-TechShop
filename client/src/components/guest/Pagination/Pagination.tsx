@@ -1,40 +1,46 @@
-import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import icons from "../../../utils/icons";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import usePagination from "../../../hooks/usePagination";
 import clsx from "clsx";
 import { useQueryString } from "../../../hooks/useQueryString";
-import { handlePageUrl } from "../../../utils/fn";
-
-const { BsArrowRight } = icons;
+import { generateSearchParamsURL } from "../../../utils/fn";
 
 interface IPaginationProps {
   name: string | undefined;
   sort: string | undefined;
   price_filter_gte: string | undefined;
   price_filter_lte: string | undefined;
+  brand: string | undefined;
   totalCount: number;
 }
 
 const Pagination = (props: IPaginationProps) => {
-  const { name, sort, price_filter_gte, price_filter_lte, totalCount } = props;
+  const { name, sort, price_filter_gte, price_filter_lte, totalCount, brand } =
+    props;
   const navigate = useNavigate();
   const pagination = usePagination(
     totalCount,
     1,
     import.meta.env.VITE_APP_LIMIT_PRODUCT_PER_PAGE
   );
+  const { category } = useParams();
   const queryString = useQueryString();
   const page = Number(queryString.page) || 1;
 
   const handlePaginationUrl = (value: string | number) => {
-    const paginationUrl = handlePageUrl(
-      value,
+    const isCategoryUrl: boolean = category ? true : false;
+    const paginationUrl = generateSearchParamsURL({
       name,
       sort,
       price_filter_gte,
-      price_filter_lte
-    );
+      price_filter_lte,
+      brand,
+      page: value as string,
+      isCategory: isCategoryUrl,
+      categoryUrlValue: category,
+      isAdmin: false,
+      adminUrlValue: "",
+    });
 
     navigate(paginationUrl);
   };

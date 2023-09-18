@@ -3,7 +3,7 @@ import {
   useDeleteUserMutation,
   useGetUsersQuery,
 } from "../../../features/user/user.services";
-import { formatDate, handleNameUrl, handleSortUrl } from "../../../utils/fn";
+import { formatDate, generateSearchParamsURL } from "../../../utils/fn";
 import { useQueryString } from "../../../hooks/useQueryString";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AdminPagination, UserLoadingRow } from "../../../components/admin";
@@ -42,24 +42,36 @@ const UserManagePage = (props: Props) => {
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
-    const searchUrl = handleNameUrl(
-      inputValue,
+    const searchUrl = generateSearchParamsURL({
+      name: inputValue,
       sort,
-      undefined,
-      undefined,
+      price_filter_gte: "",
+      price_filter_lte: "",
+      brand: "",
       page,
-      false,
-      undefined,
-      true,
-      usersPath
-    );
+      isCategory: false,
+      categoryUrlValue: "",
+      isAdmin: true,
+      adminUrlValue: usersPath,
+    });
     navigate(searchUrl);
   };
 
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     dispatch(setSeletedSort(value));
-    const sortUrl = handleSortUrl(value, name, undefined, undefined, page);
+    const sortUrl = generateSearchParamsURL({
+      name,
+      sort: value,
+      price_filter_gte: "",
+      price_filter_lte: "",
+      brand: "",
+      page,
+      isCategory: false,
+      categoryUrlValue: "",
+      isAdmin: true,
+      adminUrlValue: usersPath,
+    });
     navigate(sortUrl);
   };
 
@@ -264,6 +276,7 @@ const UserManagePage = (props: Props) => {
         sort={sort}
         totalData={data?.users.length as number}
         totalCount={data?.totalUser as number}
+        adminPath={usersPath}
       />
     </div>
   );

@@ -1,44 +1,62 @@
-import React from "react";
+import React, { useRef } from "react";
 import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";
 import { IProduct } from "../../../interfaces/product.interface";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { toggleShowProductFilter } from "../../../features/product/product.slice";
+import { IBrand } from "../../../interfaces/brand.interface";
+import useOutsideClickHandler from "../../../hooks/useOutsiteClickHandle";
 
 const { AiOutlineClose } = icons;
 
 interface productFilterMobileProps {
-  isShow: boolean;
   productLength?: number;
   totalProduct?: number;
-  handleIsShow: any;
   handleChangeSort: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   highestPriceProduct?: IProduct;
-  filterPriceGte: string;
-  filterPriceLte: string;
   handleChangeFilterPriceGte: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeFilterPriceLte: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmitFilter: (e: React.FormEvent<HTMLFormElement>) => void;
+  brandsData?: IBrand[];
+  handleChangeFilterBrand: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const ProductFilterMobile = (props: productFilterMobileProps) => {
   const {
-    isShow,
     productLength,
     totalProduct,
-    handleIsShow,
     highestPriceProduct,
     handleChangeSort,
-    filterPriceGte,
-    filterPriceLte,
+
     handleChangeFilterPriceGte,
     handleChangeFilterPriceLte,
     handleSubmitFilter,
+    brandsData,
+    handleChangeFilterBrand,
   } = props;
+
+  const {
+    showProductFilterMobile,
+    brandFilter,
+    filterPriceGte,
+    filterPriceLte,
+  } = useSelector((state: RootState) => state.product);
+  const dispatch = useDispatch();
+  const productFilterMobileRef = useRef<HTMLDivElement | null>(null);
+
+  useOutsideClickHandler(productFilterMobileRef, () => {
+    dispatch(toggleShowProductFilter(false));
+  });
 
   return (
     <div
-      className={`769:hidden fixed top-0 bottom-0 right-0 bg-white px-[10px] w-[60%] z-[50] transition-all duration-200 ease-linear ${
-        isShow ? "block animate-show-right-up" : "animate-show-right-down"
+      className={`769:hidden fixed top-0 bottom-0 right-0 bg-white px-[10px] w-[68%] overflow-y-auto z-[50] transition-all duration-200 ease-linear ${
+        showProductFilterMobile
+          ? "block animate-show-right-up"
+          : "animate-show-right-down"
       }`}
+      ref={productFilterMobileRef}
     >
       <div className="flex items-center justify-center py-[10px] mb-1">
         <div className="w-full flex flex-col items-center justify-center">
@@ -50,7 +68,10 @@ const ProductFilterMobile = (props: productFilterMobileProps) => {
           </span>
         </div>
 
-        <button className="ml-auto" onClick={() => handleIsShow(false)}>
+        <button
+          className="ml-auto"
+          onClick={() => dispatch(toggleShowProductFilter(false))}
+        >
           <AiOutlineClose size={28} />
         </button>
       </div>
@@ -125,6 +146,42 @@ const ProductFilterMobile = (props: productFilterMobileProps) => {
                 <span>Áp dụng</span>
               </button>
             </form>
+          </div>
+        </div>
+
+        <div className="py-[15px] px-[20px]">
+          <div className="text-main-500 text-[17px] font-semibold mb-[10px]">
+            Thương hiệu
+          </div>
+
+          <div className="border border-solid border-[rgba(26,27,24,0.2)] w-full max-h-[300px] overflow-y-scroll">
+            <div className="border-b border-solid border-[rgba(26,27,24,0.2)]">
+              <div className="px-[10px] py-[5px] text-main-500 text-sm flex justify-between items-center">
+                <span>{brandFilter.length} đã chọn</span>
+                <span className="underline">Reset</span>
+              </div>
+            </div>
+
+            <div className="px-4 py-3">
+              {brandsData?.map((brandItem) => (
+                <div className="flex items-center mb-4" key={brandItem._id}>
+                  <input
+                    onChange={handleChangeFilterBrand}
+                    id={brandItem._id}
+                    type="checkbox"
+                    value={brandItem.title}
+                    checked={brandFilter.includes(brandItem.title)}
+                    className="w-4 h-4 text-main-200 bg-white border-main-500 rounded focus:ring-main-200 focus:ring-1 cursor-pointer"
+                  />
+                  <label
+                    htmlFor={brandItem._id}
+                    className="ml-2 text-main-500 text-sm cursor-pointer"
+                  >
+                    {brandItem.title}
+                  </label>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

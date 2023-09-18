@@ -17,8 +17,6 @@ interface ProductItemProps {
   isProductsPage?: boolean;
 }
 
-type Props = {};
-
 const ProductItem = (props: ProductItemProps) => {
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isHoverProductHome, setIsHoverProductHome] = useState<boolean>(false);
@@ -150,7 +148,7 @@ const ProductItem = (props: ProductItemProps) => {
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(product?.description as string),
                 }}
-                className="text-[13px] text-main-500 line-clamp-[10]"
+                className="text-[13px] text-main-500 line-clamp-[10] mb-[15px]"
               ></div>
             ) : (
               <ul className="text-[13px] leading-[18px] text-main-500 mb-[15px] line-clamp-[11]">

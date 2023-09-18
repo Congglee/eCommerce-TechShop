@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface IProductState {
+export interface IProductState {
   productId: string;
   productSlug: string;
   seletedSort: string;
   filterPriceGte: string;
   filterPriceLte: string;
+  brandFilter: string[];
+  showProductFilterMobile: boolean;
 }
 
 const initialState: IProductState = {
@@ -14,6 +16,8 @@ const initialState: IProductState = {
   seletedSort: "",
   filterPriceGte: "",
   filterPriceLte: "",
+  brandFilter: [],
+  showProductFilterMobile: false,
 };
 
 const productSlice = createSlice({
@@ -31,10 +35,23 @@ const productSlice = createSlice({
     setFilterPriceLte: (state, action) => {
       state.filterPriceLte = action.payload;
     },
+
+    setBrandFilter: (state, action) => {
+      state.brandFilter = action.payload;
+    },
+
+    toggleShowProductFilter: (state, action) => {
+      state.showProductFilterMobile = action.payload;
+    },
   },
 });
 
-export const { setSeletedSort, setFilterPriceGte, setFilterPriceLte } =
-  productSlice.actions;
+export const {
+  setSeletedSort,
+  setFilterPriceGte,
+  setFilterPriceLte,
+  setBrandFilter,
+  toggleShowProductFilter,
+} = productSlice.actions;
 const productReducer = productSlice.reducer;
 export default productReducer;

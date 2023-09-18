@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import usePagination from "../../../hooks/usePagination";
 import { useQueryString } from "../../../hooks/useQueryString";
-import { handlePageUrl } from "../../../utils/fn";
+import { generateSearchParamsURL } from "../../../utils/fn";
 
 type Props = {};
 
@@ -11,10 +11,12 @@ interface IAdminPaginationProps {
   totalCount: number;
   totalData: number;
   sort?: string;
+  brand?: string;
+  adminPath?: string;
 }
 
 const AdminPagination = (props: IAdminPaginationProps) => {
-  const { name, totalCount, totalData, sort } = props;
+  const { name, totalCount, totalData, sort, brand, adminPath } = props;
   const navigate = useNavigate();
   const pagination = usePagination(
     totalCount,
@@ -26,13 +28,18 @@ const AdminPagination = (props: IAdminPaginationProps) => {
   const page = Number(queryString.page) || 1;
 
   const handlePaginationUrl = (value: string | number) => {
-    const paginationUrl = handlePageUrl(
-      value,
+    const paginationUrl = generateSearchParamsURL({
       name,
       sort,
-      undefined,
-      undefined
-    );
+      price_filter_gte: "",
+      price_filter_lte: "",
+      brand,
+      page: value as string,
+      isCategory: false,
+      categoryUrlValue: "",
+      isAdmin: true,
+      adminUrlValue: adminPath,
+    });
 
     navigate(paginationUrl);
   };

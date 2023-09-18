@@ -1,4 +1,3 @@
-import React from "react";
 import { Controller } from "react-hook-form";
 
 type Option = {
@@ -75,7 +74,7 @@ const AdminSelect = ({
                   );
                 })}
 
-            {!selectedOption && <option value="">{defaultOptionValue}</option>}
+            <option value="">{defaultOptionValue}</option>
             {!selectedOption &&
               options?.map((option, index) => {
                 return (

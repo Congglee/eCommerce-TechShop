@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { useQueryString } from "../../../hooks/useQueryString";
-import { handleNameUrl } from "../../../utils/fn";
+import { generateSearchParamsURL } from "../../../utils/fn";
 import { BurgerMenu } from "../../common";
 
 const {
@@ -27,26 +27,30 @@ const HeaderSection = (props: Props) => {
   const queryString: {
     name?: string;
     sort?: string;
+    brand?: string;
     page?: string;
     price_filter_gte?: string;
     price_filter_lte?: string;
   } = useQueryString();
-  const { sort, price_filter_gte, price_filter_lte, page } = queryString;
+  const { sort, brand, price_filter_gte, price_filter_lte, page } = queryString;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
     const isCategoryUrl: boolean = category ? true : false;
 
-    const searchUrl = handleNameUrl(
-      inputValue,
+    const searchUrl = generateSearchParamsURL({
+      name: inputValue,
       sort,
       price_filter_gte,
       price_filter_lte,
+      brand,
       page,
-      isCategoryUrl,
-      category
-    );
+      isCategory: isCategoryUrl,
+      categoryUrlValue: category,
+      isAdmin: false,
+      adminUrlValue: "",
+    });
 
     navigate(searchUrl);
   };

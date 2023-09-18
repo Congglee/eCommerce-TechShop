@@ -12,14 +12,15 @@ interface NewArrivalsProps {
 
 const NewArrivals = (props: NewArrivalsProps) => {
   const { products, isFetching } = props;
+
   const acerProducts = products?.filter(
-    (product) => (product.category as ICategory).slug === "acer"
+    (product) => product.brand?.toLowerCase() === "acer"
   );
   const asusProducts = products?.filter(
-    (product) => (product.category as ICategory).slug === "asus"
+    (product) => product.brand?.toLowerCase() === "asus"
   );
   const msiProducts = products?.filter(
-    (product) => (product.category as ICategory).slug === "msi"
+    (product) => product.brand?.toLowerCase() === "msi"
   );
 
   const [isAcer, setIsAcer] = useState<boolean>(true);

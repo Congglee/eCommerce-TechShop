@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import productReducer from "../features/product/product.slice";
+import productReducer, {
+  IProductState,
+} from "../features/product/product.slice";
 import { productApi } from "../features/product/product.services";
 
 import categoryReducer from "../features/category/category.slice";
@@ -32,7 +34,7 @@ const commonConfig = {
 
 const userConfig = {
   ...commonConfig,
-  whitelist: ["isLoggedIn", "token", "cartProducts"],
+  whitelist: ["isLoggedIn", "token", "cartProducts", "brandFilter"],
 };
 
 const persistedAuthReducer = persistReducer<IAuthState>(
@@ -45,9 +47,14 @@ const persistedCartReducer = persistReducer<ICartState>(
   cartReducer
 );
 
+const persistedProductReducer = persistReducer<IProductState>(
+  userConfig,
+  productReducer
+);
+
 export const store = configureStore({
   reducer: {
-    product: productReducer,
+    product: persistedProductReducer,
     [productApi.reducerPath]: productApi.reducer,
 
     category: categoryReducer,
@@ -69,6 +76,8 @@ export const store = configureStore({
 
     app: appReducer,
   },
+
+  devTools: import.meta.env.VITE_APP_REDUX_DEVTOOL !== "production",
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

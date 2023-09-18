@@ -13,6 +13,7 @@ import {
 import { toast } from "react-toastify";
 import { blockStatus, roles } from "../../../utils/collections";
 import useHandlerError from "../../../hooks/useHandleError";
+import { OvalSpinner } from "../../../components/common";
 
 const { AiOutlineClose } = icons;
 
@@ -29,7 +30,7 @@ const initialFormState: FormStateType = {
 
 type Props = {};
 
-const UpdateUser = (props: Props) => {
+const UpdateUserPage = (props: Props) => {
   const { userId, isShowUpdateUserDrawer } = useSelector(
     (state: RootState) => state.user
   );
@@ -176,9 +177,10 @@ const UpdateUser = (props: Props) => {
           <div className="bottom-0 left-0 flex justify-center w-full pb-4 space-x-4 md:px-4 md:absolute pt-3">
             <button
               type="submit"
-              className="text-white w-full justify-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              className="text-white flex items-center gap-x-2 w-full justify-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
               Cập nhật
+              {updateUserByAdminResult.isLoading && <OvalSpinner />}
             </button>
             <button
               type="button"
@@ -195,4 +197,4 @@ const UpdateUser = (props: Props) => {
   );
 };
 
-export default UpdateUser;
+export default UpdateUserPage;

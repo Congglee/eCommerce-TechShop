@@ -127,12 +127,12 @@ const CreateCategory = (props: Props) => {
 
           <button
             type="submit"
-            className="inline-flex items-center gap-x-2 px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+            className="inline-flex items-center justify-center gap-x-2 px-5 py-2 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 min-h-[45px] mobile:w-[250px]"
           >
             Thêm danh mục
-            <div className="max-w-[30px] min-h-[20px]">
-              {createCategoryResult.isLoading && <OvalSpinner />}
-            </div>
+            {createCategoryResult.isLoading && (
+              <OvalSpinner width={20} height={20} />
+            )}
           </button>
         </form>
       </div>

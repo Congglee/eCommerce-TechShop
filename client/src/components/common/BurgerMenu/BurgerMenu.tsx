@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import icons from "../../../utils/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +6,7 @@ import { RootState } from "../../../store/store";
 import { logOut } from "../../../features/auth/auth.slice";
 import jwt_decode from "jwt-decode";
 import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
+import useOutsideClickHandler from "../../../hooks/useOutsiteClickHandle";
 
 const { AiOutlineUser, BiSolidUserAccount, AiOutlineClose } = icons;
 
@@ -22,6 +23,11 @@ const BurgerMenu = (props: burgerMenuProps) => {
   const navigate = useNavigate();
   const { data, isError } = useGetCurrentUserQuery();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const burgerMenuRef = useRef<HTMLDivElement | null>(null);
+
+  useOutsideClickHandler(burgerMenuRef, () => {
+    setIsActive(false);
+  });
 
   useEffect(() => {
     if (token) {
@@ -38,9 +44,10 @@ const BurgerMenu = (props: burgerMenuProps) => {
 
   return (
     <div
-      className={`769:hidden fixed top-0 bottom-0 left-0 bg-main-600 px-[10px] w-[40%] z-[50] ${
+      className={`769:hidden fixed top-0 bottom-0 left-0 bg-main-600 px-[10px] w-[65%] z-[50] ${
         isActive ? "block animate-show-left-up" : "animate-show-left-down"
       }`}
+      ref={burgerMenuRef}
     >
       <div className="flex items-center py-[15px] text-white h-[80px] border-b border-[#343535] mb-1">
         <button onClick={() => setIsActive(false)}>

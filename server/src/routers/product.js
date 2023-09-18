@@ -31,6 +31,10 @@ router.get("/products/slug/:slug", getProductBySlug);
 router.put(
   "/products/update/:id",
   [verifyAccessToken, isAdminRole],
+  uploadCloud.fields([
+    { name: "images", maxCount: 10 },
+    { name: "thumb", maxCount: 1 },
+  ]),
   updateProduct
 );
 router.put("/products/ratings", verifyAccessToken, ratings);

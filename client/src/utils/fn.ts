@@ -1,5 +1,6 @@
 import CryptoJS from "crypto-js";
 import moment from "moment";
+import queryString from "query-string";
 
 export const generateRange = (start: number, end: number) => {
   const length = end + 1 - start;
@@ -19,37 +20,29 @@ export const formatDate = (inputDate?: string) => {
   return formattedDate;
 };
 
-export const handleSortUrl = (
-  value: string,
-  name?: string,
-  price_filter_gte?: string,
-  price_filter_lte?: string,
-  page?: string | number
-) => {
-  const sortUrl = `?sort=${value}${
-    name || price_filter_gte || price_filter_lte || page
-      ? `&name=${name === undefined ? "" : name}&price_filter_gte=${
-          price_filter_gte === undefined ? "" : price_filter_gte
-        }&price_filter_lte=${
-          price_filter_lte === undefined ? "" : price_filter_lte
-        }&page=${page === undefined ? "" : page}`
-      : ""
-  }`;
-
-  return sortUrl;
-};
-
-export const handleNameUrl = (
-  value: string,
-  sort?: string,
-  price_filter_gte?: string,
-  price_filter_lte?: string,
-  page?: string | number,
-  isCategory: boolean = false,
-  categoryUrlValue?: string,
-  isAdmin: boolean = false,
-  adminUrlValue?: string
-) => {
+export const generateSearchParamsURL = ({
+  name = "",
+  sort = "",
+  price_filter_gte = "",
+  price_filter_lte = "",
+  brand = "",
+  page = "",
+  isCategory = false,
+  categoryUrlValue = "",
+  isAdmin = false,
+  adminUrlValue = "",
+}: {
+  name?: string;
+  sort?: string;
+  price_filter_gte?: string;
+  price_filter_lte?: string;
+  brand?: string;
+  page?: string;
+  isCategory?: boolean;
+  categoryUrlValue?: string;
+  isAdmin?: boolean;
+  adminUrlValue?: string;
+}) => {
   let baseEndpoint;
   if (isAdmin) {
     baseEndpoint = `/admin/${adminUrlValue}`;
@@ -57,79 +50,27 @@ export const handleNameUrl = (
     baseEndpoint = isCategory ? `/category/${categoryUrlValue}` : "/products";
   }
 
-  const nameUrl = `${baseEndpoint}?name=${value}${
-    sort || price_filter_gte || price_filter_lte || page
-      ? `&sort=${sort === undefined ? "" : sort}&price_filter_gte=${
-          price_filter_gte === undefined ? "" : price_filter_gte
-        }&price_filter_lte=${
-          price_filter_lte === undefined ? "" : price_filter_lte
-        }&page=${page === undefined ? "" : page}`
-      : ""
-  }`;
+  const queryParams: {
+    name?: string;
+    sort?: string;
+    price_filter_gte?: string;
+    price_filter_lte?: string;
+    brand?: string;
+    page?: string;
+  } = {};
 
-  return nameUrl;
-};
+  if (name) queryParams.name = name;
+  if (sort) queryParams.sort = sort;
+  if (price_filter_gte) queryParams.price_filter_gte = price_filter_gte;
+  if (price_filter_lte) queryParams.price_filter_lte = price_filter_lte;
+  if (brand) queryParams.brand = brand;
+  if (page) queryParams.page = page;
 
-export const handleFilterPriceGteUrl = (
-  value: string,
-  name?: string,
-  sort?: string,
-  price_filter_lte?: string,
-  page?: string | number
-) => {
-  const filterPriceGteUrl = `?price_filter_gte=${value}${
-    name || price_filter_lte || sort || page
-      ? `&name=${name === undefined ? "" : name}&sort=${
-          sort === undefined ? "" : sort
-        }&price_filter_lte=${
-          price_filter_lte === undefined ? "" : price_filter_lte
-        }&page=${page === undefined ? "" : page}`
-      : ""
-  }`;
+  const queryParamsURL = `${baseEndpoint}?${queryString.stringify(
+    queryParams
+  )}`;
 
-  return filterPriceGteUrl;
-};
-
-export const handleFilterPriceLteUrl = (
-  value: string,
-  name?: string,
-  sort?: string,
-  price_filter_gte?: string,
-  page?: string | number
-) => {
-  const filterPriceLteUrl = `?price_filter_lte=${value}${
-    name || price_filter_gte || sort || page
-      ? `&name=${name === undefined ? "" : name}&sort=${
-          sort === undefined ? "" : sort
-        }&price_filter_gte=${
-          price_filter_gte === undefined ? "" : price_filter_gte
-        }&page=${page === undefined ? "" : page}`
-      : ""
-  }`;
-
-  return filterPriceLteUrl;
-};
-
-export const handlePageUrl = (
-  value: string | number,
-  name?: string,
-  sort?: string,
-  price_filter_gte?: string,
-  price_filter_lte?: string
-) => {
-  const pageUrl = `?page=${value}${
-    name || price_filter_gte || sort || price_filter_lte
-      ? `&name=${name === undefined ? "" : name}&sort=${
-          sort === undefined ? "" : sort
-        }&price_filter_gte=${
-          price_filter_gte === undefined ? "" : price_filter_gte
-        }&price_filter_lte=${
-          price_filter_lte === undefined ? "" : price_filter_lte
-        }`
-      : ""
-  }`;
-
-  return pageUrl;
+  return queryParamsURL;
 };
 
 export const encryptData = (data: any, secretKey: any) => {
@@ -156,8 +97,10 @@ export function getBase64(file: any) {
 
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
+    if (file.type) {
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    }
   });
 }
