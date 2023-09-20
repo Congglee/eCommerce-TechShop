@@ -26,37 +26,52 @@ const Brands = (props: Props) => {
     <div className="mb-5">
       <Slider {...settings}>
         <div className="pr-10">
-          <img src="https://hanoicomputercdn.com/media/brand/acer.png" alt="" />
-        </div>
-
-        <div className="pr-10">
-          <img src="https://hanoicomputercdn.com/media/brand/dell.png" alt="" />
-        </div>
-
-        <div className="pr-10">
           <img
-            src="https://hanoicomputercdn.com/media/brand/apple.png"
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695210656/ecommerce-techshop/acer_nidkpe.png"
             alt=""
           />
         </div>
 
         <div className="pr-10">
-          <img src="https://hanoicomputercdn.com/media/brand/asus.png" alt="" />
-        </div>
-
-        <div className="pr-10">
           <img
-            src="https://hanoicomputercdn.com/media/brand/lenovo.png"
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695210664/ecommerce-techshop/dell_bgp8qp.png"
             alt=""
           />
         </div>
 
         <div className="pr-10">
-          <img src="https://hanoicomputercdn.com/media/brand/lg.png" alt="" />
+          <img
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695210670/ecommerce-techshop/apple_bkhtxu.png"
+            alt=""
+          />
+        </div>
+
+        <div className="pr-10">
+          <img
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695210677/ecommerce-techshop/asus_jvf4cv.png"
+            alt=""
+          />
+        </div>
+
+        <div className="pr-10">
+          <img
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695210685/ecommerce-techshop/lenovo_bh0abh.png"
+            alt=""
+          />
+        </div>
+
+        <div className="pr-10">
+          <img
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695210691/ecommerce-techshop/lg_kapcrm.png"
+            alt=""
+          />
         </div>
 
         <div>
-          <img src="https://hanoicomputercdn.com/media/brand/msi.png" alt="" />
+          <img
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695210698/ecommerce-techshop/msi_un5wxp.png"
+            alt=""
+          />
         </div>
       </Slider>
     </div>

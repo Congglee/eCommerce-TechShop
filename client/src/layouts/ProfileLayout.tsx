@@ -7,10 +7,9 @@ import { useGetOrderDetailQuery } from "../features/order/order.services";
 type Props = {};
 
 const ProfileLayout = (props: Props) => {
-  const { orderId } = useSelector((state: RootState) => state.order);
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { id } = useParams();
-  const { data } = useGetOrderDetailQuery(orderId ? orderId : (id as string));
+  const { data } = useGetOrderDetailQuery(id || "");
 
   return (
     <>

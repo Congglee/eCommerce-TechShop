@@ -77,7 +77,7 @@ const Navigation = (props: Props) => {
                 <div className="w-[calc(calc(100%_/_4)_-_40px_)] mx-[20px] pr-10">
                   <div className="w-full max-w-[250px] mb-2">
                     <img
-                      src="https://cdn.shopify.com/s/files/1/1636/8779/articles/blog4_345x.jpg"
+                      src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695240315/ecommerce-techshop/blog4_345x_b36qpt.jpg"
                       alt=""
                       className="w-full h-full"
                     />

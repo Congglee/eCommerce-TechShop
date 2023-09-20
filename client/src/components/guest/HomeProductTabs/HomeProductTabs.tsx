@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { IProduct } from "../../../interfaces/product.interface";
 import ProductItem from "../ProductItem/ProductItem";
-import banner1 from "../../../assets/banner1-home2.png";
-import banner2 from "../../../assets/banner2-home2.png";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 
@@ -139,11 +137,19 @@ const HomeProductTabs = (props: HomeProductTabs) => {
 
       <div className="flex items-center gap-x-5 sm:flex-col sm:items-stretch sm:gap-y-5">
         <div>
-          <img src={banner1} alt="" className="w-full h-full" />
+          <img
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695207846/ecommerce-techshop/banner1-home2_jswako.png"
+            alt=""
+            className="w-full h-full"
+          />
         </div>
 
         <div>
-          <img src={banner2} alt="" className="w-full h-full" />
+          <img
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695207845/ecommerce-techshop/banner2-home2_scej7r.png"
+            alt=""
+            className="w-full h-full"
+          />
         </div>
       </div>
     </>

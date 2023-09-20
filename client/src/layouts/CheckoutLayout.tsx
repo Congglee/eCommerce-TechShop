@@ -9,7 +9,6 @@ import icons from "../utils/icons";
 import { RootState } from "../store/store";
 import { IProduct } from "../interfaces/product.interface";
 import { formatCurrency } from "../utils/fn";
-import { useAccessDeniedHandler } from "../hooks/useHandleAccess";
 
 const { PiShoppingCartFill, FiChevronDown, FiChevronUp } = icons;
 
@@ -22,17 +21,10 @@ const CheckoutLayout = (props: Props) => {
   );
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const [isShowSummary, setIsShowSummary] = useState(false);
-  const handleAccessDenied = useAccessDeniedHandler();
 
   useEffect(() => {
     dispatch(getCartTotals());
   }, []);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      handleAccessDenied();
-    }
-  }, [isLoggedIn]);
 
   return (
     <div className="font-Inter">

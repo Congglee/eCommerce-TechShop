@@ -1,14 +1,8 @@
-import laptopAcer from "../assets/laptop_acer_collection.png";
-import laptopAsus from "../assets/laptop_asus_collection_20.jpeg";
-import laptopDell from "../assets/laptop_dell_collection.png";
-import laptopHp from "../assets/laptop_hp_collection.png";
-import laptopLenvo from "../assets/laptop_lenovo_collection.png";
-import mackbook from "../assets/macbook_collection.png";
-
 const hotCollections = [
   {
     title: "Acer",
-    image: laptopAcer,
+    image:
+      "https://res.cloudinary.com/di3eto0bg/image/upload/v1695207845/ecommerce-techshop/laptop_acer_collection_tf0ivs.png",
     type: [
       "Acer Aspire",
       "Acer Swift",
@@ -22,7 +16,8 @@ const hotCollections = [
 
   {
     title: "Asus",
-    image: laptopAsus,
+    image:
+      "https://res.cloudinary.com/di3eto0bg/image/upload/v1695207845/ecommerce-techshop/laptop_asus_collection_20_wukgjf.jpg",
     type: [
       "Asus Vivobook",
       "Asus Zenbook",
@@ -36,7 +31,8 @@ const hotCollections = [
 
   {
     title: "Lenovo",
-    image: laptopLenvo,
+    image:
+      "https://res.cloudinary.com/di3eto0bg/image/upload/v1695207845/ecommerce-techshop/laptop_lenovo_collection_twowhp.png",
     type: [
       "Lenovo Thinkpad",
       "Lenovo Ideapad",
@@ -51,7 +47,8 @@ const hotCollections = [
 
   {
     title: "Dell",
-    image: laptopDell,
+    image:
+      "https://res.cloudinary.com/di3eto0bg/image/upload/v1695207846/ecommerce-techshop/laptop_dell_collection_sjems8.png",
     type: [
       "Dell Inspiron",
       "Dell Vostro",
@@ -67,7 +64,8 @@ const hotCollections = [
 
   {
     title: "HP",
-    image: laptopHp,
+    image:
+      "https://res.cloudinary.com/di3eto0bg/image/upload/v1695207845/ecommerce-techshop/laptop_hp_collection_fgv6j6.png",
     type: [
       "HP Pavilion",
       "HP Probook",
@@ -82,7 +80,8 @@ const hotCollections = [
 
   {
     title: "Apple",
-    image: mackbook,
+    image:
+      "https://res.cloudinary.com/di3eto0bg/image/upload/v1695207853/ecommerce-techshop/macbook_collection_go8spy.png",
     type: [
       "Apple Macbook Air",
       "Apple Macbook Pro 13",
@@ -95,7 +94,8 @@ const hotCollections = [
 const newsItems = [
   {
     id: 1,
-    image: "https://hanoicomputercdn.com/media/news/1817_cover_msi_laptop.jpg",
+    image:
+      "https://res.cloudinary.com/di3eto0bg/image/upload/v1695210302/ecommerce-techshop/1817_cover_msi_laptop_uq9t51.jpg",
     title: "Loạt laptop MSI mới trang bị Raptor Lake-HX và RTX 40 Series",
     date: "December 13, 2016",
     comments: 1,
@@ -105,7 +105,7 @@ const newsItems = [
   {
     id: 2,
     image:
-      "https://hanoicomputercdn.com/media/news/1746_cover_corei9_13900hx.jpg",
+      "https://res.cloudinary.com/di3eto0bg/image/upload/v1695210329/ecommerce-techshop/1746_cover_corei9_13900hx_egyph3.jpg",
     title:
       "Core i9-13900HX cho laptop lộ điểm hiệu năng vượt trội với thế hệ tiền nhiệm",
     date: "December 13, 2016",
@@ -116,7 +116,7 @@ const newsItems = [
   {
     id: 3,
     image:
-      "https://hanoicomputercdn.com/media/news/2035_laptop_asus_vivobook_pro_16x.jpg",
+      "https://res.cloudinary.com/di3eto0bg/image/upload/v1695210335/ecommerce-techshop/2035_laptop_asus_vivobook_pro_16x_r7wmeq.jpg",
     title: "Những mẫu laptop phù hợp với sinh viên mùa tựu trường",
     date: "December 13, 2016",
     comments: 1,
@@ -126,7 +126,7 @@ const newsItems = [
   {
     id: 4,
     image:
-      "https://hanoicomputercdn.com/media/news/2035_laptop_asus_vivobook_pro_16x.jpg",
+      "https://res.cloudinary.com/di3eto0bg/image/upload/v1695210335/ecommerce-techshop/2035_laptop_asus_vivobook_pro_16x_r7wmeq.jpg",
     title: "Những mẫu laptop phù hợp với sinh viên mùa tựu trường",
     date: "December 13, 2016",
     comments: 1,

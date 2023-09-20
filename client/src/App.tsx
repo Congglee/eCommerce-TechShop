@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import {
   AdminLayout,
@@ -39,43 +38,9 @@ import {
 } from "./pages/guest";
 import path from "./utils/path";
 import ProfileEditPage from "./pages/guest/ProfileEditPage";
-import { useSelector } from "react-redux";
-import { RootState } from "./store/store";
-import {
-  useAccessDeniedHandler,
-  useRoleAccessDeniedHandler,
-} from "./hooks/useHandleAccess";
-import jwt_decode from "jwt-decode";
 import OrderManagePage from "./pages/admin/orders/OrderManagePage";
 import UpdateOrderPage from "./pages/admin/orders/UpdateOrderPage";
-
-interface RouteProps {
-  children: React.ReactNode;
-}
-
-function ProtectedRoute({ children }: RouteProps) {
-  const { isLoggedIn, token } = useSelector((state: RootState) => state.auth);
-  const handleAccessDenied = useAccessDeniedHandler();
-  const handleRoleAccessDenied = useRoleAccessDeniedHandler();
-  const [isAdminRole, setIsAdminRole] = useState(false);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      handleAccessDenied();
-      setIsAdminRole(false);
-    } else if (token) {
-      const { isAdmin } = jwt_decode(token) as { isAdmin: boolean };
-      setIsAdminRole(isAdmin);
-
-      if (!isAdmin) {
-        handleRoleAccessDenied();
-        setIsAdminRole(false);
-      }
-    }
-  }, [isLoggedIn, token, handleAccessDenied, handleRoleAccessDenied]);
-
-  return isLoggedIn && isAdminRole ? children : null;
-}
+import { AdminRoute, ProtectedRoute } from "./components/common";
 
 function App() {
   return (
@@ -159,7 +124,9 @@ function App() {
           path={path.ADMIN_DASHBOARD}
           element={
             <ProtectedRoute>
-              <AdminLayout />
+              <AdminRoute>
+                <AdminLayout />
+              </AdminRoute>
             </ProtectedRoute>
           }
         >

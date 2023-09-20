@@ -117,7 +117,7 @@ export default {
         "show-right-up": "show-right-up 0.25s linear both",
         "show-right-down": "show-right-down 0.25s linear both",
         "scale-up-center":
-          "scale-up-center 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both",
+          "scale-up-center 0.35s cubic-bezier(0.390, 0.575, 0.565, 1.000) both",
         mymove: "mymove 2.0s infinite",
       },
     },

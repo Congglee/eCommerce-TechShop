@@ -22,20 +22,9 @@ const CartPage = (props: Props) => {
     (state: RootState) => state.cart
   );
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
-  // const { data } = useGetCurrentUserQuery();
-  // const [updateCarts, updateCartsResult] = useUpdateCartsMutation();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // const updateCartData = async () => {
-    //   await updateCarts({
-    //     cart: cartProducts.map((cart) => ({
-    //       product: cart._id,
-    //       quantity: cart.quantity,
-    //     })),
-    //   });
-    // };
-    // updateCartData();
     dispatch(getCartTotals());
   }, [cartProducts, dispatch]);
 

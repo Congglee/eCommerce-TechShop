@@ -19,7 +19,7 @@ const Banner = (props: Props) => {
     <Slider {...settings}>
       <div className="w-full h-full">
         <img
-          src="https://img.freepik.com/premium-psd/3d-objects-laptop-black-friday-red-background_23-2148660042.jpg"
+          src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695208002/ecommerce-techshop/banner_1.jpg"
           alt=""
           className="w-full h-[461px] md:h-[300px] overflow-hidden"
         />
@@ -27,7 +27,7 @@ const Banner = (props: Props) => {
 
       <div className="w-full h-full">
         <img
-          src="https://nhatkhanhtech.com/wp-content/uploads/2019/10/Banner-gaming_laptops.jpg"
+          src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695208096/ecommerce-techshop/banner_2.jpg"
           alt=""
           className="w-full h-[461px] md:h-[300px] overflow-hidden"
         />
@@ -35,7 +35,7 @@ const Banner = (props: Props) => {
 
       <div className="w-full h-full">
         <img
-          src="https://cdn.tgdd.vn/Files/2021/12/20/1405435/laptopgamingdohoah22_1280x720-800-resize.jpg"
+          src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695208248/ecommerce-techshop/banner_3.jpg"
           alt=""
           className="w-full h-[461px] md:h-[300px] overflow-hidden"
         />

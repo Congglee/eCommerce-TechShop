@@ -154,7 +154,7 @@ const ProductFilter = (props: productFilterProps) => {
       </div>
       <div className="w-full h-full">
         <img
-          src="https://digital-world-2.myshopify.com/cdn/shop/files/banner1-bottom-home2_b96bc752-67d4-45a5-ac32-49dc691b1958_300x.jpg?v=1613166661"
+          src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695240655/ecommerce-techshop/banner1-bottom-home2_b96bc752-67d4-45a5-ac32-49dc691b1958_300x_f6od9g.jpg"
           alt=""
         />
       </div>

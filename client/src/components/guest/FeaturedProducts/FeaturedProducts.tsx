@@ -74,7 +74,7 @@ const FeaturedProducts = (props: FeaturedProducts) => {
       <div className="flex gap-5 h-[675px] lg:h-[560px] md:h-[420px] sm:flex-col sm:h-full">
         <div className="w-1/2 h-full sm:w-full">
           <img
-            src="https://digital-world-2.myshopify.com/cdn/shop/files/banner1-bottom-home2_b96bc752-67d4-45a5-ac32-49dc691b1958_600x.jpg?v=1613166661"
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695240373/ecommerce-techshop/banner1-bottom-home2_b96bc752-67d4-45a5-ac32-49dc691b1958_600x_bybrgx.jpg"
             alt=""
             className="h-full w-full object-cover"
           />
@@ -83,7 +83,7 @@ const FeaturedProducts = (props: FeaturedProducts) => {
         <div className="flex w-[25%] sm:w-full flex-col gap-y-5">
           <div className="w-full h-[340px] sm:h-full">
             <img
-              src="https://digital-world-2.myshopify.com/cdn/shop/files/banner2-bottom-home2_400x.jpg?v=1613166661"
+              src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695240384/ecommerce-techshop/banner2-bottom-home2_400x_xrmf2m.jpg"
               alt=""
               className="w-full h-full"
             />
@@ -91,7 +91,7 @@ const FeaturedProducts = (props: FeaturedProducts) => {
 
           <div className="w-full h-[340px] sm:h-full">
             <img
-              src="https://digital-world-2.myshopify.com/cdn/shop/files/banner3-bottom-home2_400x.jpg?v=1613166661"
+              src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695240395/ecommerce-techshop/banner3-bottom-home2_400x_yx0zop.jpg"
               alt=""
               className="w-full h-full"
             />
@@ -100,7 +100,7 @@ const FeaturedProducts = (props: FeaturedProducts) => {
 
         <div className="w-[25%] h-full sm:w-full">
           <img
-            src="https://digital-world-2.myshopify.com/cdn/shop/files/banner4-bottom-home2_92e12df0-500c-4897-882a-7d061bb417fd_400x.jpg?v=1613166661"
+            src="https://res.cloudinary.com/di3eto0bg/image/upload/v1695240402/ecommerce-techshop/banner4-bottom-home2_92e12df0-500c-4897-882a-7d061bb417fd_400x_y4mzyt.jpg"
             alt=""
             className="w-full h-full"
           />

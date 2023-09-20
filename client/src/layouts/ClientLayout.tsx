@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { setCurrentScreenWidth } from "../features/app.slice";
+import { AdminRoute } from "../components/common";
 
 type Props = {};
 
