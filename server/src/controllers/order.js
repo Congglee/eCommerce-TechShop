@@ -1,12 +1,10 @@
 import Order from "../models/order.js";
 import User from "../models/user.js";
+import { generateOrderCode } from "../utils/generateCode.js";
 
 const createOrder = async (req, res) => {
   try {
     const { _id } = req.user;
-    // const userCart = await User.findById(_id)
-    //   .select("cart")
-    //   .populate("cart.product", "title price");
     const { cart, payment, address, mobile, date } = req.body;
 
     if (!Array.isArray(cart) || cart.length === 0) {
@@ -24,7 +22,10 @@ const createOrder = async (req, res) => {
       };
     });
 
+    const orderCode = generateOrderCode();
+
     const createData = {
+      orderCode,
       products,
       payment,
       total,
@@ -47,15 +48,21 @@ const createOrder = async (req, res) => {
   }
 };
 
-const updateStatusByAdmin = async (req, res) => {
+const updateOrderByAdmin = async (req, res) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
-    if (!status) throw new Error("Vui lòng chọn trạng thái cho đơn hàng");
+    const { status, delivery_status, payment_status } = req.body;
+    if (
+      !status ||
+      status?.trim() === "" ||
+      delivery_status?.trim() === "" ||
+      payment_status?.trim() === ""
+    )
+      throw new Error("Vui lòng chọn trạng thái cho đơn hàng");
 
     const response = await Order.findByIdAndUpdate(
       id,
-      { status },
+      { status, delivery_status, payment_status },
       { new: true }
     );
 
@@ -127,7 +134,7 @@ const getOrder = async (req, res) => {
         path: "products.product",
         select: "_id name thumb quantity price",
       })
-      .populate("orderBy", "email");
+      .populate("orderBy", "email name avatar mobile");
 
     return res.status(200).json({
       success: orderData ? true : false,
@@ -145,11 +152,60 @@ const getOrder = async (req, res) => {
 
 const getOrders = async (req, res) => {
   try {
-    const response = await Order.find();
+    const queries = { ...req.query };
+    const excludeFields = ["limit", "sort", "page", "fields"];
+    excludeFields.forEach((item) => delete queries[item]);
+
+    let queryString = JSON.stringify(queries);
+    queryString = queryString.replace(
+      /\b(gte|gt|lt|lte)\b/g,
+      (matchedItem) => `$${matchedItem}`
+    );
+
+    const formattedQueries = JSON.parse(queryString);
+
+    if (queries?.orderCode)
+      formattedQueries.orderCode = { $regex: queries.orderCode, $options: "i" };
+
+    if (queries?.orderStatus) {
+      delete formattedQueries.orderStatus;
+      formattedQueries.status = queries.orderStatus;
+    }
+
+    let queryCommand = Order.find(formattedQueries)
+      .populate({
+        path: "products.product",
+        select: "_id name thumb quantity price",
+      })
+      .populate("orderBy", "email avatar name");
+
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      queryCommand = queryCommand.sort(sortBy);
+    }
+
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      queryCommand = queryCommand.select(fields);
+    } else {
+      queryCommand = queryCommand.select("-__v");
+    }
+
+    const page = +req.query.page || 1;
+    const limit = +req.query.limit || 100;
+    const skip = (page - 1) * limit;
+
+    queryCommand = queryCommand.skip(skip).limit(limit);
+
+    const response = await queryCommand.exec();
+    const totalOrder = await Order.countDocuments(formattedQueries);
+    const totalPages = Math.ceil(totalOrder / +limit);
 
     return res.status(200).json({
       success: response ? true : false,
-      response: response ? response : "Lấy danh sách đơn hàng thất bại",
+      totalPages,
+      totalOrder,
+      orders: response ? response : "Không lấy được đơn hàng",
     });
   } catch (error) {
     return res.status(400).json({
@@ -161,7 +217,7 @@ const getOrders = async (req, res) => {
 
 export {
   createOrder,
-  updateStatusByAdmin,
+  updateOrderByAdmin,
   updateStatusByClient,
   getUserOrder,
   getOrders,

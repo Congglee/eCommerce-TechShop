@@ -12,11 +12,13 @@ interface IAdminPaginationProps {
   totalData: number;
   sort?: string;
   brand?: string;
+  orderStatus?: string;
   adminPath?: string;
 }
 
 const AdminPagination = (props: IAdminPaginationProps) => {
-  const { name, totalCount, totalData, sort, brand, adminPath } = props;
+  const { name, totalCount, totalData, sort, brand, orderStatus, adminPath } =
+    props;
   const navigate = useNavigate();
   const pagination = usePagination(
     totalCount,
@@ -39,6 +41,7 @@ const AdminPagination = (props: IAdminPaginationProps) => {
       categoryUrlValue: "",
       isAdmin: true,
       adminUrlValue: adminPath,
+      orderStatus,
     });
 
     navigate(paginationUrl);

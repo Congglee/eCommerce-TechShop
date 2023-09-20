@@ -74,7 +74,9 @@ const AdminSelect = ({
                   );
                 })}
 
-            <option value="">{defaultOptionValue}</option>
+            {defaultOptionValue && (
+              <option value="">{defaultOptionValue}</option>
+            )}
             {!selectedOption &&
               options?.map((option, index) => {
                 return (

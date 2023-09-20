@@ -112,7 +112,7 @@ const ProfilePage = (props: Props) => {
                 className="w-[calc(calc(100%_/_6))] sm:w-full mx-4 hover:text-main-200 line-clamp-2 whitespace-normal break-words md:line-clamp-3 900:line-clamp-4"
                 onClick={() => dispatch(setOrderDetail({ id: order._id }))}
               >
-                <Link to={`order/${order._id}`}>DW2{order._id}</Link>
+                <Link to={`order/${order._id}`}>{order.orderCode}</Link>
               </div>
 
               <div className="w-[calc(calc(100%_/_6))] sm:w-full mx-4">

@@ -8,9 +8,7 @@ export interface ICartState {
 }
 
 export const initialState: ICartState = {
-  cartProducts: localStorage.getItem("cartProducts")
-    ? JSON.parse(localStorage.getItem("cartProducts")!)
-    : [],
+  cartProducts: [],
   totalQuantity: 0,
   totalAmount: 0,
 };

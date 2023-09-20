@@ -7,11 +7,14 @@ import {
   ProfileLayout,
 } from "./layouts";
 import {
+  BrandManagePage,
   CategoryManagePage,
+  CreateBrandPage,
   CreateCategoryPage,
   CreateProductPage,
   DashboardPage,
   ProductManagePage,
+  UpdateBrandPage,
   UpdateCategoryPage,
   UpdateProductPage,
   UpdateUserPage,
@@ -43,6 +46,8 @@ import {
   useRoleAccessDeniedHandler,
 } from "./hooks/useHandleAccess";
 import jwt_decode from "jwt-decode";
+import OrderManagePage from "./pages/admin/orders/OrderManagePage";
+import UpdateOrderPage from "./pages/admin/orders/UpdateOrderPage";
 
 interface RouteProps {
   children: React.ReactNode;
@@ -181,9 +186,27 @@ function App() {
               element={<UpdateCategoryPage />}
             />
           </Route>
+          <Route path={path.ADMIN_BRAND_PAGE}>
+            <Route index element={<BrandManagePage />} />
+            <Route
+              path={path.ADMIN_CREATE_PAGE}
+              element={<CreateBrandPage />}
+            />
+            <Route
+              path={path.ADMIN_UPDATE_PAGE}
+              element={<UpdateBrandPage />}
+            />
+          </Route>
           <Route path={path.ADMIN_USER_PAGE}>
             <Route index element={<UserManagePage />} />
             <Route path={path.ADMIN_UPDATE_PAGE} element={<UpdateUserPage />} />
+          </Route>
+          <Route path={path.ADMIN_ORDER_PAGE}>
+            <Route index element={<OrderManagePage />} />
+            <Route
+              path={path.ADMIN_UPDATE_PAGE}
+              element={<UpdateOrderPage />}
+            />
           </Route>
         </Route>
 

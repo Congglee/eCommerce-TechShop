@@ -26,6 +26,7 @@ const path = {
 
   ADMIN_DASHBOARD: "admin",
   ADMIN_PRODUCT_PAGE: "products",
+  ADMIN_BRAND_PAGE: "brands",
   ADMIN_CATEGORY_PAGE: "categories",
   ADMIN_USER_PAGE: "users",
   ADMIN_ORDER_PAGE: "orders",

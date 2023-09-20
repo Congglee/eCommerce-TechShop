@@ -18,14 +18,21 @@ interface IGetOrderDetailResponse {
   response: IOrder;
 }
 
-interface IUpdateStatusOrderClientResponse {
+interface IUpdateStatusOrderResponse {
   success: boolean;
   response: IOrder;
 }
 
+interface IGetOrdersResponse {
+  success: boolean;
+  totalPages: number;
+  totalOrder: number;
+  orders: IOrder[];
+}
+
 export const orderApi = createApi({
   reducerPath: "orderApi",
-  tagTypes: ["Orders"],
+  tagTypes: ["Orders", "AdminOrders"],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_API_URL,
     prepareHeaders(headers, { getState }) {
@@ -83,12 +90,62 @@ export const orderApi = createApi({
       },
     }),
 
+    getOrdersByAdmin: build.query<
+      IGetOrdersResponse,
+      {
+        orderCode?: string;
+        sort?: string;
+        orderStatus?: string;
+        limit?: string | number;
+        page?: string | number;
+      }
+    >({
+      query: ({ orderCode, sort, orderStatus, limit, page }) => {
+        let queryString = "/orders/admin";
+        const params = [];
+
+        if (orderCode)
+          params.push(`orderCode=${encodeURIComponent(orderCode)}`);
+        if (sort) params.push(`sort=${encodeURIComponent(sort)}`);
+
+        if (orderStatus)
+          params.push(`orderStatus=${encodeURIComponent(orderStatus)}`);
+        if (limit) params.push(`limit=${encodeURIComponent(limit)}`);
+        if (page) params.push(`page=${encodeURIComponent(page)}`);
+
+        if (params.length > 0) queryString += `?${params.join("&")}`;
+
+        return queryString;
+      },
+      providesTags(result, error, params) {
+        if (error || !result) {
+          return [{ type: "AdminOrders", id: "LIST" }];
+        }
+
+        const hasFilter = Object.keys(params).some((key) =>
+          ["name", "sort", "limit", "page"].includes(key)
+        );
+
+        if (hasFilter) {
+          return [
+            ...result.orders.map(({ _id }) => ({
+              type: "AdminOrders" as const,
+              id: _id,
+            })),
+            { type: "AdminOrders" as const, id: "LIST" },
+          ];
+        }
+
+        return [{ type: "AdminOrders" as const, id: "LIST" }];
+      },
+    }),
+
     getOrderDetail: build.query<IGetOrderDetailResponse, string>({
       query: (id) => `orders/user/${id}`,
     }),
 
     updateStatusOrderClient: build.mutation<
-      IUpdateStatusOrderClientResponse,
+      IUpdateStatusOrderResponse,
       { id: string; body: IOrder }
     >({
       query: (data) => {
@@ -101,6 +158,21 @@ export const orderApi = createApi({
       invalidatesTags: (result, error, data) =>
         error ? [] : [{ type: "Orders", id: data.id }],
     }),
+
+    updateOrderAdmin: build.mutation<
+      IUpdateStatusOrderResponse,
+      { id: string; body: IOrder }
+    >({
+      query: (data) => {
+        return {
+          url: `/orders/admin/status/${data.id}`,
+          method: "PUT",
+          body: data.body,
+        };
+      },
+      invalidatesTags: (result, error, data) =>
+        error ? [] : [{ type: "AdminOrders", id: data.id }],
+    }),
   }),
 });
 
@@ -110,4 +182,6 @@ export const {
   useGetOrderDetailQuery,
   useUpdateStatusOrderClientMutation,
   useCreateCheckoutSessionMutation,
+  useGetOrdersByAdminQuery,
+  useUpdateOrderAdminMutation,
 } = orderApi;

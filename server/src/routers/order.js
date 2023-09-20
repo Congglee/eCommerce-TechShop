@@ -4,7 +4,7 @@ import {
   getOrder,
   getOrders,
   getUserOrder,
-  updateStatusByAdmin,
+  updateOrderByAdmin,
   updateStatusByClient,
 } from "../controllers/order.js";
 import { isAdminRole, verifyAccessToken } from "../middlewares/verifyToken.js";
@@ -15,7 +15,7 @@ router.post("/orders", [verifyAccessToken], createOrder);
 router.put(
   "/orders/admin/status/:id",
   [verifyAccessToken, isAdminRole],
-  updateStatusByAdmin
+  updateOrderByAdmin
 );
 router.put(
   "/orders/user/status/:id",

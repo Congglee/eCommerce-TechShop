@@ -6,7 +6,12 @@ import {
 import { formatDate, generateSearchParamsURL } from "../../../utils/fn";
 import { useQueryString } from "../../../hooks/useQueryString";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AdminPagination, UserLoadingRow } from "../../../components/admin";
+import {
+  AdminPagination,
+  AdminSearch,
+  AdminSortFilter,
+  UserLoadingRow,
+} from "../../../components/admin";
 import { useDispatch } from "react-redux";
 import {
   setUserDetail,
@@ -30,6 +35,25 @@ const UserManagePage = (props: Props) => {
   const location = useLocation();
   const path = location.pathname.split("/");
   const usersPath = path[path.length - 1];
+
+  const userOptionsSort = [
+    {
+      label: "Theo tên, A - Z",
+      value: "name",
+    },
+    {
+      label: "Theo tên, Z - A",
+      value: "-name",
+    },
+    {
+      label: "Ngày cập nhật, xa nhất",
+      value: "updatedAt",
+    },
+    {
+      label: "Ngày cập nhật, gần nhất",
+      value: "-updatedAt",
+    },
+  ];
 
   const { data, isFetching } = useGetUsersQuery({
     name: name || "",
@@ -108,52 +132,16 @@ const UserManagePage = (props: Props) => {
     <div className="relative overflow-hidden shadow-md tablet:rounded-lg">
       <div className="flex flex-col ipad:flex-row items-center justify-between space-y-3 ipad:space-y-0 ipad:space-x-4 p-4 bg-white dark:bg-gray-900">
         <div className="w-full ipad:w-auto flex flex-col ipad:flex-row space-y-2 ipad:space-y-0 items-stretch ipad:items-center justify-end ipad:space-x-3 flex-shrink-0">
-          <select
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={handleChangeSort}
-          >
-            <option>Sắp xếp</option>
-            <option value="name">Theo họ và tên, A - Z</option>
-            <option value="-name">Theo họ và tên, Z - A</option>
-            <option value="createdAt">Ngày tạo, xa nhất</option>
-            <option value="-createdAt">Ngày tạo, gần nhất</option>
-          </select>
+          <AdminSortFilter
+            handleChangeSort={handleChangeSort}
+            options={userOptionsSort}
+          />
         </div>
 
-        <div className="w-full ipad:w-1/2">
-          <form className="flex items-center" onSubmit={handleSearchSubmit}>
-            <label htmlFor="table-search" className="sr-only">
-              Search
-            </label>
-
-            <div className="relative w-full">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="text"
-                id="table-search-users"
-                name="searchInput"
-                className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Tìm kiếm tài khoản"
-              />
-            </div>
-          </form>
-        </div>
+        <AdminSearch
+          handleSearchSubmit={handleSearchSubmit}
+          placeHolder="Tìm kiếm tài khoản"
+        />
       </div>
 
       <div className="overflow-x-auto">

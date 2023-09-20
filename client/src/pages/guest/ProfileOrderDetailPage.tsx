@@ -49,7 +49,7 @@ const ProfileOrderDetailPage = (props: Props) => {
           {!isFetching && (
             <>
               <h2 className="text-2xl font-semibold text-main-500 whitespace-normal break-words xs:text-xl">
-                Đơn hàng DW2{data?.response._id}
+                Mã đơn hàng: {data?.response.orderCode}
               </h2>
               <span className="text-base font-medium text-gray-600">
                 Đặt hàng vào {data?.response.date}

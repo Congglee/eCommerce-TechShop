@@ -37,7 +37,7 @@ const UpdateCategory = (props: Props) => {
     defaultValues: initialFormState,
   });
   const { data: categoryData, refetch } = useGetCategoryQuery(id as string);
-  const { data: brandData } = useGetBrandsQuery();
+  const { data: brandData } = useGetBrandsQuery({});
 
   const category = categoryData?.productCategory;
   const [updateCategory, updateCategoryResult] = useUpdateCategoryMutation();
@@ -68,7 +68,7 @@ const UpdateCategory = (props: Props) => {
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <Link to="/admin/categories">
+        <Link to="/admin/categories" className="inline-block">
           <button
             type="button"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 mr-2 mb-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 flex items-center justify-center gap-x-2"

@@ -1,69 +1,37 @@
 import React, { useEffect } from "react";
-import {
-  AdminPagination,
-  AdminSearch,
-  AdminSortFilter,
-} from "../../../components/admin";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import icons from "../../../utils/icons";
-import { useQueryString } from "../../../hooks/useQueryString";
 import {
-  useDeleteCategoryMutation,
-  useGetCategoriesQuery,
-} from "../../../features/category/category.services";
+  useDeleteBrandMutation,
+  useGetBrandsQuery,
+} from "../../../features/brand/brand.services";
 import { formatDate, generateSearchParamsURL } from "../../../utils/fn";
+import { useQueryString } from "../../../hooks/useQueryString";
+import { AdminPagination, AdminSearch } from "../../../components/admin";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setSeletedSort } from "../../../features/product/product.slice";
 
 const { BiBookAdd } = icons;
 
 type Props = {};
 
-const CategoryManagePage = (props: Props) => {
+const BrandManagePage = (props: Props) => {
   const queryString: {
     name?: string;
-    sort?: string;
     page?: string;
   } = useQueryString();
-  const { name, sort, page } = queryString;
-  const { data, isFetching } = useGetCategoriesQuery({
-    name: name || "",
-    sort: sort || "",
+  const { name, page } = queryString;
+  const { data, isFetching } = useGetBrandsQuery({
+    title: name || "",
     page: page || 1,
     limit: import.meta.env.VITE_APP_LIMIT_ADMIN_PER_PAGE || 8,
   });
-  const [deleteCategory, deleteCategoryResult] = useDeleteCategoryMutation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const path = location.pathname.split("/");
-  const categoriesPath = path[path.length - 1];
+  const [deleteBrand, deleteBrandResult] = useDeleteBrandMutation();
 
-  const categoryOptionsSort = [
-    {
-      label: "Theo tên, A - Z",
-      value: "name",
-    },
-    {
-      label: "Theo tên, Z - A",
-      value: "-name",
-    },
-    {
-      label: "Ngày cập nhật, xa nhất",
-      value: "updatedAt",
-    },
-    {
-      label: "Ngày cập nhật, gần nhất",
-      value: "-updatedAt",
-    },
-  ];
-
-  const handleDeleteCategory = async (id: string) => {
+  const handleDeleteBrand = async (id: string) => {
     const result = await Swal.fire({
-      title: "Xác nhận xóa danh mục này",
-      text: "Bạn có chắc là muốn xóa danh mục này không ?",
+      title: "Xác nhận xóa thương hiệu này",
+      text: "Bạn có chắc là muốn xóa thương hiệu này không ?",
       icon: "warning",
       showCancelButton: true,
       cancelButtonColor: "#d33",
@@ -73,16 +41,21 @@ const CategoryManagePage = (props: Props) => {
     });
 
     if (result.isConfirmed) {
-      deleteCategory(id);
+      deleteBrand(id);
     }
   };
+
+  const location = useLocation();
+  const path = location.pathname.split("/");
+  const brandsPath = path[path.length - 1];
+  const navigate = useNavigate();
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
     const searchUrl = generateSearchParamsURL({
       name: inputValue,
-      sort,
+      sort: "",
       price_filter_gte: "",
       price_filter_lte: "",
       brand: "",
@@ -90,40 +63,22 @@ const CategoryManagePage = (props: Props) => {
       isCategory: false,
       categoryUrlValue: "",
       isAdmin: true,
-      adminUrlValue: categoriesPath,
+      adminUrlValue: brandsPath,
     });
     navigate(searchUrl);
   };
 
-  const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    dispatch(setSeletedSort(value));
-    const sortUrl = generateSearchParamsURL({
-      name,
-      sort: value,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand: "",
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: categoriesPath,
-    });
-    navigate(sortUrl);
-  };
+  useEffect(() => {
+    if (deleteBrandResult.isSuccess) {
+      toast.success(deleteBrandResult.data.message);
+    }
+  }, [deleteBrandResult.isSuccess]);
 
   useEffect(() => {
-    if (deleteCategoryResult.isSuccess) {
-      toast.success(deleteCategoryResult.data.message);
+    if (deleteBrandResult.isError) {
+      toast.error((deleteBrandResult.error as any).data.message);
     }
-  }, [deleteCategoryResult.isSuccess]);
-
-  useEffect(() => {
-    if (deleteCategoryResult.isError) {
-      toast.error((deleteCategoryResult.error as any).data.message);
-    }
-  }, [deleteCategoryResult.isError]);
+  }, [deleteBrandResult.isError]);
 
   return (
     <div className="relative overflow-hidden shadow-md tablet:rounded-lg">
@@ -136,16 +91,11 @@ const CategoryManagePage = (props: Props) => {
             <BiBookAdd size={20} />
             <span>Thêm mới</span>
           </Link>
-
-          <AdminSortFilter
-            handleChangeSort={handleChangeSort}
-            options={categoryOptionsSort}
-          />
         </div>
 
         <AdminSearch
           handleSearchSubmit={handleSearchSubmit}
-          placeHolder="Tìm kiếm danh mục"
+          placeHolder="Tìm kiếm thương hiệu"
         />
       </div>
 
@@ -155,9 +105,6 @@ const CategoryManagePage = (props: Props) => {
             <tr>
               <th scope="col" className="px-4 py-3">
                 #
-              </th>
-              <th scope="col" className="px-4 py-3">
-                Danh mục
               </th>
               <th scope="col" className="px-4 py-3">
                 Thương hiệu
@@ -190,9 +137,6 @@ const CategoryManagePage = (props: Props) => {
                     <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 mb-2.5" />
                   </td>
                   <td className="px-4 py-3">
-                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 mb-2.5" />
-                  </td>
-                  <td className="px-4 py-3">
                     <div className="flex items-center gap-x-2">
                       <button
                         type="button"
@@ -213,48 +157,40 @@ const CategoryManagePage = (props: Props) => {
               ))}
 
             {!isFetching &&
-              data?.categories.map((category, index) => (
+              data?.brands.map((brand, index) => (
                 <tr
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                  key={category._id}
+                  key={brand._id}
                 >
                   <td className="px-4 py-3 text-base font-semibold text-white">
                     {index + 1}
                   </td>
 
-                  <td className="px-4 py-3 text-white">{category.name}</td>
+                  <td className="px-4 py-3 text-white">{brand.title}</td>
+
                   <td className="px-4 py-3 text-white">
-                    {category.brand.map((item, index) => (
-                      <span key={index}>
-                        {index > 0 && " - "} {item}
-                      </span>
-                    ))}
-                  </td>
-                  <td className="px-4 py-3 text-white">
-                    {formatDate(category.createdAt)}
+                    {formatDate(brand.createdAt)}
                   </td>
 
                   <td className="px-4 py-3">
-                    {category.name !== "uncategorized" && (
-                      <div className="flex items-center gap-x-2">
-                        <Link to={`update/${category._id}`}>
-                          <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm  text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
-                            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                              Sửa
-                            </span>
-                          </button>
-                        </Link>
-
-                        <button
-                          className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
-                          onClick={() => handleDeleteCategory(category._id)}
-                        >
+                    <div className="flex items-center gap-x-2">
+                      <Link to={`update/${brand._id}`}>
+                        <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm  text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
                           <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                            Xóa
+                            Sửa
                           </span>
                         </button>
-                      </div>
-                    )}
+                      </Link>
+
+                      <button
+                        className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+                        onClick={() => handleDeleteBrand(brand._id)}
+                      >
+                        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                          Xóa
+                        </span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -264,13 +200,12 @@ const CategoryManagePage = (props: Props) => {
 
       <AdminPagination
         name={name}
-        sort={sort}
-        totalData={data?.categories.length as number}
-        totalCount={data?.totalCategory as number}
-        adminPath={categoriesPath}
+        totalData={data?.brands.length as number}
+        totalCount={data?.totalBrand as number}
+        adminPath={brandsPath}
       />
     </div>
   );
 };
 
-export default CategoryManagePage;
+export default BrandManagePage;

@@ -49,6 +49,8 @@ const Sidebar = (props: sideBarProps) => {
       dropdown: [
         { title: "Quản lý danh mục", path: "/admin/categories" },
         { title: "Thêm mới danh mục", path: "/admin/categories/create" },
+        { title: "Quản lý thương hiệu", path: "/admin/brands" },
+        { title: "Thêm mới thương hiệu", path: "/admin/brands/create" },
       ],
     },
     {

@@ -55,7 +55,7 @@ export const categoryApi = createApi({
         let queryString = "categories";
         const params = [];
 
-        if (name) params.push(`name=${name}`);
+        if (name) params.push(`name=${encodeURIComponent(name)}`);
         if (sort) params.push(`sort=${sort}`);
         if (limit) params.push(`limit=${limit}`);
         if (page) params.push(`page=${page}`);

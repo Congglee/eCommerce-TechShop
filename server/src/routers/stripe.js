@@ -2,6 +2,7 @@ import express from "express";
 import Stripe from "stripe";
 import dotenv from "dotenv";
 import Order from "../models/order.js";
+import { generateOrderCode } from "../utils/generateCode.js";
 
 dotenv.config();
 
@@ -135,7 +136,10 @@ const createOrderForStripe = async (customer, data) => {
     .filter((component) => component)
     .join(", ");
 
+  const orderCode = generateOrderCode();
+
   const newOrder = new Order({
+    orderCode,
     products: products,
     total: data.amount_total * 100,
     payment_status: "Đã thanh toán",

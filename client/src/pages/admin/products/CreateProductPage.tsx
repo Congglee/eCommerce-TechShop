@@ -129,8 +129,8 @@ const CreateProduct = (props: Props) => {
 
   return (
     <section className="bg-white dark:bg-gray-900">
-      <div className="py-8 px-4 mx-auto max-w-5xl lg:py-16">
-        <Link to="/admin/products">
+      <div className="py-8 px-4 mx-auto max-w-5xl laptop:py-16">
+        <Link to="/admin/products" className="inline-block">
           <button
             type="button"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 mr-2 mb-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 flex items-center justify-center gap-x-2"
@@ -212,7 +212,7 @@ const CreateProduct = (props: Props) => {
               />
 
               {preview.images.length > 0 && (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                <div className="grid grid-cols-2 ipad:grid-cols-3 gap-4 mt-4">
                   {preview.images.map(
                     (image: { name: string; path: string }, index) => (
                       <div key={index} className="relative">
@@ -267,7 +267,7 @@ const CreateProduct = (props: Props) => {
 
           <button
             type="submit"
-            className="inline-flex items-center justify-center gap-x-2 px-5 py-2 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 min-h-[45px] mobile:w-[250px]"
+            className="inline-flex items-center justify-center gap-x-2 px-5 py-2 mt-4 tablet:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 min-h-[45px] mobile:w-[250px]"
           >
             Thêm sản phẩm
             {createProductResult.isLoading && (

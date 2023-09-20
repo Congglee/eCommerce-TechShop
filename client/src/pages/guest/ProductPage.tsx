@@ -29,9 +29,12 @@ const { FiFilter } = icons;
 type Props = {};
 
 const ProductPage = (props: Props) => {
-  const { brandFilter, showProductFilterMobile } = useSelector(
-    (state: RootState) => state.product
-  );
+  const {
+    brandFilter,
+    showProductFilterMobile,
+    filterPriceGte,
+    filterPriceLte,
+  } = useSelector((state: RootState) => state.product);
   const [filterPriceUrl, setFilterPriceUrl] = useState("");
   const queryString: {
     name?: string;
@@ -57,7 +60,7 @@ const ProductPage = (props: Props) => {
     page: page || 1,
     limit: import.meta.env.VITE_APP_LIMIT_PRODUCT_PER_PAGE || 6,
   });
-  const { data: brandsData } = useGetBrandsQuery();
+  const { data: brandsData } = useGetBrandsQuery({});
 
   const highestPriceProduct = data?.products.reduce(
     (prevProduct, currentProduct) => {
@@ -101,7 +104,7 @@ const ProductPage = (props: Props) => {
       name,
       sort,
       price_filter_gte: numbericValue,
-      price_filter_lte,
+      price_filter_lte: filterPriceLte.replace(/[^\d]/g, ""),
       brand,
       page,
       isCategory: isCategoryUrl,
@@ -124,7 +127,7 @@ const ProductPage = (props: Props) => {
     const filterPriceLteUrl = generateSearchParamsURL({
       name,
       sort,
-      price_filter_gte,
+      price_filter_gte: filterPriceGte.replace(/[^\d]/g, ""),
       price_filter_lte: numbericValue,
       brand,
       page,

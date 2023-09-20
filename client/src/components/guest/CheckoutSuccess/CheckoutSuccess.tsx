@@ -35,7 +35,7 @@ const CheckoutSuccess = (props: checkoutSuccessProps) => {
               Mã đơn hàng
             </div>
             <div className="text-sm w-[70%] flex-shrink-0 pl-2 xs:w-full xs:pl-0 xs:flex-1 xs:break-all">
-              DW2{createOrderResult.data?.response._id}
+              {createOrderResult.data?.response.orderCode}
             </div>
           </div>
 

@@ -157,4 +157,57 @@ const blockStatus = [
   },
 ];
 
-export { hotCollections, newsItems, roles, blockStatus };
+const orderStatus = [
+  {
+    label: "Đang xử lý",
+    value: "Đang xử lý",
+  },
+  {
+    label: "Đã hủy",
+    value: "Đã hủy",
+  },
+  {
+    label: "Thành công",
+    value: "Thành công",
+  },
+];
+
+const orderDeliveryStatus = [
+  {
+    label: "Chưa xử lý",
+    value: "Chưa xử lý",
+  },
+  {
+    label: "Đang xử lý",
+    value: "Đang xử lý",
+  },
+  {
+    label: "Đang giao",
+    value: "Đang giao",
+  },
+  {
+    label: "Giao thành công",
+    value: "Giao thành công",
+  },
+];
+
+const orderPaymentStatus = [
+  {
+    label: "Chưa thanh toán",
+    value: "Chưa thanh toán",
+  },
+  {
+    label: "Đã thanh toán",
+    value: "Đã thanh toán",
+  },
+];
+
+export {
+  hotCollections,
+  newsItems,
+  roles,
+  blockStatus,
+  orderStatus,
+  orderDeliveryStatus,
+  orderPaymentStatus,
+};

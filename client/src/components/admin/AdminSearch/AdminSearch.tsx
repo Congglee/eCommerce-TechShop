@@ -2,10 +2,11 @@ import React from "react";
 
 interface adminSearchProps {
   handleSearchSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  placeHolder?: string;
 }
 
 const AdminSearch = (props: adminSearchProps) => {
-  const { handleSearchSubmit } = props;
+  const { handleSearchSubmit, placeHolder } = props;
 
   return (
     <div className="w-full ipad:w-1/2">
@@ -37,7 +38,7 @@ const AdminSearch = (props: adminSearchProps) => {
             id="table-search-users"
             name="searchInput"
             className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Tìm kiếm sản phẩm"
+            placeholder={placeHolder}
           />
         </div>
       </form>

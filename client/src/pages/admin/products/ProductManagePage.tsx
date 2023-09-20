@@ -48,6 +48,40 @@ const ProductManagePage = (props: Props) => {
   const navigate = useNavigate();
   const path = location.pathname.split("/");
   const productsPath = path[path.length - 1];
+  const productOptionsSort = [
+    {
+      label: "Theo tên, A - Z",
+      value: "name",
+    },
+    {
+      label: "Theo tên, Z - A",
+      value: "-name",
+    },
+    {
+      label: "Giá, tăng dần",
+      value: "price",
+    },
+    {
+      label: "Giá, giảm dần",
+      value: "-price",
+    },
+    {
+      label: "Đánh giá, tăng dần",
+      value: "totalRatings",
+    },
+    {
+      label: "Đánh giá, giảm dần",
+      value: "-totalRatings",
+    },
+    {
+      label: "Ngày cập nhật, xa nhất",
+      value: "updatedAt",
+    },
+    {
+      label: "Ngày cập nhật, gần nhất",
+      value: "-updatedAt",
+    },
+  ];
 
   const brandFilterRef = useRef<HTMLDivElement | null>(null);
   useOutsideClickHandler(brandFilterRef, () => {
@@ -61,7 +95,7 @@ const ProductManagePage = (props: Props) => {
     page: page || 1,
     limit: import.meta.env.VITE_APP_LIMIT_ADMIN_PER_PAGE || 8,
   });
-  const { data: brandsData } = useGetBrandsQuery();
+  const { data: brandsData } = useGetBrandsQuery({});
   const [deleteProduct, deleteProductResult] = useDeleteProductMutation();
 
   const handleDeleteProduct = async (id: string) => {
@@ -171,7 +205,10 @@ const ProductManagePage = (props: Props) => {
             <span>Thêm mới</span>
           </Link>
 
-          <AdminSortFilter handleChangeSort={handleChangeSort} />
+          <AdminSortFilter
+            handleChangeSort={handleChangeSort}
+            options={productOptionsSort}
+          />
 
           <AdminBrandFilter
             brandFilterRef={brandFilterRef}
@@ -183,7 +220,10 @@ const ProductManagePage = (props: Props) => {
           />
         </div>
 
-        <AdminSearch handleSearchSubmit={handleSearchSubmit} />
+        <AdminSearch
+          placeHolder="Tìm kiếm sản phẩm"
+          handleSearchSubmit={handleSearchSubmit}
+        />
       </div>
 
       <div className="overflow-x-auto">

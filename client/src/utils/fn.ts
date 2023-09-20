@@ -31,6 +31,7 @@ export const generateSearchParamsURL = ({
   categoryUrlValue = "",
   isAdmin = false,
   adminUrlValue = "",
+  orderStatus = "",
 }: {
   name?: string;
   sort?: string;
@@ -42,6 +43,7 @@ export const generateSearchParamsURL = ({
   categoryUrlValue?: string;
   isAdmin?: boolean;
   adminUrlValue?: string;
+  orderStatus?: string;
 }) => {
   let baseEndpoint;
   if (isAdmin) {
@@ -57,6 +59,7 @@ export const generateSearchParamsURL = ({
     price_filter_lte?: string;
     brand?: string;
     page?: string;
+    orderStatus?: string;
   } = {};
 
   if (name) queryParams.name = name;
@@ -65,6 +68,7 @@ export const generateSearchParamsURL = ({
   if (price_filter_lte) queryParams.price_filter_lte = price_filter_lte;
   if (brand) queryParams.brand = brand;
   if (page) queryParams.page = page;
+  if (orderStatus) queryParams.orderStatus = orderStatus;
 
   const queryParamsURL = `${baseEndpoint}?${queryString.stringify(
     queryParams

@@ -3,7 +3,8 @@ import { IUser } from "./user.interface";
 
 export interface IOrder {
   _id: string;
-  products: IProduct[];
+  orderCode: string;
+  products: { count: number; product: IProduct }[];
   status: string;
   total: number;
   payment: string;
@@ -13,4 +14,5 @@ export interface IOrder {
   date: string;
   delivery_status: string;
   payment_status: string;
+  updatedAt?: string;
 }
