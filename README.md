@@ -31,6 +31,7 @@ VITE_APP_API_URL =
 VITE_APP_LIMIT_PRODUCT_PER_PAGE =
 VITE_APP_LIMIT_ADMIN_USER_PER_PAGE =
 VITE_APP_SECRET_KEY =
+VITE_APP_MCETINY =
 ```
 
 ```bash
@@ -84,28 +85,17 @@ $ npm run dev (to start the server)
 
 ## Key Features
 
-- User registration, login and logout
-- Register an account with email verification
-- Forgot password, reset password with email verification
-- Authentication/Authorization using JWT Tokens
-- Add Product to Cart
-- Change products's quantity in the cart
-- Remove product from cart
-- Clear Cart
-- Search products by name
-- Filter products by category, price range (greater than or equal to and less than or equal to)
-- Product pagination
-- Sort products by price, name, rating
-- Comments and product reviews
-- Checkout and create new orders
-- Pay for orders via Stripe
-- Client-side order management
-- Update account information
-- 404 page not found
-- Admin: Update, Delete, Manage user (sort users by name, creation date, search users by name, email)
-- Form validation
-
-<br/>
+1. **User Management:** Register, log in, log out, and verify email addresses.
+2. **Password Management:** Reset and change passwords with email verification.
+3. **Authentication and Authorization:** Secure access with JWT Tokens.
+4. **Shopping Cart:** Add, modify, remove, and clear products in the cart.
+5. **Product Discovery:** Search, filter, paginate, and sort products by various criteria.
+6. **User Interaction:** Leave comments and reviews on products.
+7. **Checkout and Payment:** Create orders, pay with Stripe, and manage orders.
+8. **Account Management:** Update user information and avatars.
+9. **Admin Features:** Admin panel for managing users, categories, products, brands, orders, and viewing statistics and earnings.
+10. **Media Upload:** Upload photos for avatars and product images.
+11. **Form Validation:** Ensure data accuracy and completeness.
 
 ## Technologies used
 
@@ -113,13 +103,13 @@ This project was created using the following technologies.
 
 #### Frontend
 
-- [ReactJS](https://www.npmjs.com/package/react) - JavaScript library that is used for building user interfaces specifically for single-page applications
+- [ReactJS](https://react.dev/) - JavaScript library that is used for building user interfaces specifically for single-page applications
 - [Redux Toolkit](https://redux-toolkit.js.org/) - Efficient state management and updates
-- [react-router-dom](https://www.npmjs.com/package/react-router-dom) - Handling dynamic routing and component rendering
+- [react-router-dom](https://reactrouter.com/en/main) - Handling dynamic routing and component rendering
 - [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) - A part of Redux Toolkit, simplifying API calls and data fetching
 - [Tailwindcss](https://tailwindcss.com/) - For User Interface
 - [React Redux](https://react-redux.js.org/) - Manage application state efficiently and provide a more structured mechanism for managing data
-- [React Toastify](https://www.npmjs.com/package/react-toastify) - To display interactive and responsive notifications (toasts) in web applications
+- [React Toastify](https://fkhadra.github.io/react-toastify/introduction/) - To display interactive and responsive notifications (toasts) in web applications
 - [react-loader-spinner](https://mhnpd.github.io/react-loader-spinner/docs/intro) - Cool spinners for ReactJS application
 - [sweetalert2](https://sweetalert2.github.io/) - Creating attractive pop-up notifications and modals
 - [React Slick](https://react-slick.neostack.com/) - Designing responsive image sliders or carousels
@@ -130,16 +120,20 @@ This project was created using the following technologies.
 - [react-hook-form](https://www.react-hook-form.com/) - Efficiently manage and validate forms in React applications
 - [use-react-router-breadcrumbs](https://github.com/icd2k3/use-react-router-breadcrumbs#readme) - Generate breadcrumb navigation for React Router routes
 - [flowbite](https://flowbite.com/) - Streamline web development with a UI library for building responsive interfaces
+- [query-string](https://github.com/sindresorhus/query-string) - Parsing and formatting URL query strings in JavaScript
+- [recharts](https://recharts.org/en-US/guide/getting-started) - Recharts is a React-based charting library for creating interactive data visualizations
+- [dompurify](https://github.com/cure53/DOMPurify) - Sanitize and clean HTML content to prevent security vulnerabilities, especially in user-generated content
+- [moment](https://momentjs.com/) - Parsing, formatting, and manipulating dates and times in JavaScript, making it easier to work with date-related operations
 
 #### Backend
 
 - [Node js](https://nodejs.org/en/) - A runtime environment to help build fast server applications using JS
-- [Express js](https://www.npmjs.com/package/express) - The server for handling and routing HTTP requests
+- [Express js](https://expressjs.com/) - The server for handling and routing HTTP requests
 - [Mongoose](https://mongoosejs.com/) - For modeling and mapping MongoDB data to JavaScript
-- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - Used for authentication by generating and verifying JSON Web Tokens
-- [cookie-parser](https://www.npmjs.com/package/cookie-parser) - Middleware for managing cookies in Node.js web applications
-- [cors](https://www.npmjs.com/package/cors) - Middleware providing Cross-Origin Resource Sharing (CORS) support
-- [Dotenv](https://www.npmjs.com/package/dotenv) - Zero Dependency module that loads environment variables
+- [jsonwebtoken](https://jwt.io/) - Used for authentication by generating and verifying JSON Web Tokens
+- [cookie-parser](https://github.com/expressjs/cookie-parser) - Middleware for managing cookies in Node.js web applications
+- [cors](https://github.com/expressjs/cors) - Middleware providing Cross-Origin Resource Sharing (CORS) support
+- [Dotenv](https://github.com/motdotla/dotenv) - Zero Dependency module that loads environment variables
 - [nodemon](https://nodemon.io/) - Development utility for Node.js applications, automating server restarts during development
 - [cloudinary](https://cloudinary.com/documentation) - Cloud-based media management platform for storing, managing, and delivering images and videos
 - [bcrypt](https://github.com/kelektiv/node.bcrypt.js) - Library for hashing passwords securely
@@ -152,6 +146,7 @@ This project was created using the following technologies.
 - [joi](https://github.com/hapijs/joi) - Library for data validation in JavaScript applications
 - [nodemailer](https://nodemailer.com/) - A module for Node.js applications to allow easy email sending.
 - [uniqid](https://github.com/adamhalasz/uniqid/) - Generate unique IDs for elements in JavaScript applications
+- [moment](https://momentjs.com/) - Parsing, formatting, and manipulating dates and times in JavaScript, making it easier to work with date-related operations
 - [@babel/cli](https://babeljs.io/docs/babel-cli) - Command-line interface for Babel, a JavaScript compiler
 - [@babel/core](https://babel.dev/docs/babel-core) - Core of Babel, responsible for transforming code
 - [@babel/preset-env](https://babeljs.io/docs/babel-preset-env) - Babel preset for transforming modern JavaScript to be compatible with target environments
@@ -168,91 +163,161 @@ This project was created using the following technologies.
 
 ## Features in Development
 
-- Handle clicking outside the side menu to hide the side menu
 - Create cart api
-- Admin Side for manage product, category, account, order, ...
+- Improve website performance
+- Prevent users spam submit sending API requests
 
 > - fix bugs of old features
 
 ## Screenshots
 
-![homepage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692911406/ecommerce-techshop/homepage-techshop_m4gidc.png)
+#### Home Page
+
+![homepage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328212/extends/homepage_ahh31x.png)
+
+![homepagewithprofile](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328206/extends/homepagewithprofile_o7wrf6.png)
 
 ---
 
-![homepage2](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912643/ecommerce-techshop/homepage2-techshop_cizdud.png)
+#### Products Page
+
+![productspage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328209/extends/productspage_p8oazz.png)
+
+![productspage2](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328209/extends/productspage2_puwupt.png)
 
 ---
 
-![productspage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912643/ecommerce-techshop/productpage-techshop_holmi2.png)
+#### Product Detail Page
+
+![productdetailpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328208/extends/productdetailpage_zlny0s.png)
+
+![productdetailcomment](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328150/extends/productdetailcomment_w7cqrz.png)
 
 ---
 
-![productdetailpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912643/ecommerce-techshop/productdetailpage-techshop_qq8r8z.png)
+#### Login Page
+
+![loginpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328208/extends/loginpage_rl61wx.png)
 
 ---
 
-![loginpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912642/ecommerce-techshop/loginpage-techshop_pjchw9.png)
+#### Register Page
+
+![registerpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328207/extends/registerpage_wcydqg.png)
 
 ---
 
-![registerpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912642/ecommerce-techshop/registerpage-techshop_lskwsu.png)
+#### Cart Page
+
+![cartpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328207/extends/cartpage_z8luza.png)
 
 ---
 
-![cartpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912643/ecommerce-techshop/cartpage-techshop_o75shb.png)
+#### Checkout Info Page
+
+![checkoutinfopage_aijrhn](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328738/extends/DIGITAL_WORLD_2_22.09.2023_03_37_yhhlgb.png)
 
 ---
 
-![checkoutinfopage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912641/ecommerce-techshop/checkoutinfopage-techshop_se7rke.png)
+#### Checkout Payment Page
+
+![checkoutpaymentpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328771/extends/DIGITAL_WORLD_2_22.09.2023_03_39_xfe8ba.png)
 
 ---
 
-![checkoutpaymentpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912641/ecommerce-techshop/checkoutpaymentpage-techshop_nlhyht.png)
+#### Checkout Stripe Payment Page
+
+![checkoutstripepaymentpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328205/extends/checkoutstripepaymentpage_qrtajm.png)
 
 ---
 
-![checkoutpaymentstripepage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912641/ecommerce-techshop/checkoutstripe-techshop_iptbxq.png)
+#### Checkout Success Page
+
+![checkoutsuccesspage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328204/extends/checkoutsuccesspage_c8fg5l.png)
 
 ---
 
-![checkoutsuccesspage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912644/ecommerce-techshop/checkoutsuccesspage-techshop_cyqpls.png)
+#### Profile Page
+
+![profilepage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328999/extends/DIGITAL_WORLD_2_22.09.2023_03_42_qoqdw0.png)
 
 ---
 
-![profilepage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912642/ecommerce-techshop/profilepage-techshop_mzsbjb.png)
+#### Profile Order Detail Page
+
+![profileorderdetailpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695329080/extends/DIGITAL_WORLD_2_22.09.2023_03_44_nzwzrr.png)
 
 ---
 
-![profileditpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1692912641/ecommerce-techshop/profileeditpage-techshop_vbya4e.png)
+#### Profile Edit Page
+
+![profileeditpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695329168/extends/DIGITAL_WORLD_2_22.09.2023_03_45_ibxbqs.png)
 
 ---
 
-![profilorderdetailpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1694484191/ecommerce-techshop/DIGITAL_WORLD_2_12.09.2023_09_01_ihk4yz.png)
+#### Admin DashBoard Page
+
+![admindashboardpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328202/extends/admindashboardpage_rkcgue.png)
 
 ---
 
-![dropdowmenu](https://res.cloudinary.com/di3eto0bg/image/upload/v1694484188/ecommerce-techshop/dropmenu2-update_grglr4.jpg)
+#### Admin Category Manage Page
+
+![admincategorymanageppage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328201/extends/admincategorymanageppage_zs5x0t.png)
 
 ---
 
-![productpage2](https://res.cloudinary.com/di3eto0bg/image/upload/v1694484188/ecommerce-techshop/DIGITAL_WORLD_2_12.09.2023_08_59_h7jpum.png)
+#### Admin Create Category Page
+
+![admincreatecategorypage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328200/extends/admincreatecategorypage_r1sw9x.png)
 
 ---
 
-![productpage3](https://res.cloudinary.com/di3eto0bg/image/upload/v1694484189/ecommerce-techshop/DIGITAL_WORLD_2_12.09.2023_08_59_1_eg7rhs.png)
+#### Admin Update Category Page
+
+![adminupdatecategorypage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/adminupdatecategorypage_jvats7.png)
 
 ---
 
-![dropdowmenu2](https://res.cloudinary.com/di3eto0bg/image/upload/v1692914917/ecommerce-techshop/dropdowmenu2-techshop_esqxrw.jpg)
+#### Admin Product Manage Page
+
+![adminproductmanagepage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/adminproductmanagepage_intx9m.png)
 
 ---
 
-![comment](https://res.cloudinary.com/di3eto0bg/image/upload/v1692914917/ecommerce-techshop/comment-techshop_yu74o2.png)
+#### Admin Create Product Page
+
+![admincreateproductpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/admincreateproductpage_e8r3vs.png)
 
 ---
 
-![rating](https://res.cloudinary.com/di3eto0bg/image/upload/v1692914919/ecommerce-techshop/rating-techshop_exlnfq.png)
+#### Admin Update Product Page
+
+![adminupdateproductpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/adminupdateproductpage_pnlc2z.png)
+
+---
+
+#### Admin User Manage Page
+
+![adminusermanagapage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/adminusermanagapage_astj6g.png)
+
+---
+
+#### Admin Update User Page
+
+![adminupdateuserpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/adminupdateuserpage_cwivuh.png)
+
+---
+
+#### Admin Order Manage Page
+
+![adminordermanagepage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328198/extends/adminordermanagepage_xs8gxe.png)
+
+---
+
+#### Admin Update Order Page
+
+![adminupdateorderpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328151/extends/adminupdateorderpage_x29x4u.png)
 
 ## Author
 
