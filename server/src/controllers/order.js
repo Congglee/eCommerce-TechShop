@@ -1,5 +1,5 @@
+import moment from "moment";
 import Order from "../models/order.js";
-import User from "../models/user.js";
 import { generateOrderCode } from "../utils/generateCode.js";
 
 const createOrder = async (req, res) => {
@@ -215,6 +215,115 @@ const getOrders = async (req, res) => {
   }
 };
 
+const getOrdersStat = async (req, res) => {
+  try {
+    const previousMonth = moment()
+      .month(moment().month() - 1)
+      .set("date", 7)
+      .format("YYYY-MM-DD HH:mm:sss");
+
+    const orders = await Order.aggregate([
+      {
+        $match: { createdAt: { $gte: new Date(previousMonth) } },
+      },
+      {
+        $project: {
+          month: { $month: "$createdAt" },
+        },
+      },
+      {
+        $group: {
+          _id: "$month",
+          total: { $sum: 1 },
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      orders,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getOrdersIncomeStat = async (req, res) => {
+  try {
+    const previousMonth = moment()
+      .month(moment().month() - 1)
+      .set("date", 7)
+      .format("YYYY-MM-DD HH:mm:sss");
+
+    const ordersIncome = await Order.aggregate([
+      {
+        $match: { createdAt: { $gte: new Date(previousMonth) } },
+      },
+      {
+        $project: {
+          month: { $month: "$createdAt" },
+          sales: "$total",
+        },
+      },
+      {
+        $group: {
+          _id: "$month",
+          total: { $sum: "$sales" },
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      ordersIncome,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const get1WeekOrderSales = async (req, res) => {
+  try {
+    const last7Days = moment()
+      .day(moment().day() - 7)
+      .format("YYYY-MM-DD HH:mm:sss");
+
+    const weekSalesOrders = await Order.aggregate([
+      {
+        $match: { createdAt: { $gte: new Date(last7Days) } },
+      },
+      {
+        $project: {
+          day: { $dayOfWeek: "$createdAt" },
+          sales: "$total",
+        },
+      },
+      {
+        $group: {
+          _id: "$day",
+          total: { $sum: "$sales" },
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      weekSalesOrders,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export {
   createOrder,
   updateOrderByAdmin,
@@ -222,4 +331,7 @@ export {
   getUserOrder,
   getOrders,
   getOrder,
+  getOrdersStat,
+  getOrdersIncomeStat,
+  get1WeekOrderSales,
 };

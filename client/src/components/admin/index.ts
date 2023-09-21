@@ -9,3 +9,4 @@ export { default as AdminSearch } from "./AdminSearch/AdminSearch";
 export { default as UserLoadingRow } from "./User/UserLoadingRow";
 export { default as ProductLoadingRow } from "./Product/ProductLoadingRow";
 export { default as MarkdownEditor } from "./MarkdownEditor/MarkdownEditor";
+export { default as Chart } from "./Chart/Chart";

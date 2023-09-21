@@ -20,6 +20,7 @@ import {
   AiOutlineUser,
   AiFillSetting,
   AiOutlineDashboard,
+  AiOutlineAreaChart,
 } from "react-icons/ai";
 import { LiaBarsSolid } from "react-icons/lia";
 import {
@@ -31,6 +32,7 @@ import {
   FaTty,
   FaReply,
   FaCcStripe,
+  FaLaptop,
 } from "react-icons/fa";
 import {
   BsFillHeartFill,
@@ -45,6 +47,8 @@ import { FiChevronDown, FiChevronUp, FiFilter } from "react-icons/fi";
 import { PiCircleFill, PiListBold, PiShoppingCartFill } from "react-icons/pi";
 import { CgWebsite } from "react-icons/cg";
 import { RiDeleteBin2Fill } from "react-icons/ri";
+import { TfiStatsDown, TfiStatsUp } from "react-icons/tfi";
+import { FaMoneyBill } from "react-icons/fa";
 
 const icons = {
   BiChevronRight,
@@ -95,6 +99,11 @@ const icons = {
   PiCircleFill,
   BiBookAdd,
   RiDeleteBin2Fill,
+  TfiStatsUp,
+  TfiStatsDown,
+  FaMoneyBill,
+  AiOutlineAreaChart,
+  FaLaptop,
 };
 
 export default icons;

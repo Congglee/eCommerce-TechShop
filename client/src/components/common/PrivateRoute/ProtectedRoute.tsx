@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }: { children: any }) => {
   ) : (
     <LoadingToRedirect
       title="Vui lòng đăng nhập để truy cập trang này"
-      text="Chuyền đến trang đăng nhập trong"
+      text="Chuyển đến trang đăng nhập trong"
     />
   );
 };

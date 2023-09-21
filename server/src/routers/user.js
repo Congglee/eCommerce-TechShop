@@ -11,12 +11,12 @@ import {
   updateUserByAdmin,
   getCurrentUser,
   removeProductInCart,
-  updateCarts,
   updateUserOrder,
   refreshAccessToken,
   forgotPassword,
   resetPassword,
   finalRegister,
+  getUsersStat,
 } from "../controllers/user.js";
 import { isAdminRole, verifyAccessToken } from "../middlewares/verifyToken.js";
 import uploadCloud from "../config/cloudinary.config.js";
@@ -32,6 +32,7 @@ router.get("/users", [verifyAccessToken, isAdminRole], getUsers);
 router.get("/users/id/:id", [verifyAccessToken, isAdminRole], getUser);
 router.get("/users/currentUser", verifyAccessToken, getCurrentUser);
 router.get("/users/logOut", logOut);
+router.get("/users/stats", [verifyAccessToken, isAdminRole], getUsersStat);
 
 router.put("/users/finalRegister/:token", finalRegister);
 router.put(
@@ -48,7 +49,6 @@ router.put(
   updateUserByAdmin
 );
 router.put("/users/updateCart", [verifyAccessToken], updateCart);
-router.put("/users/updateCarts", [verifyAccessToken], updateCarts);
 
 router.delete(
   "/users/removeCart/:id",

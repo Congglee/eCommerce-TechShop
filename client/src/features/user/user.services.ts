@@ -27,6 +27,11 @@ interface IResetPasswordResponse {
   message: string;
 }
 
+interface IGetUsersStatResponse {
+  success: boolean;
+  users: { _id: number; total: number }[];
+}
+
 interface IGetUsersResponse {
   success: boolean;
   totalPages: number;
@@ -108,6 +113,23 @@ export const userApi = createApi({
       query: (id) => `/users/id/${id}`,
     }),
 
+    getUsersStats: build.query<IGetUsersStatResponse, void>({
+      query: () => `/users/stats`,
+      providesTags(result) {
+        if (result) {
+          const final = [
+            ...result.users.map(({ _id }) => ({
+              type: "Users" as const,
+              id: _id,
+            })),
+            { type: "Users" as const, id: "LIST" },
+          ];
+          return final;
+        }
+        return [{ type: "Users" as const, id: "LIST" }];
+      },
+    }),
+
     forgotPassword: build.mutation<IForgotPasswordResponse, { email: string }>({
       query: (body) => {
         return {
@@ -177,4 +199,5 @@ export const {
   useGetUsersQuery,
   useUpdateUserByAdminMutation,
   useDeleteUserMutation,
+  useGetUsersStatsQuery,
 } = userApi;

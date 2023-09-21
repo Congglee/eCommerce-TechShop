@@ -14,6 +14,7 @@ import jwt from "jsonwebtoken";
 import { sendMail } from "../utils/sendMail.js";
 import crypto from "crypto";
 import makeToken from "uniqid";
+import moment from "moment";
 
 const register = async (req, res) => {
   try {
@@ -717,39 +718,36 @@ const removeProductInCart = async (req, res) => {
   }
 };
 
-const updateCarts = async (req, res) => {
+const getUsersStat = async (req, res) => {
   try {
-    const { _id } = req.user;
-    const { cart } = req.body;
+    const previousMonth = moment()
+      .month(moment().month() - 1)
+      .set("date", 7)
+      .format("YYYY-MM-DD HH:mm:sss");
 
-    const user = await User.findById(_id).select("cart");
-
-    for (const submittedCartItem of cart) {
-      const existingCartItemIndex = user.cart.findIndex(
-        (item) => item.product.toString() === submittedCartItem.product
-      );
-
-      if (existingCartItemIndex !== -1) {
-        if (submittedCartItem.quantity === 1) {
-          user.cart[existingCartItemIndex].quantity += 1;
-        } else {
-          user.cart[existingCartItemIndex].quantity +=
-            submittedCartItem.quantity;
-        }
-      } else {
-        user.cart.push(submittedCartItem);
-      }
-    }
-
-    const updatedUserCart = await user.save();
+    const users = await User.aggregate([
+      {
+        $match: { createdAt: { $gte: new Date(previousMonth) } },
+      },
+      {
+        $project: {
+          month: { $month: "$createdAt" },
+        },
+      },
+      {
+        $group: {
+          _id: "$month",
+          total: { $sum: 1 },
+        },
+      },
+    ]);
 
     return res.status(200).json({
       success: true,
-      message: "Giỏ hàng được cập nhật thành công",
-      updatedUserCart,
+      users,
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -772,6 +770,6 @@ export {
   deleteUser,
   updateCart,
   removeProductInCart,
-  updateCarts,
   updateUserOrder,
+  getUsersStat,
 };

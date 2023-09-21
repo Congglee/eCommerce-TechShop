@@ -30,6 +30,21 @@ interface IGetOrdersResponse {
   orders: IOrder[];
 }
 
+interface IGetOrdersStatResponse {
+  success: boolean;
+  orders: { _id: number; total: number }[];
+}
+
+interface IGetOrdersIncomeResponse {
+  success: boolean;
+  ordersIncome: { _id: number; total: number }[];
+}
+
+interface IGetOneWeekSalesResponse {
+  success: boolean;
+  weekSalesOrders: { _id: number; total: number }[];
+}
+
 export const orderApi = createApi({
   reducerPath: "orderApi",
   tagTypes: ["Orders", "AdminOrders"],
@@ -141,7 +156,21 @@ export const orderApi = createApi({
     }),
 
     getOrderDetail: build.query<IGetOrderDetailResponse, string>({
-      query: (id) => `orders/user/${id}`,
+      query: (id) => `/orders/user/${id}`,
+    }),
+
+    getOrdersStats: build.query<IGetOrdersStatResponse, void>({
+      query: () => "/orders/stats",
+      providesTags(result) {
+        return [{ type: "Orders" as const, id: "LIST" }];
+      },
+    }),
+
+    getOrdersIncome: build.query<IGetOrdersIncomeResponse, void>({
+      query: () => "/orders/income/stats",
+      providesTags(result) {
+        return [{ type: "Orders" as const, id: "LIST" }];
+      },
     }),
 
     updateStatusOrderClient: build.mutation<
@@ -157,6 +186,13 @@ export const orderApi = createApi({
       },
       invalidatesTags: (result, error, data) =>
         error ? [] : [{ type: "Orders", id: data.id }],
+    }),
+
+    getOneWeekSale: build.query<IGetOneWeekSalesResponse, void>({
+      query: () => "/orders/weeksales",
+      providesTags(result) {
+        return [{ type: "Orders" as const, id: "LIST" }];
+      },
     }),
 
     updateOrderAdmin: build.mutation<
@@ -184,4 +220,7 @@ export const {
   useCreateCheckoutSessionMutation,
   useGetOrdersByAdminQuery,
   useUpdateOrderAdminMutation,
+  useGetOrdersStatsQuery,
+  useGetOrdersIncomeQuery,
+  useGetOneWeekSaleQuery,
 } = orderApi;

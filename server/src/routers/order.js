@@ -1,8 +1,11 @@
 import express from "express";
 import {
   createOrder,
+  get1WeekOrderSales,
   getOrder,
   getOrders,
+  getOrdersIncomeStat,
+  getOrdersStat,
   getUserOrder,
   updateOrderByAdmin,
   updateStatusByClient,
@@ -10,6 +13,21 @@ import {
 import { isAdminRole, verifyAccessToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
+
+router.get("/orders/user", [verifyAccessToken], getUserOrder);
+router.get("/orders/user/:id", [verifyAccessToken], getOrder);
+router.get("/orders/admin", [verifyAccessToken, isAdminRole], getOrders);
+router.get("/orders/stats", [verifyAccessToken, isAdminRole], getOrdersStat);
+router.get(
+  "/orders/income/stats",
+  [verifyAccessToken, isAdminRole],
+  getOrdersIncomeStat
+);
+router.get(
+  "/orders/weeksales",
+  [verifyAccessToken, isAdminRole],
+  get1WeekOrderSales
+);
 
 router.post("/orders", [verifyAccessToken], createOrder);
 router.put(
@@ -22,9 +40,5 @@ router.put(
   [verifyAccessToken],
   updateStatusByClient
 );
-
-router.get("/orders/user", [verifyAccessToken], getUserOrder);
-router.get("/orders/user/:id", [verifyAccessToken], getOrder);
-router.get("/orders/admin", [verifyAccessToken, isAdminRole], getOrders);
 
 export default router;

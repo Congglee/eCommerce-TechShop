@@ -12,6 +12,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import { isEntityError } from "../../../utils/helper";
 import DOMPurify from "dompurify";
+import { OvalSpinner } from "../../common";
 
 const { AiTwotoneStar } = icons;
 
@@ -74,7 +75,7 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
   useEffect(() => {
     if (ratingProductResult.isSuccess) {
       refetchProduct();
-      toast.success("Đánh giá, bình luận sản phẩm thành công");
+      toast.success("Đánh giá và bình luận sản phẩm thành công");
     }
   }, [ratingProductResult.isSuccess]);
 
@@ -259,8 +260,13 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
                   </div>
 
                   <div className="mb-[15px] flex flex-col items-end gap-y-[2px]">
-                    <button className="bg-main-200 text-white text-sm py-[11px] px-[15px] uppercase hover:bg-main-600 hover:opacity-90 transition-all duration-150 ease-out">
-                      Gửi đánh giá
+                    <button className="bg-main-200 text-white text-sm py-[11px] px-[15px] uppercase hover:bg-main-600 hover:opacity-90 transition-all duration-150 ease-out min-h-[50px]">
+                      <div className="flex items-center justify-center gap-x-2">
+                        <span> Cập nhật</span>
+                        {ratingProductResult.isLoading && (
+                          <OvalSpinner width={20} height={20} />
+                        )}
+                      </div>
                     </button>
                   </div>
                 </form>
