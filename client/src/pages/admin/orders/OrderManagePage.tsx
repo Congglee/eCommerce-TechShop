@@ -16,9 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSeletedSort } from "../../../features/product/product.slice";
 
-type Props = {};
-
-const OrderManagePage = (props: Props) => {
+const OrderManagePage = () => {
   const queryString: {
     name?: string;
     sort?: string;

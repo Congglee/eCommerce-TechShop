@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { formatCurrency } from "../../utils/fn";
 import { Link } from "react-router-dom";
 import {
@@ -6,23 +6,18 @@ import {
   useUpdateStatusOrderClientMutation,
 } from "../../features/order/order.services";
 import { IOrder } from "../../interfaces/order.interface";
-import { useGetCurrentUserQuery } from "../../features/auth/auth.service";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrderDetail } from "../../features/order/order.slice";
 import { RootState } from "../../store/store";
 import Swal from "sweetalert2";
 
-type Props = {};
-
-const ProfilePage = (props: Props) => {
+const ProfilePage = () => {
   const {
     data: userOrders,
     refetch,
     isFetching: isFetchingUserOrder,
   } = useGetUserOrderQuery();
-  const { token } = useSelector((state: RootState) => state.auth);
-  const { data: userProfile, isFetching: isFetchingCurrentUser } =
-    useGetCurrentUserQuery();
+  const { token, userData } = useSelector((state: RootState) => state.auth);
   const [updateStatusOrderClient, updateStatusOrderClientResult] =
     useUpdateStatusOrderClientMutation();
   const dispatch = useDispatch();
@@ -157,25 +152,10 @@ const ProfilePage = (props: Props) => {
           CHI TIẾT TÀI KHOẢN
         </div>
         <div className="flex flex-col gap-y-1 text-sm text-main-500 mb-2 px-[15px]">
-          {isFetchingCurrentUser && (
-            <div role="status" className="max-w-sm animate-pulse">
-              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5" />
-              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5" />
-              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5" />
-              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5" />
-              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]" />
-              <span className="sr-only">Loading...</span>
-            </div>
-          )}
-
-          {!isFetchingCurrentUser && (
-            <>
-              <span>{userProfile?.userData.name}</span>
-              <span>{userProfile?.userData.email}</span>
-              <span>{userProfile?.userData.address}</span>
-              <span>{userProfile?.userData.mobile}</span>
-            </>
-          )}
+          <span>{userData?.name}</span>
+          <span>{userData?.email}</span>
+          <span>{userData?.address}</span>
+          <span>{userData?.mobile}</span>
         </div>
 
         <div className="px-[15px] text-main-200 text-sm">

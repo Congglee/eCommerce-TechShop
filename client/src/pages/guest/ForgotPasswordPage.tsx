@@ -14,9 +14,7 @@ type FormErrors = {
   [key in keyof initialState]?: string;
 };
 
-type Props = {};
-
-const ForgotPasswordPage = (props: Props) => {
+const ForgotPasswordPage = () => {
   const initialState: initialState = {
     email: "",
   };

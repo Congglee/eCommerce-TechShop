@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetUsersStatsQuery } from "../../features/user/user.services";
 import icons from "../../utils/icons";
 import {
@@ -18,9 +18,7 @@ const {
   FaLaptop,
 } = icons;
 
-type Props = {};
-
-const Dashboard = (props: Props) => {
+const Dashboard = () => {
   const { data: usersStatsData } = useGetUsersStatsQuery();
   const { data: productsData } = useGetProductsQuery({});
   const [sortedUsers, setSortedUsers] = useState<

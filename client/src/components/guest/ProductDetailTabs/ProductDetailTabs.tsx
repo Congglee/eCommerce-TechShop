@@ -6,7 +6,6 @@ import { RootState } from "../../../store/store";
 import { Link } from "react-router-dom";
 import { DeliveryTab, PaymentTab, StarRating, WarrantyTab } from "..";
 import { IUser } from "../../../interfaces/user.interface";
-import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
 import { useRatingProductMutation } from "../../../features/product/product.services";
 import moment from "moment";
 import { toast } from "react-toastify";
@@ -24,8 +23,9 @@ interface productDetailTabsProps {
 
 const ProductDetailTabs = (props: productDetailTabsProps) => {
   const { product, refetchProduct, hasHtmlTags } = props;
-  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
-  const { data } = useGetCurrentUserQuery();
+  const { isLoggedIn, userData } = useSelector(
+    (state: RootState) => state.auth
+  );
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [activeTab, setActiveTab] = useState("description");
@@ -34,7 +34,7 @@ const ProductDetailTabs = (props: productDetailTabsProps) => {
   const [ratingProduct, ratingProductResult] = useRatingProductMutation();
 
   const alreadyRating = product?.ratings?.find(
-    (item) => (item.postedBy as IUser)?._id === data?.userData?._id
+    (item) => (item.postedBy as IUser)?._id === userData?._id
   );
 
   const currentDate = moment();

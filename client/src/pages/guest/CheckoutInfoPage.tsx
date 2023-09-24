@@ -20,9 +20,7 @@ type FormErrors = {
   [key in keyof initialState]?: string;
 };
 
-type Props = {};
-
-const CheckoutInfoPage = (props: Props) => {
+const CheckoutInfoPage = () => {
   const { data } = useGetCurrentUserQuery();
   const initalState: initialState = {
     address: "",

@@ -1,11 +1,9 @@
-import React from "react";
 import icons from "../../../utils/icons";
 
 const {
   BiLogoFacebook,
   BiLogoGoogle,
   BiLogoInstagramAlt,
-  BiLogoLinkedin,
   BiLogoPinterest,
   BiLogoTwitter,
   BsFillTelephoneFill,
@@ -13,9 +11,7 @@ const {
   GrMail,
 } = icons;
 
-type Props = {};
-
-const UserFooter = (props: Props) => {
+const UserFooter = () => {
   return (
     <div>
       <div className="bg-main-200">

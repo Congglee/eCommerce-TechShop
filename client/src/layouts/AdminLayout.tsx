@@ -9,9 +9,7 @@ import { useRef } from "react";
 import useOutsideClickHandler from "../hooks/useOutsiteClickHandle";
 import { showUpdateUserDrawer } from "../features/user/user.slice";
 
-type Props = {};
-
-const AdminLayout = (props: Props) => {
+const AdminLayout = () => {
   const { isShowUpdateUserDrawer } = useSelector(
     (state: RootState) => state.user
   );

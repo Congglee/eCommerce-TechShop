@@ -4,9 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useGetOrderDetailQuery } from "../features/order/order.services";
 
-type Props = {};
-
-const ProfileLayout = (props: Props) => {
+const ProfileLayout = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { id } = useParams();
   const { data } = useGetOrderDetailQuery(id || "");

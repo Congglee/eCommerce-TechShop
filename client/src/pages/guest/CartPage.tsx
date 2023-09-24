@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Link } from "react-router-dom";
@@ -15,9 +15,7 @@ import { toast } from "react-toastify";
 import CartItem from "../../components/guest/CartItem/CartItem";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 
-type Props = {};
-
-const CartPage = (props: Props) => {
+const CartPage = () => {
   const { cartProducts, totalAmount } = useSelector(
     (state: RootState) => state.cart
   );
@@ -67,15 +65,6 @@ const CartPage = (props: Props) => {
               </div>
             </div>
 
-            {/* {isLoggedIn && data?.userData.cart.length === 0 && (
-              <div className="py-[15px] px-5 border-b border-main-700 flex flex-col gap-y-1 text-main-500 text-lg font-medium">
-                <span>Giỏ hàng của bạn đang trống</span>
-                <span className="hover:text-main-200">
-                  <Link to="/products">Quay về cửa hàng</Link>
-                </span>
-              </div>
-            )} */}
-
             {cartProducts.length === 0 && (
               <div className="py-[15px] px-5 border-b border-main-700 flex flex-col gap-y-1 text-main-500 text-lg font-medium">
                 <span>Giỏ hàng của bạn đang trống</span>
@@ -95,20 +84,6 @@ const CartPage = (props: Props) => {
                   handleRemoveFromCart={handleRemoveFromCart}
                 />
               ))}
-
-            {/* {isLoggedIn &&
-              (data?.userData.cart.length as number) > 0 &&
-              data?.userData.cart.map((cartItem: any) => (
-                <CartItem
-                  key={cartItem.product._id}
-                  cartItem={cartItem.product}
-                  quantity={cartItem.quantity}
-                  isLoggedIn={isLoggedIn}
-                  handleDecreaseCart={handleDecreaseCart}
-                  handleIncreaseCart={handleIncreaseCart}
-                  handleRemoveFromCart={handleRemoveFromCart}
-                />
-              ))} */}
 
             <div className="py-[15px] px-5 border-b border-main-700 flex justify-end">
               <div>

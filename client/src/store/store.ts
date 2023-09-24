@@ -34,7 +34,7 @@ const commonConfig = {
 
 const userConfig = {
   ...commonConfig,
-  whitelist: ["isLoggedIn", "token", "cartProducts", "brandFilter"],
+  whitelist: ["isLoggedIn", "token", "userData", "cartProducts", "brandFilter"],
 };
 
 const persistedAuthReducer = persistReducer<IAuthState>(

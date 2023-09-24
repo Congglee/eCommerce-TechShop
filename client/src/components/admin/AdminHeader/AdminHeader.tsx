@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import logo from "../../../assets/logo_digital_new_250x.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleShowSidebar } from "../../../features/app.slice";
 import { RootState } from "../../../store/store";
-import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
 import { logOut } from "../../../features/auth/auth.slice";
 import useOutsideClickHandler from "../../../hooks/useOutsiteClickHandle";
 
@@ -15,13 +14,11 @@ interface adminHeader {
 
 const AdminHeader = (props: adminHeader) => {
   const { toggleButtonRef, currentUserRef } = props;
-
   const [isShowCurrentUser, setIsShowCurrentUser] = useState(false);
   const { showSidebar } = useSelector((state: RootState) => state.app);
-  const { token } = useSelector((state: RootState) => state.auth);
+  const { userData } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data, isFetching, refetch, isError } = useGetCurrentUserQuery();
 
   useOutsideClickHandler(
     currentUserRef,
@@ -30,18 +27,6 @@ const AdminHeader = (props: adminHeader) => {
     },
     [toggleButtonRef]
   );
-
-  useEffect(() => {
-    if (token) {
-      refetch();
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (isError) {
-      dispatch(logOut());
-    }
-  }, [isError]);
 
   return (
     <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -94,7 +79,7 @@ const AdminHeader = (props: adminHeader) => {
                   <span className="sr-only">Open user menu</span>
                   <img
                     className="w-8 h-8 rounded-full"
-                    src={data?.userData.avatar as string}
+                    src={userData?.avatar as string}
                     alt="user photo"
                   />
                 </button>
@@ -107,13 +92,13 @@ const AdminHeader = (props: adminHeader) => {
                       className="text-sm text-gray-900 dark:text-white"
                       role="none"
                     >
-                      {data?.userData.name}
+                      {userData?.name}
                     </p>
                     <p
                       className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                       role="none"
                     >
-                      {data?.userData.email}
+                      {userData?.email}
                     </p>
                   </div>
                   <ul className="py-1" role="none">

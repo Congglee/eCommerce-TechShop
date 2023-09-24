@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ICartItem, IProduct } from "../../../interfaces/product.interface";
 import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";

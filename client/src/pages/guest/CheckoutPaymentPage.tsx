@@ -12,9 +12,7 @@ import { CheckoutPaymentMethod, CheckoutSuccess } from "../../components/guest";
 
 const { BiChevronRight } = icons;
 
-type Props = {};
-
-const CheckoutPaymentPage = (props: Props) => {
+const CheckoutPaymentPage = () => {
   const encryptedData = localStorage.getItem("orderInfo");
   const decryptedUserData = decryptData(
     encryptedData,

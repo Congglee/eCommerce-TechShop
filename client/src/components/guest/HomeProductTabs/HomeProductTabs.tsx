@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IProduct } from "../../../interfaces/product.interface";
 import ProductItem from "../ProductItem/ProductItem";
 import { useSelector } from "react-redux";

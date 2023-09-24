@@ -1,11 +1,8 @@
-import React from "react";
 import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";
 import { Link } from "react-router-dom";
 
 const { BsArrowLeft } = icons;
-
-type Props = {};
 
 interface checkoutSuccessProps {
   createOrderResult: any;

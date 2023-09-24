@@ -1,11 +1,8 @@
-import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-type Props = {};
-
-const Banner = (props: Props) => {
+const Banner = () => {
   const settings = {
     infinite: true,
     speed: 500,

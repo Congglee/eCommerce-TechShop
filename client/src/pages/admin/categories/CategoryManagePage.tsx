@@ -19,9 +19,7 @@ import { setSeletedSort } from "../../../features/product/product.slice";
 
 const { BiBookAdd } = icons;
 
-type Props = {};
-
-const CategoryManagePage = (props: Props) => {
+const CategoryManagePage = () => {
   const queryString: {
     name?: string;
     sort?: string;

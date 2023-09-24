@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import icons from "../../../utils/icons";
 import {
@@ -34,9 +34,7 @@ const initialFormState = {
   description: "",
 };
 
-type Props = {};
-
-const UpdateProduct = (props: Props) => {
+const UpdateProduct = () => {
   const {
     register,
     handleSubmit,

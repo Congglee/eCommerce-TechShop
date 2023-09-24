@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import icons from "../../../utils/icons";
 import {
@@ -30,9 +30,7 @@ const initialFormState: FormStateType = {
   description: "",
 };
 
-type Props = {};
-
-const CreateProduct = (props: Props) => {
+const CreateProduct = () => {
   const { data: categoriesData } = useGetCategoriesQuery({});
   const {
     register,

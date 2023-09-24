@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { logOut } from "../../../features/auth/auth.slice";
 import jwt_decode from "jwt-decode";
-import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
 import useOutsideClickHandler from "../../../hooks/useOutsiteClickHandle";
 
 const { AiOutlineUser, BiSolidUserAccount, AiOutlineClose } = icons;
@@ -18,10 +17,11 @@ interface burgerMenuProps {
 
 const BurgerMenu = (props: burgerMenuProps) => {
   const { handleSubmit, isActive, setIsActive } = props;
-  const { isLoggedIn, token } = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn, token, userData } = useSelector(
+    (state: RootState) => state.auth
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data, isError } = useGetCurrentUserQuery();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const burgerMenuRef = useRef<HTMLDivElement | null>(null);
 
@@ -35,12 +35,6 @@ const BurgerMenu = (props: burgerMenuProps) => {
       setIsAdmin(decodedToken.isAdmin);
     }
   }, [token]);
-
-  useEffect(() => {
-    if (isError) {
-      dispatch(logOut());
-    }
-  }, [isError]);
 
   return (
     <div
@@ -97,7 +91,7 @@ const BurgerMenu = (props: burgerMenuProps) => {
               </div>
             </Link>
 
-            {data?.userData && isAdmin && (
+            {userData && isAdmin && (
               <Link to="/admin">
                 <div className="flex items-center text-white py-[10px]">
                   <span className="pl-2 uppercase">Quản lý website</span>

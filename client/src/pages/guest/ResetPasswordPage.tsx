@@ -19,9 +19,7 @@ type ResetPasswordFormError =
   | null
   | undefined;
 
-type Props = {};
-
-const ResetPasswordPage = (props: Props) => {
+const ResetPasswordPage = () => {
   const [formData, setFormData] = useState(initialState);
   const { token } = useParams();
   const [resetPassword, resetPasswordResult] = useResetPasswordMutation();

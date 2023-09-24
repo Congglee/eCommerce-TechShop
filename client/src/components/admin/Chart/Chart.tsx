@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -11,9 +11,7 @@ import {
 } from "recharts";
 import { useGetOneWeekSaleQuery } from "../../../features/order/order.services";
 
-type Props = {};
-
-const Chart = (props: Props) => {
+const Chart = () => {
   const { data: oneWeekSalesData, isFetching } = useGetOneWeekSaleQuery();
 
   const [sales, setSales] = useState<

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import icons from "../../../utils/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
 import { logOut } from "../../../features/auth/auth.slice";
 import jwt_decode from "jwt-decode";
 
@@ -17,29 +16,21 @@ const {
   BiLogoPinterest,
 } = icons;
 
-type Props = {};
-
-const HeaderTop = (props: Props) => {
+const HeaderTop = () => {
   const [isHover, setIsHover] = useState(false);
   const dispatch = useDispatch();
-  const { data, isFetching, refetch, isError } = useGetCurrentUserQuery();
-  const { isLoggedIn, token } = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn, token, userData } = useSelector(
+    (state: RootState) => state.auth
+  );
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (token) {
-      refetch();
       const decodedToken = jwt_decode(token) as { isAdmin: boolean };
       setIsAdmin(decodedToken.isAdmin);
     }
   }, [token]);
-
-  useEffect(() => {
-    if (isError) {
-      dispatch(logOut());
-    }
-  }, [isError]);
 
   return (
     <div className="bg-main-200 w-full py-[10px] md:hidden">
@@ -57,7 +48,7 @@ const HeaderTop = (props: Props) => {
 
         <div className="flex items-center text-white text-xs cursor-pointer gap-x-[10px] 900:gap-x-[5px]">
           <div className="hover:text-[#151515] transition-all duration-200 ease-linear">
-            {isLoggedIn && !data?.userData.isBlocked ? (
+            {isLoggedIn && !userData?.isBlocked ? (
               <div
                 className="flex items-center gap-x-2 relative"
                 onMouseEnter={() => setIsHover(true)}
@@ -65,15 +56,13 @@ const HeaderTop = (props: Props) => {
               >
                 <div className="w-[30px] h-[30px] rounded-full overflow-hidden">
                   <img
-                    src={data?.userData.avatar as string}
+                    src={userData?.avatar as string}
                     alt=""
                     className="w-full h-full"
                   />
                 </div>
                 <div>
-                  <Link to="/profile">{`Hello ${
-                    isFetching ? "....." : `${data?.userData.name}`
-                  }`}</Link>
+                  <Link to="/profile">{`Hello ${userData?.name}`}</Link>
                 </div>
 
                 <div
@@ -82,9 +71,9 @@ const HeaderTop = (props: Props) => {
                   }`}
                 >
                   <div className="px-4 py-3 text-[13px] text-gray-900 dark:text-white">
-                    <div>{data?.userData.name}</div>
+                    <div>{userData?.name}</div>
                     <div className="font-medium truncate">
-                      {data?.userData?.email}
+                      {userData?.email}
                     </div>
                   </div>
                   <ul className="py-2 text-[13px] text-gray-700 dark:text-gray-200">
@@ -97,7 +86,7 @@ const HeaderTop = (props: Props) => {
                       </Link>
                     </li>
 
-                    {data?.userData && isAdmin && (
+                    {userData && isAdmin && (
                       <li>
                         <Link
                           to="/admin"

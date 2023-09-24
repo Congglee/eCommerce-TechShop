@@ -1,11 +1,8 @@
-import React from "react";
 import icons from "../../../utils/icons";
 
 const { PiCircleFill } = icons;
 
-type Props = {};
-
-const UserLoadingRow = (props: Props) => {
+const UserLoadingRow = () => {
   return (
     <tr className="p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700">
       <td className="px-4 py-3">

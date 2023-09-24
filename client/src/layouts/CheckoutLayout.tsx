@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { CheckoutProducts } from "../components/guest";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,9 +12,7 @@ import { formatCurrency } from "../utils/fn";
 
 const { PiShoppingCartFill, FiChevronDown, FiChevronUp } = icons;
 
-type Props = {};
-
-const CheckoutLayout = (props: Props) => {
+const CheckoutLayout = () => {
   const dispatch = useDispatch();
   const { cartProducts, totalAmount } = useSelector(
     (state: RootState) => state.cart

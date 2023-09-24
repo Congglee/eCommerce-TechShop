@@ -1,4 +1,3 @@
-import React from "react";
 import icons from "../../../utils/icons";
 import laptop_icon from "../../../assets/laptop-icon.png";
 import { useGetCategoriesQuery } from "../../../features/category/category.services";
@@ -7,9 +6,7 @@ import { Link, useParams } from "react-router-dom";
 
 const { GrUnorderedList } = icons;
 
-type Props = {};
-
-const CategorySideMenu = (props: Props) => {
+const CategorySideMenu = () => {
   const { data, isFetching } = useGetCategoriesQuery({});
   const { category: categoryParams } = useParams();
 

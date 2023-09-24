@@ -13,9 +13,7 @@ import { useGetProductsQuery } from "../../features/product/product.services";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-type Props = {};
-
-const HomePage = (props: Props) => {
+const HomePage = () => {
   const { data, isFetching } = useGetProductsQuery({});
   const dailyDealProduct = data?.products[data?.products.length - 1];
 

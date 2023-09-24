@@ -1,8 +1,4 @@
-import React from "react";
-
-type Props = {};
-
-const DeliveryTab = (props: Props) => {
+const DeliveryTab = () => {
   return (
     <>
       <h2 className="font-semibold text-xl uppercase text-main-500 mb-[10px]">

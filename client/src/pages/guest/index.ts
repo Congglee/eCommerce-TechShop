@@ -3,7 +3,6 @@ export { default as ProductDetailPage } from "./ProductDetailPage";
 export { default as ProductPage } from "./ProductPage";
 export { default as LoginPage } from "./LoginPage";
 export { default as RegisterPage } from "./RegisterPage";
-export { default as FinalRegisterPage } from "./FinalRegisterPage";
 export { default as ForgotPasswordPage } from "./ForgotPasswordPage";
 export { default as ResetPasswordPage } from "./ResetPasswordPage";
 export { default as CartPage } from "./CartPage";

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import icons from "../../../utils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { showUpdateUserDrawer } from "../../../features/user/user.slice";
@@ -28,9 +28,7 @@ const initialFormState: FormStateType = {
   isBlocked: false,
 };
 
-type Props = {};
-
-const UpdateUserPage = (props: Props) => {
+const UpdateUserPage = () => {
   const { userId, isShowUpdateUserDrawer } = useSelector(
     (state: RootState) => state.user
   );

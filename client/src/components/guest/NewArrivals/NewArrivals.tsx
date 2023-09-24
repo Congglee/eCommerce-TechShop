@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IProduct } from "../../../interfaces/product.interface";
 import ProductItem from "../ProductItem/ProductItem";
-import { ICategory } from "../../../interfaces/category.interface";
-import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import { useSelector } from "react-redux";
 
 interface NewArrivalsProps {
   products: IProduct[] | undefined;

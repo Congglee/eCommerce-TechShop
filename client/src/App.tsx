@@ -24,7 +24,6 @@ import {
   CheckoutInfoPage,
   CheckoutPaymentPage,
   CheckoutSuccessPage,
-  FinalRegisterPage,
   ForgotPasswordPage,
   HomePage,
   LoginPage,
@@ -62,10 +61,7 @@ function App() {
           />
           <Route path={path.LOGIN_PAGE} element={<LoginPage />} />
           <Route path={path.REGISTER_PAGE} element={<RegisterPage />} />
-          <Route
-            path={path.FINAL_REGISTER_PAGE}
-            element={<FinalRegisterPage />}
-          />
+
           <Route
             path={path.FORGOT_PASSWORD_PAGE}
             element={<ForgotPasswordPage />}

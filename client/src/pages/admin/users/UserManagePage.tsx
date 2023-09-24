@@ -24,9 +24,7 @@ import icons from "../../../utils/icons";
 
 const { PiCircleFill } = icons;
 
-type Props = {};
-
-const UserManagePage = (props: Props) => {
+const UserManagePage = () => {
   const queryString: { name?: string; sort?: string; page?: string } =
     useQueryString();
   const { name, sort, page } = queryString;

@@ -32,9 +32,7 @@ import useOutsideClickHandler from "../../../hooks/useOutsiteClickHandle";
 
 const { BiBookAdd, AiFillStar } = icons;
 
-type Props = {};
-
-const ProductManagePage = (props: Props) => {
+const ProductManagePage = () => {
   const queryString: {
     name?: string;
     sort?: string;

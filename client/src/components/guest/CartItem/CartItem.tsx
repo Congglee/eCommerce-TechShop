@@ -1,4 +1,3 @@
-import React from "react";
 import { ICartItem, IProduct } from "../../../interfaces/product.interface";
 import { useDispatch } from "react-redux";
 import { formatCurrency } from "../../../utils/fn";
@@ -20,8 +19,6 @@ const CartItem = (props: cartItemProps) => {
     handleDecreaseCart,
     handleIncreaseCart,
     handleRemoveFromCart,
-    quantity,
-    isLoggedIn,
   } = props;
 
   return (

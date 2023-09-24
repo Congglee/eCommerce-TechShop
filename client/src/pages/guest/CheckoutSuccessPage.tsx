@@ -1,12 +1,9 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import icons from "../../utils/icons";
 
 const { BsArrowLeft } = icons;
 
-type Props = {};
-
-const CheckoutSuccessPage = (props: Props) => {
+const CheckoutSuccessPage = () => {
   return (
     <div className="mb-[65px]">
       <div className="mb-6 p-3">

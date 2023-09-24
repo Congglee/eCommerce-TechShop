@@ -1,12 +1,9 @@
-import React from "react";
 import icons from "../../../utils/icons";
 import { hotCollections } from "../../../utils/collections";
 
 const { BiChevronRight } = icons;
 
-type Props = {};
-
-const HotCollections = (props: Props) => {
+const HotCollections = () => {
   return (
     <div className="mb-5">
       <div className="mb-5 text-[#151515] border-b-2 border-main-200 pb-[15px] uppercase text-xl font-semibold">

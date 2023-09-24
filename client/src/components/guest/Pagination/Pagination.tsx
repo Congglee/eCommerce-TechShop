@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import usePagination from "../../../hooks/usePagination";
 import clsx from "clsx";

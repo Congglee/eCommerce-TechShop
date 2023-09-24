@@ -1,4 +1,3 @@
-import React from "react";
 import icons from "../../utils/icons";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -9,9 +8,7 @@ import { IUser } from "../../interfaces/user.interface";
 
 const { BsArrowLeft, GrMail, BsFillTelephoneFill } = icons;
 
-type Props = {};
-
-const ProfileOrderDetailPage = (props: Props) => {
+const ProfileOrderDetailPage = () => {
   const { orderId } = useSelector((state: RootState) => state.order);
   const { id } = useParams();
   const { data, isFetching } = useGetOrderDetailQuery(

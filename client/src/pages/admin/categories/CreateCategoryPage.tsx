@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { ICategory } from "../../../interfaces/category.interface";
 import { useForm } from "react-hook-form";
 import { AdminInputItem } from "../../../components/admin";
@@ -19,9 +19,7 @@ const initialFormState: FormStateType = {
   brand: [],
 };
 
-type Props = {};
-
-const CreateCategory = (props: Props) => {
+const CreateCategory = () => {
   const {
     register,
     handleSubmit,

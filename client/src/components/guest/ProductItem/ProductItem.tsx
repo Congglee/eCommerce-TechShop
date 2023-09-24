@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import icons from "../../../utils/icons";
 import { Link, useParams } from "react-router-dom";
 import { IProduct } from "../../../interfaces/product.interface";

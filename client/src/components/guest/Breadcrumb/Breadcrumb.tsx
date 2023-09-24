@@ -1,4 +1,3 @@
-import React from "react";
 import icons from "../../../utils/icons";
 import { IProduct } from "../../../interfaces/product.interface";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
@@ -7,8 +6,6 @@ import { ICategory } from "../../../interfaces/category.interface";
 import { IOrder } from "../../../interfaces/order.interface";
 
 const { BiChevronRight } = icons;
-
-type Props = {};
 
 interface breadCrumbProps {
   product?: IProduct;

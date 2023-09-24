@@ -16,9 +16,7 @@ import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
 
 const { BsArrowLeft } = icons;
 
-type Props = {};
-
-const ProductDetailPage = (props: Props) => {
+const ProductDetailPage = () => {
   const { slug } = useParams();
   const productSlug = useSelector(
     (state: RootState) => state.product.productSlug

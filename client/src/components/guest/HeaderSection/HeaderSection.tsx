@@ -17,9 +17,7 @@ const {
   PiShoppingCartFill,
 } = icons;
 
-type Props = {};
-
-const HeaderSection = (props: Props) => {
+const HeaderSection = () => {
   const { cartProducts } = useSelector((state: RootState) => state.cart);
   const [isActive, setIsActive] = useState(false);
   const { category } = useParams();

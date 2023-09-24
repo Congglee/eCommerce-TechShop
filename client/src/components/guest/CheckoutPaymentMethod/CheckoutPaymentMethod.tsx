@@ -7,8 +7,6 @@ import { useGetCurrentUserQuery } from "../../../features/auth/auth.service";
 
 const { BsArrowLeft, FaCcStripe } = icons;
 
-type Props = {};
-
 interface checkoutOutPaymentMethodProps {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   paymentMethod: string;

@@ -26,9 +26,7 @@ import { useGetBrandsQuery } from "../../features/brand/brand.services";
 
 const { FiFilter } = icons;
 
-type Props = {};
-
-const ProductPage = (props: Props) => {
+const ProductPage = () => {
   const {
     brandFilter,
     showProductFilterMobile,

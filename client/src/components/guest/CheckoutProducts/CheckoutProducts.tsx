@@ -1,12 +1,9 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { formatCurrency } from "../../../utils/fn";
 import { ICartItem } from "../../../interfaces/product.interface";
 
-type Props = {};
-
-const CheckoutProducts = (props: Props) => {
+const CheckoutProducts = () => {
   const { cartProducts, totalAmount } = useSelector(
     (state: RootState) => state.cart
   );

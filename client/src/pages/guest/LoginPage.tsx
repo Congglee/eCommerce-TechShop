@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { isEntityError } from "../../utils/helper";
 import { InputItem } from "../../components/guest";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
-import { OvalSpinner } from "../../components/common";
+import { Button } from "../../components/common";
 import Swal from "sweetalert2";
 
 const initialState: { email: string; password: string } = {
@@ -23,9 +23,7 @@ type LoginFormError =
   | null
   | undefined;
 
-type Props = {};
-
-const LoginPage = (props: Props) => {
+const LoginPage = () => {
   const [formValue, setFormValue] = useState(initialState);
   const [login, loginResult] = useLoginMutation();
   const dispatch = useDispatch();
@@ -142,12 +140,14 @@ const LoginPage = (props: Props) => {
               )}
             </div>
 
-            <button className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px] w-full">
-              <div className="flex items-center justify-center gap-x-2">
-                <span>Đăng nhập</span>
-                {loginResult.isLoading && <OvalSpinner />}
-              </div>
-            </button>
+            <Button
+              type="submit"
+              className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px] w-full"
+              isLoading={loginResult.isLoading}
+              disabled={loginResult.isLoading}
+            >
+              Đăng nhập
+            </Button>
 
             <div className="flex items-center justify-center flex-col gap-y-[10px]">
               <span className="text-main-600 text-sm hover:text-main-200">

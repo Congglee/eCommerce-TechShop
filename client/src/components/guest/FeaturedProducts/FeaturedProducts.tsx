@@ -1,4 +1,3 @@
-import React from "react";
 import { IProduct } from "../../../interfaces/product.interface";
 import { formatCurrency } from "../../../utils/fn";
 import { Link } from "react-router-dom";

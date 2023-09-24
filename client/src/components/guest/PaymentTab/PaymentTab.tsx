@@ -1,8 +1,4 @@
-import React from "react";
-
-type Props = {};
-
-const PaymentTab = (props: Props) => {
+const PaymentTab = () => {
   return (
     <>
       <h2 className="font-semibold text-xl uppercase text-main-500 mb-[10px]">

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   useFinalRegisterMutation,
@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { isEntityError } from "../../utils/helper";
 import { InputItem } from "../../components/guest";
 import Breadcrumb from "../../components/guest/Breadcrumb/Breadcrumb";
-import { OvalSpinner } from "../../components/common";
+import { Button } from "../../components/common";
 import Swal from "sweetalert2";
 
 const initialState: {
@@ -30,9 +30,7 @@ type RegisterFormError =
   | null
   | undefined;
 
-type Props = {};
-
-const RegisterPage = (props: Props) => {
+const RegisterPage = () => {
   const [formValue, setFormValue] = useState(initialState);
   const [register, registerResult] = useRegisterMutation();
   const [finalRegister, finalRegisterResult] = useFinalRegisterMutation();
@@ -204,12 +202,14 @@ const RegisterPage = (props: Props) => {
               )}
             </div>
 
-            <button className="bg-main-200 w-full uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px]">
-              <div className="flex items-center justify-center gap-x-2">
-                <span>Đăng ký</span>
-                {registerResult.isLoading && <OvalSpinner />}
-              </div>
-            </button>
+            <Button
+              type="submit"
+              className="bg-main-200 w-full uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px]"
+              isLoading={registerResult.isLoading}
+              disabled={registerResult.isLoading}
+            >
+              Đăng ký
+            </Button>
 
             <div className="flex items-center justify-center">
               <span className="text-main-600 text-sm hover:text-main-200">

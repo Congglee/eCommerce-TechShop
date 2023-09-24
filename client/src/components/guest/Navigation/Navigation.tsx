@@ -7,9 +7,7 @@ import { useGetCategoriesQuery } from "../../../features/category/category.servi
 
 const { AiOutlineCaretDown } = icons;
 
-type Props = {};
-
-const Navigation = (props: Props) => {
+const Navigation = () => {
   const [isHoverMenu, setIsHoverMenu] = useState<boolean>(false);
   const { data } = useGetCategoriesQuery({});
   const navigate = useNavigate();

@@ -1,4 +1,3 @@
-import React from "react";
 import icons from "../../../utils/icons";
 import { IProduct } from "../../../interfaces/product.interface";
 import { formatCurrency } from "../../../utils/fn";

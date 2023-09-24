@@ -1,9 +1,6 @@
-import React from "react";
 import { RotatingLines } from "react-loader-spinner";
 
-type Props = {};
-
-const RotatingSpinner = (props: Props) => {
+const RotatingSpinner = () => {
   return (
     <RotatingLines
       strokeColor="grey"

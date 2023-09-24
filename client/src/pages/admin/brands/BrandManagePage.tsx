@@ -13,9 +13,7 @@ import { toast } from "react-toastify";
 
 const { BiBookAdd } = icons;
 
-type Props = {};
-
-const BrandManagePage = (props: Props) => {
+const BrandManagePage = () => {
   const queryString: {
     name?: string;
     page?: string;

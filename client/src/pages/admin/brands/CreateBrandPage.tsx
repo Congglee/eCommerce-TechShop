@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import icons from "../../../utils/icons";
 import { Link } from "react-router-dom";
 import { AdminInputItem } from "../../../components/admin";
@@ -17,9 +17,7 @@ const initialFormState: FormStateType = {
   title: "",
 };
 
-type Props = {};
-
-const CreateBrandPage = (props: Props) => {
+const CreateBrandPage = () => {
   const {
     register,
     handleSubmit,

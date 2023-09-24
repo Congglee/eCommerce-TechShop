@@ -7,7 +7,7 @@ import { useUpdateUserByClientMutation } from "../../features/user/user.services
 import { isEntityError } from "../../utils/helper";
 import { toast } from "react-toastify";
 import { InputItem } from "../../components/guest";
-import { OvalSpinner } from "../../components/common";
+import { Button } from "../../components/common";
 
 const { BsArrowLeft } = icons;
 
@@ -29,9 +29,7 @@ type UpdateUserClientFormError =
   | null
   | undefined;
 
-type Props = {};
-
-const ProfileEditPage = (props: Props) => {
+const ProfileEditPage = () => {
   const { data, refetch } = useGetCurrentUserQuery();
   const [formValue, setFormValue] = useState(initialFormState);
   const [updateUserByClient, updateUserByClientResult] =
@@ -248,12 +246,14 @@ const ProfileEditPage = (props: Props) => {
           </div>
 
           <div className="text-right">
-            <button className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px] w-full max-w-[250px] xs:max-w-[150px] mt-2">
-              <div className="flex items-center justify-center gap-x-2">
-                <span> Cập nhật</span>
-                {updateUserByClientResult.isLoading && <OvalSpinner />}
-              </div>
-            </button>
+            <Button
+              type="submit"
+              className="bg-main-200 uppercase h-12 px-[15px] text-white text-[15px] font-light hover:bg-[#333] transition-all duration-150 ease-in-out hover:opacity-90 mb-[10px] w-full max-w-[250px] xs:max-w-[150px] mt-2"
+              isLoading={updateUserByClientResult.isLoading}
+              disabled={updateUserByClientResult.isLoading}
+            >
+              Cập nhật
+            </Button>
           </div>
         </form>
       </div>

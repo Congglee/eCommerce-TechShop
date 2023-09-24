@@ -1,10 +1,7 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import usePagination from "../../../hooks/usePagination";
 import { useQueryString } from "../../../hooks/useQueryString";
 import { generateSearchParamsURL } from "../../../utils/fn";
-
-type Props = {};
 
 interface IAdminPaginationProps {
   name?: string;

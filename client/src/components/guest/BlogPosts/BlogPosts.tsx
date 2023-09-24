@@ -1,4 +1,3 @@
-import React from "react";
 import icons from "../../../utils/icons";
 import Slider from "react-slick";
 import { newsItems } from "../../../utils/collections";
@@ -7,9 +6,7 @@ import { RootState } from "../../../store/store";
 
 const { FaRegComment, FaCalendarAlt } = icons;
 
-type Props = {};
-
-const BlogPosts = (props: Props) => {
+const BlogPosts = () => {
   const { currentWidth } = useSelector((state: RootState) => state.app);
   let numItemsToShow = 3;
 

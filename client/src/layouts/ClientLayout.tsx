@@ -5,11 +5,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { setCurrentScreenWidth } from "../features/app.slice";
-import { AdminRoute } from "../components/common";
 
-type Props = {};
-
-const UserLayout = (props: Props) => {
+const UserLayout = () => {
   const { pathname, search } = useLocation();
   const [currentWidth, setCurrentWidth] = useState(screen.width);
   const [searchParams] = useSearchParams();
