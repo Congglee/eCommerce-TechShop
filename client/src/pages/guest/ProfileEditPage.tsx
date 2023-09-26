@@ -105,7 +105,6 @@ const ProfileEditPage = () => {
   useEffect(() => {
     if (updateUserByClientResult.isSuccess) {
       toast.success("Cập nhật tài khoản thành công");
-      // refetch();
       dispatch(
         setCurrentUser({ userData: updateUserByClientResult.data.updatedUser })
       );
