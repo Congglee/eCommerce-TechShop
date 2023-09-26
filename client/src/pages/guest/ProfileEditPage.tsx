@@ -1,13 +1,15 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import icons from "../../utils/icons";
-import { useGetCurrentUserQuery } from "../../features/auth/auth.service";
 import { IUser } from "../../interfaces/user.interface";
 import { useUpdateUserByClientMutation } from "../../features/user/user.services";
 import { isEntityError } from "../../utils/helper";
 import { toast } from "react-toastify";
 import { InputItem } from "../../components/guest";
 import { Button } from "../../components/common";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../../features/auth/auth.slice";
+import { RootState } from "../../store/store";
 
 const { BsArrowLeft } = icons;
 
@@ -30,30 +32,31 @@ type UpdateUserClientFormError =
   | undefined;
 
 const ProfileEditPage = () => {
-  const { data, refetch } = useGetCurrentUserQuery();
+  const { userData } = useSelector((state: RootState) => state.auth);
   const [formValue, setFormValue] = useState(initialFormState);
   const [updateUserByClient, updateUserByClientResult] =
     useUpdateUserByClientMutation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (data?.userData) {
+    if (userData) {
       const updatedFormValue: any = {
-        name: data.userData.name,
-        email: data.userData.email,
-        avatar: data.userData.avatar,
+        name: userData.name,
+        email: userData.email,
+        avatar: userData.avatar,
       };
 
-      if (data.userData.address) {
-        updatedFormValue.address = data.userData.address;
+      if (userData.address) {
+        updatedFormValue.address = userData.address;
       }
 
-      if (data.userData.mobile) {
-        updatedFormValue.mobile = data.userData.mobile;
+      if (userData.mobile) {
+        updatedFormValue.mobile = userData.mobile;
       }
 
       setFormValue(updatedFormValue);
     }
-  }, [data]);
+  }, [userData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -102,7 +105,10 @@ const ProfileEditPage = () => {
   useEffect(() => {
     if (updateUserByClientResult.isSuccess) {
       toast.success("Cập nhật tài khoản thành công");
-      refetch();
+      // refetch();
+      dispatch(
+        setCurrentUser({ userData: updateUserByClientResult.data.updatedUser })
+      );
     }
   }, [updateUserByClientResult.isSuccess]);
 
@@ -208,7 +214,7 @@ const ProfileEditPage = () => {
 
             <div className="mt-2 w-[100px] h-[100px] rounded-full overflow-hidden">
               <img
-                src={data?.userData.avatar as string}
+                src={userData?.avatar as string}
                 alt=""
                 className="w-full h-full"
               />

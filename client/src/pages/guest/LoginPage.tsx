@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../features/auth/auth.service";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../features/auth/auth.slice";
+import { setCurrentUser, setUser } from "../../features/auth/auth.slice";
 import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
 import { isEntityError } from "../../utils/helper";
@@ -49,8 +49,12 @@ const LoginPage = () => {
       dispatch(
         setUser({
           isLoggedIn: true,
-          userData: loginResult.data.userData,
           token: loginResult.data.accessToken,
+        })
+      );
+      dispatch(
+        setCurrentUser({
+          userData: loginResult.data.userData,
         })
       );
       localStorage.removeItem("orderInfo");
@@ -73,8 +77,12 @@ const LoginPage = () => {
               dispatch(
                 setUser({
                   isLoggedIn: false,
-                  userData: undefined,
                   token: "",
+                })
+              );
+              dispatch(
+                setCurrentUser({
+                  userData: undefined,
                 })
               );
               navigate("/login");

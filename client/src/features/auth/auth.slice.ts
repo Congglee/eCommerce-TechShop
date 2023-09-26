@@ -21,13 +21,15 @@ export const authSlice = createSlice({
       state,
       action: PayloadAction<{
         isLoggedIn: boolean;
-        userData?: IUser;
         token?: string;
       }>
     ) => {
       state.isLoggedIn = action.payload.isLoggedIn;
-      state.userData = action.payload.userData;
       state.token = action.payload.token;
+    },
+
+    setCurrentUser: (state, action: PayloadAction<{ userData?: IUser }>) => {
+      state.userData = action.payload.userData;
     },
 
     logOut: (state) => {
@@ -38,6 +40,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setUser, logOut } = authSlice.actions;
+export const { setUser, logOut, setCurrentUser } = authSlice.actions;
 const authReducer = authSlice.reducer;
 export default authReducer;
