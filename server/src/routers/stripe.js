@@ -1,5 +1,5 @@
 import express from "express";
-import Stripe from "stripe";
+import stripe from "stripe/cjs/stripe.cjs.node.js";
 import dotenv from "dotenv";
 import Order from "../models/order.js";
 import { generateOrderCode } from "../utils/generateCode.js";
