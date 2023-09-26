@@ -1,5 +1,5 @@
 import express from "express";
-import Stripe from "stripe";
+import { Stripe } from "stripe";
 import dotenv from "dotenv";
 import Order from "../models/order.js";
 import { generateOrderCode } from "../utils/generateCode.js";
