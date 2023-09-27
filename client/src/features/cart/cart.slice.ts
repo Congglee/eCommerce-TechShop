@@ -56,7 +56,6 @@ const cartSlice = createSlice({
 
       if (itemIndex !== -1) {
         const currentQuantity = state.cartProducts[itemIndex].cartQuantity;
-
         if (currentQuantity > 1) {
           state.cartProducts[itemIndex].cartQuantity = currentQuantity - 1;
         } else if (currentQuantity === 1) {
@@ -72,9 +71,10 @@ const cartSlice = createSlice({
 
       if (itemIndex !== -1) {
         const currentQuantity = state.cartProducts[itemIndex].cartQuantity;
-
-        if (currentQuantity >= 1) {
-          state.cartProducts[itemIndex].cartQuantity = currentQuantity + 1;
+        if (currentQuantity < state.cartProducts[itemIndex].quantity) {
+          if (currentQuantity >= 1) {
+            state.cartProducts[itemIndex].cartQuantity = currentQuantity + 1;
+          }
         }
       }
     },

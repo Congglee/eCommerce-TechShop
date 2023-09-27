@@ -63,14 +63,31 @@ const CartItem = (props: cartItemProps) => {
               type="number"
               id="Quantity"
               value={cartItem.cartQuantity}
-              onChange={(e) =>
-                dispatch(
-                  setCartQuantity({
-                    id: cartItem._id,
-                    quantity: +e.target.value === 0 ? 1 : +e.target.value,
-                  })
-                )
-              }
+              onChange={(e) => {
+                if (+e.target.value > (cartItem?.quantity as number)) {
+                  dispatch(
+                    setCartQuantity({
+                      id: cartItem._id,
+                      quantity: cartItem.quantity,
+                    })
+                  );
+                } else if (+e.target.value <= (cartItem?.quantity as number)) {
+                  dispatch(
+                    setCartQuantity({
+                      id: cartItem._id,
+                      quantity: +e.target.value,
+                    })
+                  );
+                }
+
+                if (+e.target.value === 0)
+                  dispatch(
+                    setCartQuantity({
+                      id: cartItem._id,
+                      quantity: 1,
+                    })
+                  );
+              }}
               className="w-[50px] border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none bg-[#f6f6f6] focus:border-transparent focus:ring-0"
             />
 

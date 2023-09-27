@@ -134,7 +134,17 @@ const ProductDetailContent = (props: productDetailContentProps) => {
                   type="number"
                   id="Quantity"
                   value={value}
-                  onChange={(e) => setValue(+e.target.value)}
+                  onChange={(e) => {
+                    if (+e.target.value > (product?.quantity as number)) {
+                      setValue(product?.quantity as number);
+                    } else if (
+                      +e.target.value <= (product?.quantity as number)
+                    ) {
+                      setValue(+e.target.value);
+                    }
+
+                    if (+e.target.value === 0) setValue(1);
+                  }}
                   className="w-[50px] border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none bg-[#f6f6f6] focus:border-transparent focus:ring-0"
                 />
 
