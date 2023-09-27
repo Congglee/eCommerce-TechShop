@@ -8,6 +8,7 @@ import { productApi } from "../features/product/product.services";
 import categoryReducer from "../features/category/category.slice";
 import { categoryApi } from "../features/category/category.services";
 
+import brandReducer from "../features/brand/brand.slice";
 import { brandApi } from "../features/brand/brand.services";
 
 import authReducer, { IAuthState } from "../features/auth/auth.slice";
@@ -72,6 +73,7 @@ export const store = configureStore({
     order: orderReducer,
     [orderApi.reducerPath]: orderApi.reducer,
 
+    brand: brandReducer,
     [brandApi.reducerPath]: brandApi.reducer,
 
     app: appReducer,

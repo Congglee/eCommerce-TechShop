@@ -3,32 +3,35 @@ import {
   useDeleteUserMutation,
   useGetUsersQuery,
 } from "../../../features/user/user.services";
-import { formatDate, generateSearchParamsURL } from "../../../utils/fn";
+import { formatDate } from "../../../utils/fn";
 import { useQueryString } from "../../../hooks/useQueryString";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   AdminPagination,
   AdminSearch,
   AdminSortFilter,
   UserLoadingRow,
 } from "../../../components/admin";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setUserDetail,
+  setUserSearchValue,
+  setUserSelectedSort,
   showUpdateUserDrawer,
 } from "../../../features/user/user.slice";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { setSeletedSort } from "../../../features/product/product.slice";
 import icons from "../../../utils/icons";
+import { RootState } from "../../../store/store";
 
 const { PiCircleFill } = icons;
 
 const UserManagePage = () => {
-  const queryString: { name?: string; sort?: string; page?: string } =
-    useQueryString();
-  const { name, sort, page } = queryString;
-  const navigate = useNavigate();
+  const queryString: { page?: string } = useQueryString();
+  const { page } = queryString;
+  const { userSearchValue, userSelectedSort } = useSelector(
+    (state: RootState) => state.user
+  );
   const dispatch = useDispatch();
   const location = useLocation();
   const path = location.pathname.split("/");
@@ -54,9 +57,9 @@ const UserManagePage = () => {
   ];
 
   const { data, isFetching } = useGetUsersQuery({
-    name: name || "",
+    name: userSearchValue || "",
     page: page || 1,
-    sort: sort || "",
+    sort: userSelectedSort || "",
     limit: import.meta.env.VITE_APP_LIMIT_ADMIN_PER_PAGE || 8,
   });
   const [deleteUser, deleteUserResult] = useDeleteUserMutation();
@@ -64,37 +67,12 @@ const UserManagePage = () => {
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
-    const searchUrl = generateSearchParamsURL({
-      name: inputValue,
-      sort,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand: "",
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: usersPath,
-    });
-    navigate(searchUrl);
+    dispatch(setUserSearchValue({ searchValue: inputValue }));
   };
 
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    dispatch(setSeletedSort(value));
-    const sortUrl = generateSearchParamsURL({
-      name,
-      sort: value,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand: "",
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: usersPath,
-    });
-    navigate(sortUrl);
+    dispatch(setUserSelectedSort({ selectSort: value }));
   };
 
   const handleDeleteUser = async (id: string) => {
@@ -258,8 +236,6 @@ const UserManagePage = () => {
       </div>
 
       <AdminPagination
-        name={name}
-        sort={sort}
         totalData={data?.users.length as number}
         totalCount={data?.totalUser as number}
         adminPath={usersPath}

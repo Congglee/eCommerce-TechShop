@@ -49,6 +49,7 @@ import { CgWebsite } from "react-icons/cg";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { TfiStatsDown, TfiStatsUp } from "react-icons/tfi";
 import { FaMoneyBill } from "react-icons/fa";
+import { BsCaretUpFill } from "react-icons/bs";
 
 const icons = {
   BiChevronRight,
@@ -104,6 +105,7 @@ const icons = {
   FaMoneyBill,
   AiOutlineAreaChart,
   FaLaptop,
+  BsCaretUpFill,
 };
 
 export default icons;

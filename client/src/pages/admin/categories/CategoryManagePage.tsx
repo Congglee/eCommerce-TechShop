@@ -10,31 +10,33 @@ import {
   useDeleteCategoryMutation,
   useGetCategoriesQuery,
 } from "../../../features/category/category.services";
-import { formatDate, generateSearchParamsURL } from "../../../utils/fn";
+import { formatDate } from "../../../utils/fn";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setSeletedSort } from "../../../features/product/product.slice";
+import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setCategorySearchValue,
+  setCategorySelectedSort,
+} from "../../../features/category/category.slice";
+import { RootState } from "../../../store/store";
 
 const { BiBookAdd } = icons;
 
 const CategoryManagePage = () => {
-  const queryString: {
-    name?: string;
-    sort?: string;
-    page?: string;
-  } = useQueryString();
-  const { name, sort, page } = queryString;
+  const queryString: { page?: string } = useQueryString();
+  const { page } = queryString;
+  const { categorySearchValue, categorySeletedSort } = useSelector(
+    (state: RootState) => state.category
+  );
   const { data, isFetching } = useGetCategoriesQuery({
-    name: name || "",
-    sort: sort || "",
+    name: categorySearchValue || "",
+    sort: categorySeletedSort || "",
     page: page || 1,
     limit: import.meta.env.VITE_APP_LIMIT_ADMIN_PER_PAGE || 8,
   });
   const [deleteCategory, deleteCategoryResult] = useDeleteCategoryMutation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split("/");
   const categoriesPath = path[path.length - 1];
@@ -78,37 +80,12 @@ const CategoryManagePage = () => {
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
-    const searchUrl = generateSearchParamsURL({
-      name: inputValue,
-      sort,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand: "",
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: categoriesPath,
-    });
-    navigate(searchUrl);
+    dispatch(setCategorySearchValue({ searchValue: inputValue }));
   };
 
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    dispatch(setSeletedSort(value));
-    const sortUrl = generateSearchParamsURL({
-      name,
-      sort: value,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand: "",
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: categoriesPath,
-    });
-    navigate(sortUrl);
+    dispatch(setCategorySelectedSort({ selectSort: value }));
   };
 
   useEffect(() => {
@@ -261,8 +238,6 @@ const CategoryManagePage = () => {
       </div>
 
       <AdminPagination
-        name={name}
-        sort={sort}
         totalData={data?.categories.length as number}
         totalCount={data?.totalCategory as number}
         adminPath={categoriesPath}

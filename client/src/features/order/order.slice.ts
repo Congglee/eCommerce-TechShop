@@ -8,11 +8,17 @@ export interface IOrderState {
     mobile: string;
   } | null;
   orderId: string;
+  orderSearchValue: string;
+  orderSelectedSort: string;
+  orderStatus: string;
 }
 
 export const initialState: IOrderState = {
   userOrderInfo: null,
   orderId: "",
+  orderSearchValue: "",
+  orderSelectedSort: "",
+  orderStatus: "",
 };
 
 const orderSlice = createSlice({
@@ -36,11 +42,35 @@ const orderSlice = createSlice({
       };
     },
 
+    setOrderSearchValue: (
+      state,
+      action: PayloadAction<{ searchValue: string }>
+    ) => {
+      state.orderSearchValue = action.payload.searchValue;
+    },
+
+    setOrderSelectedSort: (
+      state,
+      action: PayloadAction<{ selectSort: string }>
+    ) => {
+      state.orderSelectedSort = action.payload.selectSort;
+    },
+
+    setOrderStatus: (state, action: PayloadAction<{ status: string }>) => {
+      state.orderStatus = action.payload.status;
+    },
+
     setOrderDetail: (state, action: PayloadAction<{ id: string }>) => {
       state.orderId = action.payload.id;
     },
   },
 });
 
-export const { setUserOrderInfo, setOrderDetail } = orderSlice.actions;
+export const {
+  setUserOrderInfo,
+  setOrderDetail,
+  setOrderSearchValue,
+  setOrderSelectedSort,
+  setOrderStatus,
+} = orderSlice.actions;
 export const orderReducer = orderSlice.reducer;

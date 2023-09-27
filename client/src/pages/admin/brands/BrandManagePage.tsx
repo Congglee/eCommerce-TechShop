@@ -1,26 +1,27 @@
 import React, { useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import icons from "../../../utils/icons";
 import {
   useDeleteBrandMutation,
   useGetBrandsQuery,
 } from "../../../features/brand/brand.services";
-import { formatDate, generateSearchParamsURL } from "../../../utils/fn";
+import { formatDate } from "../../../utils/fn";
 import { useQueryString } from "../../../hooks/useQueryString";
 import { AdminPagination, AdminSearch } from "../../../components/admin";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { setBrandSearchValue } from "../../../features/brand/brand.slice";
 
 const { BiBookAdd } = icons;
 
 const BrandManagePage = () => {
-  const queryString: {
-    name?: string;
-    page?: string;
-  } = useQueryString();
-  const { name, page } = queryString;
+  const queryString: { page?: string } = useQueryString();
+  const { page } = queryString;
+  const { brandSearchValue } = useSelector((state: RootState) => state.brand);
   const { data, isFetching } = useGetBrandsQuery({
-    title: name || "",
+    title: brandSearchValue || "",
     page: page || 1,
     limit: import.meta.env.VITE_APP_LIMIT_ADMIN_PER_PAGE || 8,
   });
@@ -46,24 +47,12 @@ const BrandManagePage = () => {
   const location = useLocation();
   const path = location.pathname.split("/");
   const brandsPath = path[path.length - 1];
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
-    const searchUrl = generateSearchParamsURL({
-      name: inputValue,
-      sort: "",
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand: "",
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: brandsPath,
-    });
-    navigate(searchUrl);
+    dispatch(setBrandSearchValue({ searchValue: inputValue }));
   };
 
   useEffect(() => {
@@ -197,7 +186,6 @@ const BrandManagePage = () => {
       </div>
 
       <AdminPagination
-        name={name}
         totalData={data?.brands.length as number}
         totalCount={data?.totalBrand as number}
         adminPath={brandsPath}

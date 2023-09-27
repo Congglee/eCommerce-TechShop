@@ -73,16 +73,20 @@ const ProductDetailContent = (props: productDetailContentProps) => {
             <span>{formatCurrency(product?.price)} VND</span>
           </div>
 
-          <div className="flex items-start gap-x-[3px] mb-3">
-            <div className="flex items-center text-[#f1b400] mb-[10px]">
+          <div className="flex items-start justify-between gap-x-[3px] mb-3 flex-wrap">
+            <div className="flex items-center text-[#f1b400]">
               <StarRating
                 totalRatings={product?.totalRatings as number}
                 size={18}
               />
+              <span className="text-main-500 text-sm">
+                {product?.ratings?.length} đánh giá
+              </span>
             </div>
-            <span className="text-main-500 text-sm">
-              {product?.ratings?.length} đánh giá
-            </span>
+
+            <div className="mr-5 text-sm italic text-main-200">
+              Số lượng còn lại: {product?.quantity}
+            </div>
           </div>
 
           <div className="mb-5">
@@ -137,7 +141,11 @@ const ProductDetailContent = (props: productDetailContentProps) => {
                 <button
                   type="button"
                   className="w-full h-full px-2 border-l border-[#343535] hover:bg-main-600 transition-all duration-200 ease-out"
-                  onClick={() => setValue(value + 1)}
+                  onClick={() => {
+                    if (value < (product?.quantity as number)) {
+                      setValue(value + 1);
+                    }
+                  }}
                 >
                   +
                 </button>

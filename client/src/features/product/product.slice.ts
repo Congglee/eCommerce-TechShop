@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface IProductState {
   productId: string;
   productSlug: string;
-  seletedSort: string;
+  productSearchValue: string;
+  productSeletedSort: string;
   filterPriceGte: string;
   filterPriceLte: string;
   brandFilter: string[];
@@ -13,7 +14,8 @@ export interface IProductState {
 const initialState: IProductState = {
   productId: "",
   productSlug: "",
-  seletedSort: "",
+  productSearchValue: "",
+  productSeletedSort: "",
   filterPriceGte: "",
   filterPriceLte: "",
   brandFilter: [],
@@ -24,20 +26,30 @@ const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    setSeletedSort: (state, action) => {
-      state.seletedSort = action.payload;
+    setProductSearchValue: (
+      state,
+      action: PayloadAction<{ searchValue: string }>
+    ) => {
+      state.productSearchValue = action.payload.searchValue;
     },
 
-    setFilterPriceGte: (state, action) => {
-      state.filterPriceGte = action.payload;
+    setProductSeletedSort: (
+      state,
+      action: PayloadAction<{ selectSort: string }>
+    ) => {
+      state.productSeletedSort = action.payload.selectSort;
     },
 
-    setFilterPriceLte: (state, action) => {
-      state.filterPriceLte = action.payload;
+    setFilterPriceGte: (state, action: PayloadAction<{ priceGte: string }>) => {
+      state.filterPriceGte = action.payload.priceGte;
     },
 
-    setBrandFilter: (state, action) => {
-      state.brandFilter = action.payload;
+    setFilterPriceLte: (state, action: PayloadAction<{ priceLte: string }>) => {
+      state.filterPriceLte = action.payload.priceLte;
+    },
+
+    setBrandFilter: (state, action: PayloadAction<{ brands: string[] }>) => {
+      state.brandFilter = action.payload.brands;
     },
 
     toggleShowProductFilter: (state, action) => {
@@ -47,11 +59,12 @@ const productSlice = createSlice({
 });
 
 export const {
-  setSeletedSort,
+  setProductSeletedSort,
   setFilterPriceGte,
   setFilterPriceLte,
   setBrandFilter,
   toggleShowProductFilter,
+  setProductSearchValue,
 } = productSlice.actions;
 const productReducer = productSlice.reducer;
 export default productReducer;

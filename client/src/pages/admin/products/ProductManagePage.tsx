@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import icons from "../../../utils/icons";
 import {
   AdminBrandFilter,
@@ -12,17 +12,14 @@ import {
   useDeleteProductMutation,
   useGetProductsQuery,
 } from "../../../features/product/product.services";
-import {
-  formatCurrency,
-  formatDate,
-  generateSearchParamsURL,
-} from "../../../utils/fn";
+import { formatCurrency, formatDate } from "../../../utils/fn";
 import { ICategory } from "../../../interfaces/category.interface";
 import { useQueryString } from "../../../hooks/useQueryString";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setBrandFilter,
-  setSeletedSort,
+  setProductSearchValue,
+  setProductSeletedSort,
 } from "../../../features/product/product.slice";
 import { useGetBrandsQuery } from "../../../features/brand/brand.services";
 import { RootState } from "../../../store/store";
@@ -33,17 +30,13 @@ import useOutsideClickHandler from "../../../hooks/useOutsiteClickHandle";
 const { BiBookAdd, AiFillStar } = icons;
 
 const ProductManagePage = () => {
-  const queryString: {
-    name?: string;
-    sort?: string;
-    brand?: string;
-    page?: string;
-  } = useQueryString();
-  const { name, sort, brand, page } = queryString;
+  const queryString: { page?: string } = useQueryString();
+  const { page } = queryString;
   const [isShowBrandFilter, setIsShowBrandFilter] = useState(false);
-  const { brandFilter } = useSelector((state: RootState) => state.product);
+  const { brandFilter, productSeletedSort, productSearchValue } = useSelector(
+    (state: RootState) => state.product
+  );
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const path = location.pathname.split("/");
   const productsPath = path[path.length - 1];
   const productOptionsSort = [
@@ -87,12 +80,13 @@ const ProductManagePage = () => {
   });
 
   const { data: productsData, isFetching } = useGetProductsQuery({
-    name: name || "",
-    sort: sort || "",
-    brand: brand || "",
+    name: productSearchValue || "",
+    sort: productSeletedSort || "",
+    brand: brandFilter.join(",") || "",
     page: page || 1,
     limit: import.meta.env.VITE_APP_LIMIT_ADMIN_PER_PAGE || 8,
   });
+
   const { data: brandsData } = useGetBrandsQuery({});
   const [deleteProduct, deleteProductResult] = useDeleteProductMutation();
 
@@ -116,66 +110,25 @@ const ProductManagePage = () => {
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
-    const searchUrl = generateSearchParamsURL({
-      name: inputValue,
-      sort,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand,
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: productsPath,
-    });
-    navigate(searchUrl);
+    dispatch(setProductSearchValue({ searchValue: inputValue }));
   };
 
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    dispatch(setSeletedSort(value));
-    const sortUrl = generateSearchParamsURL({
-      name,
-      sort: value,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand,
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: productsPath,
-    });
-    navigate(sortUrl);
+    dispatch(setProductSeletedSort({ selectSort: value }));
   };
 
   const handleChangeFilterBrand = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
     let updatedBrands = [...brandFilter];
-
     if (checked) updatedBrands.push(value);
     else updatedBrands = updatedBrands.filter((brand) => brand !== value);
-    dispatch(setBrandFilter(updatedBrands));
-
-    const brandFilterUrl = generateSearchParamsURL({
-      name,
-      sort,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand: updatedBrands.join(","),
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: productsPath,
-    });
-
-    navigate(brandFilterUrl);
+    dispatch(setBrandFilter({ brands: updatedBrands }));
   };
 
   useEffect(() => {
     return () => {
-      dispatch(setBrandFilter([]));
+      dispatch(setBrandFilter({ brands: [] }));
     };
   }, [dispatch]);
 
@@ -343,11 +296,8 @@ const ProductManagePage = () => {
       </div>
 
       <AdminPagination
-        name={name}
-        sort={sort}
         totalData={productsData?.products.length as number}
         totalCount={productsData?.totalProduct as number}
-        brand={brand}
         adminPath={productsPath}
       />
     </div>

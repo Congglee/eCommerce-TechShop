@@ -17,7 +17,6 @@ import {
   setBrandFilter,
   setFilterPriceGte,
   setFilterPriceLte,
-  setSeletedSort,
   toggleShowProductFilter,
 } from "../../features/product/product.slice";
 import { formatCurrency, generateSearchParamsURL } from "../../utils/fn";
@@ -72,7 +71,6 @@ const ProductPage = () => {
 
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    dispatch(setSeletedSort(value));
     const isCategoryUrl: boolean = category ? true : false;
     const sortUrl = generateSearchParamsURL({
       name,
@@ -95,7 +93,7 @@ const ProductPage = () => {
     const value = e.target.value;
     const numbericValue = value.replace(/[^\d]/g, "");
     const formattedValue = formatCurrency(numbericValue);
-    dispatch(setFilterPriceGte(formattedValue));
+    dispatch(setFilterPriceGte({ priceGte: formattedValue }));
     const isCategoryUrl: boolean = category ? true : false;
 
     const filterPriceGteUrl = generateSearchParamsURL({
@@ -119,9 +117,8 @@ const ProductPage = () => {
     const value = e.target.value;
     const numbericValue = value.replace(/[^\d]/g, "");
     const formattedValue = formatCurrency(numbericValue);
-    dispatch(setFilterPriceLte(formattedValue));
+    dispatch(setFilterPriceLte({ priceLte: formattedValue }));
     const isCategoryUrl: boolean = category ? true : false;
-
     const filterPriceLteUrl = generateSearchParamsURL({
       name,
       sort,
@@ -134,7 +131,6 @@ const ProductPage = () => {
       isAdmin: false,
       adminUrlValue: "",
     });
-
     setFilterPriceUrl(filterPriceLteUrl);
   };
 
@@ -149,7 +145,7 @@ const ProductPage = () => {
 
     if (checked) updatedBrands.push(value);
     else updatedBrands = updatedBrands.filter((brand) => brand !== value);
-    dispatch(setBrandFilter(updatedBrands));
+    dispatch(setBrandFilter({ brands: updatedBrands }));
     const isCategoryUrl: boolean = category ? true : false;
 
     const brandFilterUrl = generateSearchParamsURL({
@@ -169,8 +165,20 @@ const ProductPage = () => {
   };
 
   useEffect(() => {
-    if (!brand) dispatch(setBrandFilter([]));
+    if (!brand) dispatch(setBrandFilter({ brands: [] }));
   }, [brand]);
+
+  useEffect(() => {
+    if (!price_filter_gte) {
+      dispatch(setFilterPriceGte({ priceGte: "" }));
+      setFilterPriceUrl("");
+    }
+
+    if (!price_filter_lte) {
+      dispatch(setFilterPriceLte({ priceLte: "" }));
+      setFilterPriceUrl("");
+    }
+  }, [price_filter_gte, price_filter_lte]);
 
   return (
     <>

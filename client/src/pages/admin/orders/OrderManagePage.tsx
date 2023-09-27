@@ -7,25 +7,25 @@ import {
 import { useQueryString } from "../../../hooks/useQueryString";
 import { useGetOrdersByAdminQuery } from "../../../features/order/order.services";
 import { IUser } from "../../../interfaces/user.interface";
+import { formatCurrency, formatDate } from "../../../utils/fn";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import {
-  formatCurrency,
-  formatDate,
-  generateSearchParamsURL,
-} from "../../../utils/fn";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setSeletedSort } from "../../../features/product/product.slice";
+  setOrderSearchValue,
+  setOrderSelectedSort,
+  setOrderStatus,
+} from "../../../features/order/order.slice";
 
 const OrderManagePage = () => {
   const queryString: {
-    name?: string;
-    sort?: string;
-    orderStatus?: string;
     page?: string;
   } = useQueryString();
-  const { name, sort, orderStatus, page } = queryString;
+  const { page } = queryString;
+  const { orderSearchValue, orderSelectedSort, orderStatus } = useSelector(
+    (state: RootState) => state.order
+  );
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const path = location.pathname.split("/");
   const ordersPath = path[path.length - 1];
 
@@ -57,7 +57,7 @@ const OrderManagePage = () => {
   ];
 
   const { data: ordersData, isFetching } = useGetOrdersByAdminQuery({
-    orderCode: name || "",
+    orderCode: orderSearchValue || "",
     orderStatus:
       orderStatus === "1"
         ? "Đang xử lý"
@@ -66,7 +66,7 @@ const OrderManagePage = () => {
         : orderStatus === "3"
         ? "Thành công"
         : "",
-    sort: sort || "",
+    sort: orderSelectedSort || "",
     page: page || 1,
     limit: import.meta.env.VITE_APP_LIMIT_ADMIN_PER_PAGE || 8,
   });
@@ -74,58 +74,17 @@ const OrderManagePage = () => {
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputValue = (e.target as HTMLFormElement).searchInput.value;
-    const searchUrl = generateSearchParamsURL({
-      name: inputValue,
-      sort,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand: "",
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: ordersPath,
-      orderStatus,
-    });
-
-    navigate(searchUrl);
+    dispatch(setOrderSearchValue({ searchValue: inputValue }));
   };
 
   const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    dispatch(setSeletedSort(value));
-    const sortUrl = generateSearchParamsURL({
-      name,
-      sort: value,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand: "",
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: ordersPath,
-      orderStatus,
-    });
-    navigate(sortUrl);
+    dispatch(setOrderSelectedSort({ selectSort: value }));
   };
 
   const handleChangeOrderStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    const orderStatusUrl = generateSearchParamsURL({
-      name,
-      sort,
-      price_filter_gte: "",
-      price_filter_lte: "",
-      brand: "",
-      page,
-      isCategory: false,
-      categoryUrlValue: "",
-      isAdmin: true,
-      adminUrlValue: ordersPath,
-      orderStatus: value,
-    });
-    navigate(orderStatusUrl);
+    dispatch(setOrderStatus({ status: value }));
   };
 
   return (
@@ -303,9 +262,6 @@ const OrderManagePage = () => {
       </div>
 
       <AdminPagination
-        name={name}
-        sort={sort}
-        orderStatus={orderStatus}
         totalData={ordersData?.orders.length as number}
         totalCount={ordersData?.totalOrder as number}
         adminPath={ordersPath}

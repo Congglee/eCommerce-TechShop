@@ -4,18 +4,13 @@ import { useQueryString } from "../../../hooks/useQueryString";
 import { generateSearchParamsURL } from "../../../utils/fn";
 
 interface IAdminPaginationProps {
-  name?: string;
   totalCount: number;
   totalData: number;
-  sort?: string;
-  brand?: string;
-  orderStatus?: string;
   adminPath?: string;
 }
 
 const AdminPagination = (props: IAdminPaginationProps) => {
-  const { name, totalCount, totalData, sort, brand, orderStatus, adminPath } =
-    props;
+  const { totalCount, totalData, adminPath } = props;
   const navigate = useNavigate();
   const pagination = usePagination(
     totalCount,
@@ -28,17 +23,16 @@ const AdminPagination = (props: IAdminPaginationProps) => {
 
   const handlePaginationUrl = (value: string | number) => {
     const paginationUrl = generateSearchParamsURL({
-      name,
-      sort,
+      name: "",
+      sort: "",
       price_filter_gte: "",
       price_filter_lte: "",
-      brand,
+      brand: "",
       page: value as string,
       isCategory: false,
       categoryUrlValue: "",
       isAdmin: true,
       adminUrlValue: adminPath,
-      orderStatus,
     });
 
     navigate(paginationUrl);
