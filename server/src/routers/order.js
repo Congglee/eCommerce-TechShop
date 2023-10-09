@@ -2,6 +2,7 @@ import express from "express";
 import {
   createOrder,
   get1WeekOrderSales,
+  getMonthlyOrderSales,
   getOrder,
   getOrders,
   getOrdersIncomeStat,
@@ -27,6 +28,11 @@ router.get(
   "/orders/weeksales",
   [verifyAccessToken, isAdminRole],
   get1WeekOrderSales
+);
+router.get(
+  "/orders/monthlysales",
+  [verifyAccessToken, isAdminRole],
+  getMonthlyOrderSales
 );
 
 router.post("/orders", [verifyAccessToken], createOrder);

@@ -9,10 +9,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { useGetOneWeekSaleQuery } from "../../../features/order/order.services";
+import { useGetMonthlySaleQuery } from "../../../features/order/order.services";
 
 const Chart = () => {
-  const { data: oneWeekSalesData, isFetching } = useGetOneWeekSaleQuery();
+  const { data: monthlySalesData, isFetching } = useGetMonthlySaleQuery();
 
   const [sales, setSales] = useState<
     {
@@ -21,44 +21,40 @@ const Chart = () => {
     }[]
   >([]);
 
-  const compare = (a: any, b: any) => {
-    if (a._id < b._id) return 1;
-    if (a._id > b._id) return -1;
-    return 0;
-  };
-
   useEffect(() => {
-    if (oneWeekSalesData && oneWeekSalesData.weekSalesOrders.length >= 2) {
-      const oneWeekSalesOrders = [...oneWeekSalesData.weekSalesOrders];
-      oneWeekSalesOrders.sort(compare);
-
-      const newData = oneWeekSalesData.weekSalesOrders.map((item) => {
-        const DAYS = [
-          "Chủ nhật",
-          "Thứ hai",
-          "Thứ ba",
-          "Thứ tư",
-          "Thứ năm",
-          "Thứ sáu",
-          "Thứ bảy",
+    if (monthlySalesData && monthlySalesData.monthlySalesOrders.length >= 2) {
+      const newData = monthlySalesData.monthlySalesOrders.map((item) => {
+        const MONTHS = [
+          "Tháng 1",
+          "Tháng 2",
+          "Tháng 3",
+          "Tháng 4",
+          "Tháng 5",
+          "Tháng 6",
+          "Tháng 7",
+          "Tháng 8",
+          "Tháng 9",
+          "Tháng 10",
+          "Tháng 11",
+          "Tháng 12",
         ];
 
         return {
-          day: DAYS[item._id - 1],
+          day: MONTHS[item._id - 1],
           amount: item.total / 100,
         };
       });
       setSales(newData);
     }
-  }, [oneWeekSalesData]);
+  }, [monthlySalesData]);
 
   return (
     <div className="w-full h-[320px] mt-[2rem] p-[1rem] border-2 border-[rgba(48,51,78,0.2)] rounded-[5px] text-sm">
-      {isFetching && <div className="mt-[2rem]">Loading Chart ...</div>}
+      {isFetching && <div className="mt-[2rem]">Loading ...</div>}
 
       {!isFetching && (
         <>
-          <h3 className="mb-[1rem]">Thu nhập 7 ngày qua (VN vnd)</h3>
+          <h3 className="mb-[1rem]">Thu nhập các tháng (VN vnd)</h3>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               width={500}

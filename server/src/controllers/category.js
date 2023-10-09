@@ -155,7 +155,7 @@ const deleteCategory = async (req, res) => {
       );
     }
 
-    await category.remove();
+    await Category.deleteOne({ _id: category._id });
     return res.status(200).json({
       success: true,
       message: "Xóa danh mục thành công",

@@ -125,11 +125,11 @@ export const productApi = createApi({
     }),
 
     getProduct: build.query<IGetProductResponse, string>({
-      query: (slug) => `products/slug/${slug}`,
+      query: (slug) => `/products/slug/${slug}`,
     }),
 
     getProductById: build.query<IGetProductResponse, string>({
-      query: (id) => `products/id/${id}`,
+      query: (id) => `/products/id/${id}`,
     }),
 
     updateProduct: build.mutation<
@@ -150,7 +150,7 @@ export const productApi = createApi({
     deleteProduct: build.mutation<IDeleteProductResponse, string>({
       query: (id) => {
         return {
-          url: `products/${id}`,
+          url: `/products/${id}`,
           method: "DELETE",
         };
       },
@@ -163,7 +163,7 @@ export const productApi = createApi({
     >({
       query: (body) => {
         return {
-          url: "products/ratings",
+          url: "/products/ratings",
           method: "PUT",
           body,
         };

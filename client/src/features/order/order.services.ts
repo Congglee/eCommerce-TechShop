@@ -40,9 +40,9 @@ interface IGetOrdersIncomeResponse {
   ordersIncome: { _id: number; total: number }[];
 }
 
-interface IGetOneWeekSalesResponse {
+interface IGetMonthlySalesResponse {
   success: boolean;
-  weekSalesOrders: { _id: number; total: number }[];
+  monthlySalesOrders: { _id: number; total: number }[];
 }
 
 export const orderApi = createApi({
@@ -188,8 +188,8 @@ export const orderApi = createApi({
         error ? [] : [{ type: "Orders", id: data.id }],
     }),
 
-    getOneWeekSale: build.query<IGetOneWeekSalesResponse, void>({
-      query: () => "/orders/weeksales",
+    getMonthlySale: build.query<IGetMonthlySalesResponse, void>({
+      query: () => "/orders/monthlysales",
       providesTags(result) {
         return [{ type: "Orders" as const, id: "LIST" }];
       },
@@ -222,5 +222,5 @@ export const {
   useUpdateOrderAdminMutation,
   useGetOrdersStatsQuery,
   useGetOrdersIncomeQuery,
-  useGetOneWeekSaleQuery,
+  useGetMonthlySaleQuery,
 } = orderApi;

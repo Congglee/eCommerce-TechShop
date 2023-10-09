@@ -3,13 +3,19 @@ import { Outlet, useLocation, useSearchParams } from "react-router-dom";
 import { Footer, Header } from "../components/guest";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentScreenWidth } from "../features/app.slice";
 import icons from "../utils/icons";
+import { RootState } from "../store/store";
+import { Modal } from "../components/common";
 
 const { BsCaretUpFill } = icons;
 
-const UserLayout = () => {
+const ClientLayout = () => {
+  const { isShowModal, modalChildren } = useSelector(
+    (state: RootState) => state.app
+  );
+
   const { pathname, search } = useLocation();
   const [currentWidth, setCurrentWidth] = useState(screen.width);
   const [visible, setVisible] = useState(false);
@@ -91,6 +97,8 @@ const UserLayout = () => {
       />
       <Outlet />
 
+      {isShowModal && <Modal>{modalChildren}</Modal>}
+
       <div
         className={`fixed right-[10px] bottom-[10px] bg-[#A0A0A0] w-10 h-10 text-white rounded-md cursor-pointer transition-all duration-500 ease-in hover:bg-main-200 items-center justify-center ${
           visible ? "flex" : "hidden"
@@ -105,4 +113,4 @@ const UserLayout = () => {
   );
 };
 
-export default UserLayout;
+export default ClientLayout;

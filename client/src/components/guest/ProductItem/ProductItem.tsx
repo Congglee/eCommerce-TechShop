@@ -1,10 +1,12 @@
 import { useState } from "react";
 import icons from "../../../utils/icons";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { IProduct } from "../../../interfaces/product.interface";
 import { formatCurrency } from "../../../utils/fn";
-import { StarRating } from "..";
+import { ProductDetailContent, StarRating } from "..";
 import DOMPurify from "dompurify";
+import { useDispatch } from "react-redux";
+import { showModal } from "../../../features/app.slice";
 
 const { LiaBarsSolid, FaEye, BsFillHeartFill, PiShoppingCartFill } = icons;
 
@@ -31,6 +33,35 @@ const ProductItem = (props: ProductItemProps) => {
 
   const hasHtmlTags = /<[^>]*>/g.test(product?.description as string);
   const { category } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleClickOptions = (flag: string) => {
+    if (flag === "QUICK_VIEW") {
+      setIsHover(false);
+      dispatch(
+        showModal({
+          isShowModal: true,
+          modalChildren: (
+            <div
+              className="flex items-center justify-center gap-x-6 max-w-[80%] mx-auto w-[800px] bg-white p-5 overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ProductDetailContent
+                isQuickView={true}
+                product={product}
+                hasHtmlTags={hasHtmlTags}
+              />
+            </div>
+          ),
+        })
+      );
+    }
+
+    if (flag === "WISHLIST") {
+      console.log("wishlist");
+    }
+  };
 
   return (
     <div
@@ -76,7 +107,10 @@ const ProductItem = (props: ProductItemProps) => {
               <PiShoppingCartFill size={14} />
             </div>
 
-            <div className="w-10 h-10 border border-[#c5cfd6] bg-white text-[#2a2a2a] rounded-full flex items-center justify-center cursor-pointer hover:border-transparent hover:bg-[#2a2a2a] hover:text-white transition-all duration-500 ease-out mx-[5px]">
+            <div
+              className="w-10 h-10 border border-[#c5cfd6] bg-white text-[#2a2a2a] rounded-full flex items-center justify-center cursor-pointer hover:border-transparent hover:bg-[#2a2a2a] hover:text-white transition-all duration-500 ease-out mx-[5px]"
+              onClick={() => handleClickOptions("QUICK_VIEW")}
+            >
               <FaEye size={14} />
             </div>
           </div>
@@ -165,15 +199,24 @@ const ProductItem = (props: ProductItemProps) => {
           </Link>
 
           <div className="flex items-center gap-x-2">
-            <div className="w-10 h-10 border border-[#c5cfd6] bg-white text-[#2a2a2a] rounded-full flex items-center justify-center cursor-pointer hover:border-transparent hover:bg-[#2a2a2a] hover:text-white transition-all duration-500 ease-out">
+            <div
+              className="w-10 h-10 border border-[#c5cfd6] bg-white text-[#2a2a2a] rounded-full flex items-center justify-center cursor-pointer hover:border-transparent hover:bg-[#2a2a2a] hover:text-white transition-all duration-500 ease-out"
+              onClick={() => navigate(`/products/${product?.slug}`)}
+            >
               <LiaBarsSolid size={17} />
             </div>
 
-            <div className="w-10 h-10 border border-[#c5cfd6] bg-white text-[#2a2a2a] rounded-full flex items-center justify-center cursor-pointer hover:border-transparent hover:bg-[#2a2a2a] hover:text-white transition-all duration-500 ease-out">
+            <div
+              className="w-10 h-10 border border-[#c5cfd6] bg-white text-[#2a2a2a] rounded-full flex items-center justify-center cursor-pointer hover:border-transparent hover:bg-[#2a2a2a] hover:text-white transition-all duration-500 ease-out"
+              onClick={() => handleClickOptions("QUICK_VIEW")}
+            >
               <FaEye size={17} />
             </div>
 
-            <div className="w-10 h-10 border border-[#c5cfd6] bg-white text-[#2a2a2a] rounded-full flex items-center justify-center cursor-pointer hover:border-transparent hover:bg-[#2a2a2a] hover:text-white transition-all duration-500 ease-out">
+            <div
+              className="w-10 h-10 border border-[#c5cfd6] bg-white text-[#2a2a2a] rounded-full flex items-center justify-center cursor-pointer hover:border-transparent hover:bg-[#2a2a2a] hover:text-white transition-all duration-500 ease-out"
+              onClick={() => handleClickOptions("WISHLIST")}
+            >
               <BsFillHeartFill size={17} />
             </div>
           </div>

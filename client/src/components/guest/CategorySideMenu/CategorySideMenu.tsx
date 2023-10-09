@@ -14,7 +14,7 @@ const CategorySideMenu = () => {
     <div className="border border-[#ebebeb]">
       <div className="py-[10px] px-5 uppercase bg-main-200 text-white text-base font-semibold flex items-center md:items-start gap-x-[10px]">
         <GrUnorderedList size={22} />
-        <h3>Thương hiệu</h3>
+        <h3>Danh mục</h3>
       </div>
 
       {isFetching && (

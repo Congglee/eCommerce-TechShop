@@ -16,6 +16,7 @@ export { default as ProductFilter } from "./ProductFilter/ProductFilter";
 export { default as ProductFilterMobile } from "./ProductFilter/ProductFilterMobile";
 export { default as ProductDetailContent } from "./ProductDetailContent/ProductDetailContent";
 export { default as ProductDetailTabs } from "./ProductDetailTabs/ProductDetailTabs";
+export { default as ProductQuickView } from "./ProductQuickView/ProductQuickView";
 export { default as WarrantyTab } from "./WarrantyTab/WarrantyTab";
 export { default as DeliveryTab } from "./DeliveryTab/DeliveryTab";
 export { default as PaymentTab } from "./PaymentTab/PaymentTab";

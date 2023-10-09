@@ -324,6 +324,48 @@ const get1WeekOrderSales = async (req, res) => {
   }
 };
 
+const getMonthlyOrderSales = async (req, res) => {
+  try {
+    const year = moment().year();
+
+    const monthlySalesOrders = await Order.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date(`${year}-01-01T00:00:00.000Z`),
+            $lte: new Date(`${year}-12-31T23:59:59.999Z`),
+          },
+        },
+      },
+      {
+        $project: {
+          month: { $month: "$createdAt" },
+          sales: "$total",
+        },
+      },
+      {
+        $group: {
+          _id: "$month",
+          total: { $sum: "$sales" },
+        },
+      },
+      {
+        $sort: { _id: 1 }, // Sort the results by month
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      monthlySalesOrders,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export {
   createOrder,
   updateOrderByAdmin,
@@ -334,4 +376,5 @@ export {
   getOrdersStat,
   getOrdersIncomeStat,
   get1WeekOrderSales,
+  getMonthlyOrderSales,
 };

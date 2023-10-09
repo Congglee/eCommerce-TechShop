@@ -3,10 +3,11 @@ import { ICartItem, IProduct } from "../../../interfaces/product.interface";
 import icons from "../../../utils/icons";
 import { formatCurrency } from "../../../utils/fn";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../features/cart/cart.slice";
 import { StarRating } from "..";
 import DOMPurify from "dompurify";
+import { RootState } from "../../../store/store";
 
 const {
   BiLogoFacebook,
@@ -23,10 +24,15 @@ interface productDetailContentProps {
   product: IProduct | undefined;
   slug?: string;
   hasHtmlTags: boolean;
+  isQuickView?: boolean;
 }
 
 const ProductDetailContent = (props: productDetailContentProps) => {
-  const { product, hasHtmlTags } = props;
+  const { product, hasHtmlTags, isQuickView } = props;
+  const { cartProducts } = useSelector((state: RootState) => state.cart);
+  const cartProductItem = cartProducts.find(
+    (item) => item._id === product?._id
+  );
   const dispatch = useDispatch();
 
   const [value, setValue] = useState(1);
@@ -68,7 +74,11 @@ const ProductDetailContent = (props: productDetailContentProps) => {
       </div>
 
       <div className="w-[60%] md:w-full flex-1 flex sm:flex-col">
-        <div className="w-[62.5%] flex-shrink-0 sm:w-full sm:mb-5">
+        <div
+          className={`${
+            !isQuickView ? "w-[62.5%] flex-shrink-0 sm:w-full" : "w-full"
+          } sm:mb-5`}
+        >
           <div className="text-[#333] text-3xl font-semibold mb-5">
             <span>{formatCurrency(product?.price)} VND</span>
           </div>
@@ -165,7 +175,22 @@ const ProductDetailContent = (props: productDetailContentProps) => {
 
           <button
             className="w-full bg-main-200 text-white font-bold py-[11px] px-[15px] uppercase text-sm hover:bg-[#333] transition-all duration-150 ease-out mb-5"
-            onClick={() => handleAddToCartStorage(product as ICartItem)}
+            onClick={() => {
+              if (cartProductItem) {
+                if (
+                  value + cartProductItem.cartQuantity <
+                  cartProductItem.quantity
+                ) {
+                  handleAddToCartStorage(product as ICartItem);
+                } else {
+                  toast.info("Sản phẩm không còn đủ số lượng!", {
+                    position: "bottom-right",
+                  });
+                }
+              } else {
+                handleAddToCartStorage(product as ICartItem);
+              }
+            }}
           >
             Thêm vào giỏ hàng
           </button>
@@ -185,68 +210,74 @@ const ProductDetailContent = (props: productDetailContentProps) => {
           </div>
         </div>
 
-        <div className="w-[37.5%] flex-1 flex flex-col gap-y-[10px] sm:w-full">
-          <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
-            <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
-              <BsShieldShaded size={18} />
+        {!isQuickView && (
+          <div className="w-[37.5%] flex-1 flex flex-col gap-y-[10px] sm:w-full">
+            <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
+              <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
+                <BsShieldShaded size={18} />
+              </div>
+
+              <div className="flex flex-col capitalize">
+                <span className="text-main-500 text-sm">Bảo đảm</span>
+                <span className="text-xs text-[#999]">
+                  Đã kiểm tra chất lượng
+                </span>
+              </div>
             </div>
 
-            <div className="flex flex-col capitalize">
-              <span className="text-main-500 text-sm">Bảo đảm</span>
-              <span className="text-xs text-[#999]">
-                Đã kiểm tra chất lượng
-              </span>
+            <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
+              <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
+                <FaTruck size={18} />
+              </div>
+
+              <div className="flex flex-col capitalize">
+                <span className="text-main-500 text-sm">
+                  Miễn phí vận chuyển
+                </span>
+                <span className="text-xs text-[#999]">
+                  Miễn phí trên tất cả sản phẩm
+                </span>
+              </div>
+            </div>
+
+            <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
+              <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
+                <HiGift size={18} />
+              </div>
+
+              <div className="flex flex-col capitalize">
+                <span className="text-main-500 text-sm">
+                  Thẻ quà tặng đặc biệt
+                </span>
+                <span className="text-xs text-[#999]">
+                  Thẻ quà tặng đặc biệt
+                </span>
+              </div>
+            </div>
+
+            <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
+              <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
+                <FaReply size={18} />
+              </div>
+
+              <div className="flex flex-col capitalize">
+                <span className="text-main-500 text-sm">Trả lại miễn phí</span>
+                <span className="text-xs text-[#999]">Trong vòng 7 ngày</span>
+              </div>
+            </div>
+
+            <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
+              <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
+                <FaTty size={18} />
+              </div>
+
+              <div className="flex flex-col capitalize">
+                <span className="text-main-500 text-sm">Tư vấn</span>
+                <span className="text-xs text-[#999]">24/7</span>
+              </div>
             </div>
           </div>
-
-          <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
-            <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
-              <FaTruck size={18} />
-            </div>
-
-            <div className="flex flex-col capitalize">
-              <span className="text-main-500 text-sm">Miễn phí vận chuyển</span>
-              <span className="text-xs text-[#999]">
-                Miễn phí trên tất cả sản phẩm
-              </span>
-            </div>
-          </div>
-
-          <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
-            <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
-              <HiGift size={18} />
-            </div>
-
-            <div className="flex flex-col capitalize">
-              <span className="text-main-500 text-sm">
-                Thẻ quà tặng đặc biệt
-              </span>
-              <span className="text-xs text-[#999]">Thẻ quà tặng đặc biệt</span>
-            </div>
-          </div>
-
-          <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
-            <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
-              <FaReply size={18} />
-            </div>
-
-            <div className="flex flex-col capitalize">
-              <span className="text-main-500 text-sm">Trả lại miễn phí</span>
-              <span className="text-xs text-[#999]">Trong vòng 7 ngày</span>
-            </div>
-          </div>
-
-          <div className="p-[10px] border border-main-700 flex items-center gap-x-[10px]">
-            <div className="p-[10px] bg-main-500 rounded-full flex items-center justify-center text-white">
-              <FaTty size={18} />
-            </div>
-
-            <div className="flex flex-col capitalize">
-              <span className="text-main-500 text-sm">Tư vấn</span>
-              <span className="text-xs text-[#999]">24/7</span>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </>
   );

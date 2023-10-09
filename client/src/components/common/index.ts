@@ -6,3 +6,4 @@ export { default as LoadingToRedirect } from "./LoadingToRedirect/LoadingToRedir
 export { default as ProtectedRoute } from "./PrivateRoute/ProtectedRoute";
 export { default as AdminRoute } from "./PrivateRoute/AdminRoute";
 export { default as Button } from "./Button/Button";
+export { default as Modal } from "./Modal/Modal";

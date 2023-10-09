@@ -1,4 +1,4 @@
-# Thông tin tài khoản, số thẻ thanh toán qua công Stripe
+# Thông tin tài khoản, số thẻ thanh toán qua cổng Stripe
 
 ## Thông tin tài khoản điền form
 
