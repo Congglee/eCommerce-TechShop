@@ -107,14 +107,14 @@ This project was created using the following technologies.
 - [Redux Toolkit](https://redux-toolkit.js.org/) - Efficient state management and updates
 - [react-router-dom](https://reactrouter.com/en/main) - Handling dynamic routing and component rendering
 - [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) - A part of Redux Toolkit, simplifying API calls and data fetching
-- [Tailwindcss](https://tailwindcss.com/) - For User Interface
-- [React Redux](https://react-redux.js.org/) - Manage application state efficiently and provide a more structured mechanism for managing data
-- [React Toastify](https://fkhadra.github.io/react-toastify/introduction/) - To display interactive and responsive notifications (toasts) in web applications
+- [TailwindCSS](https://tailwindcss.com/) - For User Interface
+- [react-redux](https://react-redux.js.org/) - Manage application state efficiently and provide a more structured mechanism for managing data
+- [react-toastify](https://fkhadra.github.io/react-toastify/introduction/) - To display interactive and responsive notifications (toasts) in web applications
 - [react-loader-spinner](https://mhnpd.github.io/react-loader-spinner/docs/intro) - Cool spinners for ReactJS application
 - [sweetalert2](https://sweetalert2.github.io/) - Creating attractive pop-up notifications and modals
-- [React Slick](https://react-slick.neostack.com/) - Designing responsive image sliders or carousels
-- [Redux Persist](https://github.com/rt2zz/redux-persist) - Persistently storing application state
-- [React Icons](https://react-icons.github.io/react-icons) - Integrating icons into React components
+- [react-slick](https://react-slick.neostack.com/) - Designing responsive image sliders or carousels
+- [redux-persist](https://github.com/rt2zz/redux-persist) - Persistently storing application state
+- [react-icons](https://react-icons.github.io/react-icons) - Integrating icons into React components
 - [jwt-decode](https://github.com/auth0/jwt-decode) - Decoding JSON Web Tokens (JWTs)
 - [crypto-js](https://github.com/brix/crypto-js) - Providing cryptographic functions for data security
 - [react-hook-form](https://www.react-hook-form.com/) - Efficiently manage and validate forms in React applications

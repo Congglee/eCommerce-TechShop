@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import icons from "../../utils/icons";
 import { useGetProductsQuery } from "../../features/product/product.services";
@@ -32,7 +32,7 @@ const ProductPage = () => {
     filterPriceGte,
     filterPriceLte,
   } = useSelector((state: RootState) => state.product);
-  const [filterPriceUrl, setFilterPriceUrl] = useState("");
+  // const [filterPriceUrl, setFilterPriceUrl] = useState("");
   const queryString: {
     name?: string;
     sort?: string;
@@ -94,21 +94,20 @@ const ProductPage = () => {
     const numbericValue = value.replace(/[^\d]/g, "");
     const formattedValue = formatCurrency(numbericValue);
     dispatch(setFilterPriceGte({ priceGte: formattedValue }));
-    const isCategoryUrl: boolean = category ? true : false;
-
-    const filterPriceGteUrl = generateSearchParamsURL({
-      name,
-      sort,
-      price_filter_gte: numbericValue,
-      price_filter_lte: filterPriceLte.replace(/[^\d]/g, ""),
-      brand,
-      page,
-      isCategory: isCategoryUrl,
-      categoryUrlValue: category,
-      isAdmin: false,
-      adminUrlValue: "",
-    });
-    setFilterPriceUrl(filterPriceGteUrl);
+    // const isCategoryUrl: boolean = category ? true : false;
+    // const filterPriceGteUrl = generateSearchParamsURL({
+    //   name,
+    //   sort,
+    //   price_filter_gte: numbericValue,
+    //   price_filter_lte: filterPriceLte.replace(/[^\d]/g, ""),
+    //   brand,
+    //   page,
+    //   isCategory: isCategoryUrl,
+    //   categoryUrlValue: category,
+    //   isAdmin: false,
+    //   adminUrlValue: "",
+    // });
+    // setFilterPriceUrl(filterPriceGteUrl);
   };
 
   const handleChangeFilterPriceLte = (
@@ -118,12 +117,32 @@ const ProductPage = () => {
     const numbericValue = value.replace(/[^\d]/g, "");
     const formattedValue = formatCurrency(numbericValue);
     dispatch(setFilterPriceLte({ priceLte: formattedValue }));
+    // const isCategoryUrl: boolean = category ? true : false;
+    // const filterPriceLteUrl = generateSearchParamsURL({
+    //   name,
+    //   sort,
+    //   price_filter_gte: filterPriceGte.replace(/[^\d]/g, ""),
+    //   price_filter_lte: numbericValue,
+    //   brand,
+    //   page,
+    //   isCategory: isCategoryUrl,
+    //   categoryUrlValue: category,
+    //   isAdmin: false,
+    //   adminUrlValue: "",
+    // });
+    // setFilterPriceUrl(filterPriceLteUrl);
+  };
+
+  const handleSubmitFilter = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const isCategoryUrl: boolean = category ? true : false;
-    const filterPriceLteUrl = generateSearchParamsURL({
+    const filterPriceUrl = generateSearchParamsURL({
       name,
       sort,
-      price_filter_gte: filterPriceGte.replace(/[^\d]/g, ""),
-      price_filter_lte: numbericValue,
+      price_filter_gte:
+        filterPriceGte !== "0,00" ? filterPriceGte.replace(/[^\d]/g, "") : "",
+      price_filter_lte:
+        filterPriceLte !== "0,00" ? filterPriceLte.replace(/[^\d]/g, "") : "",
       brand,
       page,
       isCategory: isCategoryUrl,
@@ -131,11 +150,7 @@ const ProductPage = () => {
       isAdmin: false,
       adminUrlValue: "",
     });
-    setFilterPriceUrl(filterPriceLteUrl);
-  };
 
-  const handleSubmitFilter = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     navigate(filterPriceUrl);
   };
 
@@ -145,9 +160,9 @@ const ProductPage = () => {
 
     if (checked) updatedBrands.push(value);
     else updatedBrands = updatedBrands.filter((brand) => brand !== value);
+
     dispatch(setBrandFilter({ brands: updatedBrands }));
     const isCategoryUrl: boolean = category ? true : false;
-
     const brandFilterUrl = generateSearchParamsURL({
       name,
       sort,
@@ -160,7 +175,6 @@ const ProductPage = () => {
       isAdmin: false,
       adminUrlValue: "",
     });
-
     navigate(brandFilterUrl);
   };
 
@@ -169,15 +183,8 @@ const ProductPage = () => {
   }, [brand]);
 
   useEffect(() => {
-    if (!price_filter_gte) {
-      dispatch(setFilterPriceGte({ priceGte: "" }));
-      setFilterPriceUrl("");
-    }
-
-    if (!price_filter_lte) {
-      dispatch(setFilterPriceLte({ priceLte: "" }));
-      setFilterPriceUrl("");
-    }
+    if (!price_filter_gte) dispatch(setFilterPriceGte({ priceGte: "" }));
+    if (!price_filter_lte) dispatch(setFilterPriceLte({ priceLte: "" }));
   }, [price_filter_gte, price_filter_lte]);
 
   return (
