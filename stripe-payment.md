@@ -1,18 +1,18 @@
-# Thông tin tài khoản, số thẻ thanh toán qua cổng Stripe
+# Account information, payment card number via Stripe portal
 
-## Thông tin tài khoản điền form
+## Account information fill in the form
 
-- _Điền bất cứ thứ gì_
+- _Fill in anything_
 
-## Số thẻ thanh toán
+## Payment card number
 
-| BRAND            | NUMBER           | CVC             | DATE                            |
-| ---------------- | ---------------- | --------------- | ------------------------------- |
-| Visa             | 4242424242424242 | 3 chữ số bất kỳ | Bất kỳ ngày nào trong tương lai |
-| Mastercard       | 5555555555554444 | 3 chữ số bất kỳ | Bất kỳ ngày nào trong tương lai |
-| American Express | 378282246310005  | 3 chữ số bất kỳ | Bất kỳ ngày nào trong tương lai |
-| Discover         | 6011111111111117 | 3 chữ số bất kỳ | Bất kỳ ngày nào trong tương lai |
-| Diners Club      | 3056930009020004 | 3 chữ số bất kỳ | Bất kỳ ngày nào trong tương lai |
-| UnionPay         | 6200000000000005 | 3 chữ số bất kỳ | Bất kỳ ngày nào trong tương lai |
+| BRAND            | NUMBER           | CVC           | DATE                   |
+| ---------------- | ---------------- | ------------- | ---------------------- |
+| Visa             | 4242424242424242 | Any 3 numbers | Any date in the future |
+| Mastercard       | 5555555555554444 | Any 3 numbers | Any date in the future |
+| American Express | 378282246310005  | Any 3 numbers | Any date in the future |
+| Discover         | 6011111111111117 | Any 3 numbers | Any date in the future |
+| Diners Club      | 3056930009020004 | Any 3 numbers | Any date in the future |
+| UnionPay         | 6200000000000005 | Any 3 numbers | Any date in the future |
 
-[Tham khảo thêm](https://stripe.com/docs/testing#cards)
+[Read more](https://stripe.com/docs/testing#cards)

@@ -76,7 +76,7 @@ EMAIL_NAME =
 STRIPE_KEY =
 ```
 
-```
+```bash
 # --- Terminal ---
 
 $ npm install (to install server-side dependencies)
@@ -179,145 +179,11 @@ This project was created using the following technologies.
 
 ---
 
-#### Products Page
-
-![productspage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328209/extends/productspage_p8oazz.png)
-
-![productspage2](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328209/extends/productspage2_puwupt.png)
-
----
-
-#### Product Detail Page
-
-![productdetailpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328208/extends/productdetailpage_zlny0s.png)
-
-![productdetailcomment](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328150/extends/productdetailcomment_w7cqrz.png)
-
----
-
-#### Login Page
-
-![loginpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328208/extends/loginpage_rl61wx.png)
-
----
-
-#### Register Page
-
-![registerpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328207/extends/registerpage_wcydqg.png)
-
----
-
-#### Cart Page
-
-![cartpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328207/extends/cartpage_z8luza.png)
-
----
-
-#### Checkout Info Page
-
-![checkoutinfopage_aijrhn](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328738/extends/DIGITAL_WORLD_2_22.09.2023_03_37_yhhlgb.png)
-
----
-
-#### Checkout Payment Page
-
-![checkoutpaymentpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328771/extends/DIGITAL_WORLD_2_22.09.2023_03_39_xfe8ba.png)
-
----
-
-#### Checkout Stripe Payment Page
-
-![checkoutstripepaymentpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328205/extends/checkoutstripepaymentpage_qrtajm.png)
-
----
-
-#### Checkout Success Page
-
-![checkoutsuccesspage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328204/extends/checkoutsuccesspage_c8fg5l.png)
-
----
-
-#### Profile Page
-
-![profilepage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328999/extends/DIGITAL_WORLD_2_22.09.2023_03_42_qoqdw0.png)
-
----
-
-#### Profile Order Detail Page
-
-![profileorderdetailpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695329080/extends/DIGITAL_WORLD_2_22.09.2023_03_44_nzwzrr.png)
-
----
-
-#### Profile Edit Page
-
-![profileeditpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695329168/extends/DIGITAL_WORLD_2_22.09.2023_03_45_ibxbqs.png)
-
----
-
 #### Admin DashBoard Page
 
-![admindashboardpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328202/extends/admindashboardpage_rkcgue.png)
+![admindashboardpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1697450263/extends/DIGITAL_WORLD_2_16.10.2023_16_55_l6rnfk.png)
 
 ---
-
-#### Admin Category Manage Page
-
-![admincategorymanageppage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328201/extends/admincategorymanageppage_zs5x0t.png)
-
----
-
-#### Admin Create Category Page
-
-![admincreatecategorypage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328200/extends/admincreatecategorypage_r1sw9x.png)
-
----
-
-#### Admin Update Category Page
-
-![adminupdatecategorypage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/adminupdatecategorypage_jvats7.png)
-
----
-
-#### Admin Product Manage Page
-
-![adminproductmanagepage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/adminproductmanagepage_intx9m.png)
-
----
-
-#### Admin Create Product Page
-
-![admincreateproductpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/admincreateproductpage_e8r3vs.png)
-
----
-
-#### Admin Update Product Page
-
-![adminupdateproductpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/adminupdateproductpage_pnlc2z.png)
-
----
-
-#### Admin User Manage Page
-
-![adminusermanagapage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/adminusermanagapage_astj6g.png)
-
----
-
-#### Admin Update User Page
-
-![adminupdateuserpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328199/extends/adminupdateuserpage_cwivuh.png)
-
----
-
-#### Admin Order Manage Page
-
-![adminordermanagepage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328198/extends/adminordermanagepage_xs8gxe.png)
-
----
-
-#### Admin Update Order Page
-
-![adminupdateorderpage](https://res.cloudinary.com/di3eto0bg/image/upload/v1695328151/extends/adminupdateorderpage_x29x4u.png)
 
 ## Author
 
